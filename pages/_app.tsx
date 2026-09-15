@@ -19,6 +19,7 @@ import "../i18n";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import i18n, { detectLanguage, loadTranslations, syncLanguageToBackend } from "../i18n";
+import { captureReferral } from "utils/referral";
 
 const GA_ID = "G-80CZZG1HG5";
 
@@ -53,6 +54,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       router.events.on("routeChangeComplete", handleRouteChange);
       return () => {
          router.events.off("routeChangeComplete", handleRouteChange);
+      };
+   }, [router.events]);
+
+   // A partner's ?ref= can land on any page, so this watches every navigation
+   // rather than only the first load. Does nothing when the URL has no code.
+   useEffect(() => {
+      captureReferral();
+      router.events.on("routeChangeComplete", captureReferral);
+      return () => {
+         router.events.off("routeChangeComplete", captureReferral);
       };
    }, [router.events]);
 

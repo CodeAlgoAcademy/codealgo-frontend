@@ -7,6 +7,7 @@ import { RootState } from "store/store";
 import { errorResolver } from "utils/errorResolver";
 import { ILoginReducerArg, IUser } from "types/interfaces";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
+import { referralHeaders } from "utils/referral";
 
 export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi): Promise<ILoginReducerArg | any> => {
    const state = <RootState>thunkApi.getState();
@@ -104,7 +105,9 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
 
       localStorage.setItem(ILocalStorageItems.signupAccountType, is_teacher ? "teacher" : is_parent ? "parent" : "student");
       try {
-         const { data } = await http.post("/auth/registration/", { ...options, source: "web" });
+         // Referral headers, not body fields. The backend attaches attribution
+         // from the signup signal, which only ever sees the raw request.
+         const { data } = await http.post("/auth/registration/", { ...options, source: "web" }, { headers: referralHeaders() });
          dispatch(clearFields());
          dispatch(closePreloader());
 
@@ -123,10 +126,14 @@ export const signUpWithGoogle: any = createAsyncThunk(
       dispatch(openPreloader({ loadingText: "Registering your Google account" }));
 
       try {
-         const res = await http.post("/auth/google/", {
-            access_token: payload.access_token,
-            role: payload.role,
-         });
+         const res = await http.post(
+            "/auth/google/",
+            {
+               access_token: payload.access_token,
+               role: payload.role,
+            },
+            { headers: referralHeaders() },
+         );
 
          dispatch(closePreloader());
 
@@ -161,10 +168,16 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
    dispatch(openPreloader({ loadingText: "Signing in with Google" }));
 
    try {
-      const res = await http.post<ILoginReducerArg>("/auth/google/", {
-         access_token,
-         action: "signin",
-      });
+      // Referral headers here too: an email Google has never signed in with
+      // before creates an account on this call, not on the signup one.
+      const res = await http.post<ILoginReducerArg>(
+         "/auth/google/",
+         {
+            access_token,
+            action: "signin",
+         },
+         { headers: referralHeaders() },
+      );
 
       dispatch(closePreloader());
 
