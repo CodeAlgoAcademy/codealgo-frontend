@@ -85,15 +85,20 @@ export function getReferral(): StoredReferral | null {
  * Headers and not the body: the backend attaches attribution from allauth's
  * user_signed_up signal, and by the time that fires the request body has been
  * read and is no longer available. See referrals/services.read_code.
+ *
+ * The visitor id goes out on every signup, code or not. The marketing
+ * dashboard uses it to find which site visit (Instagram post, Google search)
+ * the account came from.
  */
 export function referralHeaders(): Record<string, string> {
-   const stored = getReferral();
-   if (!stored) return {};
+   const headers: Record<string, string> = {};
+   if (typeof window === "undefined") return headers;
 
-   return {
-      "X-Referral-Code": stored.code,
-      "X-Referral-Visitor": getVisitorId(),
-   };
+   headers["X-Referral-Visitor"] = getVisitorId();
+
+   const stored = getReferral();
+   if (stored) headers["X-Referral-Code"] = stored.code;
+   return headers;
 }
 
 function readCodeFromUrl(): string {

@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import i18n, { detectLanguage, loadTranslations, syncLanguageToBackend } from "../i18n";
 import { captureReferral } from "utils/referral";
+import { trackSiteVisit } from "utils/siteVisit";
 
 const GA_ID = "G-80CZZG1HG5";
 
@@ -64,6 +65,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       router.events.on("routeChangeComplete", captureReferral);
       return () => {
          router.events.off("routeChangeComplete", captureReferral);
+      };
+   }, [router.events]);
+
+   // Site traffic for the marketing dashboard. Throttles itself to one call per
+   // tab per day unless the url has utm tags, see utils/siteVisit.ts.
+   useEffect(() => {
+      trackSiteVisit();
+      router.events.on("routeChangeComplete", trackSiteVisit);
+      return () => {
+         router.events.off("routeChangeComplete", trackSiteVisit);
       };
    }, [router.events]);
 
