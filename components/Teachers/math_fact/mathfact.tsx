@@ -4,7 +4,12 @@ import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import MathFactAssignModal from "./components/mathfactAssignmentModal";
 import MathFactsList from "./components/mathlist";
+import FactSetManager from "./components/FactSetManager";
+import StandardsExplorer from "./components/StandardsExplorer";
+import CoverageDashboard from "./components/CoverageDashboard";
 import { MathFactAssignmentDetail } from "types/interfaces/mathfact";
+
+type MathTab = "assign" | "sets" | "standards" | "coverage";
 
 interface MathFactsPageProps {
    onViewReport: () => void;
@@ -13,6 +18,7 @@ interface MathFactsPageProps {
 export default function MathFactsPage({ onViewReport }: MathFactsPageProps) {
    const { t } = useTranslation("teacher");
    const classId = useSelector((state: RootState) => state.currentClass?.id);
+   const classGrade = useSelector((state: RootState) => (state as any).currentClass?.grade);
    const classStudents = useSelector((state: RootState) => (state as any).teacherStudentSlice?.students ?? []);
 
   const students = useMemo(() => classStudents.map((s: any) => ({
@@ -27,6 +33,7 @@ export default function MathFactsPage({ onViewReport }: MathFactsPageProps) {
    const [editingStudentName, setEditingStudentName] = useState<string>("");
    const [editingAssignments, setEditingAssignments] = useState<MathFactAssignmentDetail[]>([]);
    const [refreshKey, setRefreshKey] = useState(0);
+   const [tab, setTab] = useState<MathTab>("assign");
 
    const handleEdit = (studentId: number, studentName: string, assignments: MathFactAssignmentDetail[]) => {
       setEditingStudentId(studentId);
@@ -80,12 +87,41 @@ export default function MathFactsPage({ onViewReport }: MathFactsPageProps) {
             </div>
          </div>
 
-         <MathFactsList
-            key={refreshKey}
-            classId={classId}
-            students={students}
-            onEdit={handleEdit}
-         />
+         <div className="mb-6 flex flex-wrap gap-2 border-b border-slate-200">
+            {([
+               ["assign", "tabAssign"],
+               ["sets", "tabFactSets"],
+               ["standards", "tabStandards"],
+               ["coverage", "tabCoverage"],
+            ] as [MathTab, string][]).map(([key, labelKey]) => (
+               <button
+                  key={key}
+                  onClick={() => setTab(key)}
+                  className={`-mb-px border-b-2 px-4 py-2.5 text-sm font-bold transition-colors ${
+                     tab === key
+                        ? "border-blue-600 text-blue-600"
+                        : "border-transparent text-slate-400 hover:text-slate-600"
+                  }`}
+               >
+                  {t(labelKey)}
+               </button>
+            ))}
+         </div>
+
+         {tab === "assign" && (
+            <MathFactsList
+               key={refreshKey}
+               classId={classId}
+               students={students}
+               onEdit={handleEdit}
+            />
+         )}
+
+         {tab === "sets" && <FactSetManager classId={classId} classGrade={classGrade} />}
+
+         {tab === "standards" && <StandardsExplorer />}
+
+         {tab === "coverage" && <CoverageDashboard />}
 
          <MathFactAssignModal
             classId={classId}
