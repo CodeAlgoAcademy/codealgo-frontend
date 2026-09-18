@@ -1,3 +1,5 @@
+import { MathStandard } from "types/interfaces/mathStandards";
+
 export interface Standards{
   id:string
   name:string;
@@ -17,7 +19,12 @@ export interface MathFactSet {
   operand_b_max: number;
   grade: string;
   created_by: number | null;
-  standards: Standards[]; 
+  standards: Standards[];
+  // Coding standards above, math standards below. Both optional so anything
+  // holding an older response still type checks.
+  math_standards?: MathStandard[];
+  // False for the shipped sets, which are shared across teachers.
+  is_editable?: boolean;
 }
  
 export interface MathFactAssignmentList {

@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "store/store";
 import mathFactsService from "services/mathfact";
 import { MathFactSet } from "types/interfaces/mathfact";
 import { fetchMathOverview } from "store/mathFactsSlice";
+import StandardFilters, { EMPTY_FILTERS, StandardFilterValue } from "./StandardFilters";
 
 interface ModalProps {
    classId: string | number;
@@ -27,6 +28,7 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
    
    const [step, setStep] = useState(1);
    const [factSets, setFactSets] = useState<MathFactSet[]>([]);
+   const [standardFilters, setStandardFilters] = useState<StandardFilterValue>(EMPTY_FILTERS);
    const [selectedFactSetIds, setSelectedFactSetIds] = useState<number[]>([]);
    const [isAdaptive, setIsAdaptive] = useState(false);
    const [isTurningOff, setIsTurningOff] = useState(false);
@@ -62,6 +64,13 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
       }
    }, [isOpen, assignmentData]);
 
+   // Narrowing by standard refetches rather than filtering client side, so the
+   // teacher sees everything the server knows about, not just the first page.
+   useEffect(() => {
+      if (isOpen) loadFactSets();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [standardFilters.framework, standardFilters.grade, standardFilters.domain]);
+
    const resetFormFields = () => {
       setSelectedFactSetIds([]);
       setIsAdaptive(false);
@@ -72,13 +81,17 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
    };
 
    const loadFactSets = async () => {
-   try {
-      const data = await mathFactsService.getFactSets(classId); 
-      setFactSets(data);
-   } catch (err) {
-      setError(t("failedToLoadSets"));
-   }
-};
+      try {
+         const data = await mathFactsService.getFactSets(classId, {
+            framework: standardFilters.framework || undefined,
+            domain: standardFilters.domain || undefined,
+            standard_grade: standardFilters.grade || undefined,
+         });
+         setFactSets(data);
+      } catch (err) {
+         setError(t("failedToLoadSets"));
+      }
+   };
 
    const toggleFactSet = (id: number) => {
       if (isAdaptive || isTurningOff) return;
@@ -153,12 +166,28 @@ export default function MathFactAssignModal({ classId, isOpen, isEditing, assign
                            <button type="button" onClick={() => setSelectedFactSetIds([])} className="text-xs font-bold text-blue-600 hover:underline">{t("selectNone")}</button>
                         </div>
                      </div>
+                     <StandardFilters value={standardFilters} onChange={setStandardFilters} compact />
+
                      <div className="space-y-2">
+                        {factSets.length === 0 && (
+                           <p className="rounded-2xl border border-dashed border-slate-200 p-6 text-center text-xs font-semibold text-slate-400">
+                              {t("noFactSetsMatch")}
+                           </p>
+                        )}
                         {factSets.map((fs) => (
-                           <label key={fs.id} className={`flex cursor-pointer items-center justify-between rounded-2xl border bg-white p-4 transition-all ${selectedFactSetIds.includes(fs.id) ? "border-blue-500 ring-4 ring-blue-50" : "border-gray-200"} ${isAdaptive || isTurningOff ? "cursor-not-allowed opacity-50 grayscale" : ""}`}>
-                              <div className="flex items-center gap-3">
-                                 <input type="checkbox" disabled={isAdaptive || isTurningOff} checked={selectedFactSetIds.includes(fs.id)} onChange={() => toggleFactSet(fs.id)} className="h-5 w-5 accent-blue-600" />
-                                 <span className="text-sm font-bold text-slate-700">{fs.name} ({fs.operation_display})</span>
+                           <label key={fs.id} className={`flex cursor-pointer items-start justify-between gap-3 rounded-2xl border bg-white p-4 transition-all ${selectedFactSetIds.includes(fs.id) ? "border-blue-500 ring-4 ring-blue-50" : "border-gray-200"} ${isAdaptive || isTurningOff ? "cursor-not-allowed opacity-50 grayscale" : ""}`}>
+                              <div className="flex min-w-0 items-start gap-3">
+                                 <input type="checkbox" disabled={isAdaptive || isTurningOff} checked={selectedFactSetIds.includes(fs.id)} onChange={() => toggleFactSet(fs.id)} className="mt-0.5 h-5 w-5 shrink-0 accent-blue-600" />
+                                 <span className="min-w-0">
+                                    <span className="block text-sm font-bold text-slate-700">{fs.name} ({fs.operation_display})</span>
+                                    <span className="mt-1 flex flex-wrap gap-1">
+                                       {(fs.math_standards ?? []).map((std) => (
+                                          <span key={std.id} title={std.description} className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 ring-1 ring-blue-100">
+                                             {std.code}
+                                          </span>
+                                       ))}
+                                    </span>
+                                 </span>
                               </div>
                            </label>
                         ))}

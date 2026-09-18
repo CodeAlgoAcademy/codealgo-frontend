@@ -1,14 +1,60 @@
 import http from "axios.config";
 import { CreateAssignmentBulkPayload, CreateAssignmentPayload, MathFactAnalyticsPair, MathFactAssignmentDetail, MathFactAssignmentList, MathFactSet, StudentMathOverview } from "types/interfaces/mathfact";
+import { FactSetFilters, FactSetPayload } from "types/interfaces/mathStandards";
 import { getAccessToken } from "utils/getTokens";
 
+const buildQuery = (params: Record<string, string | number | boolean | undefined>) => {
+  const search = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined || value === "" || value === false) return;
+    search.set(key, String(value));
+  });
+  return search.toString();
+};
+
 const mathFactsService = {
-  getFactSets: async (classId: string | number) => {
-    const res = await http.get(`/academics/math_facts/fact-sets/?class_id=${classId}`, {
+  // filters is optional, so the existing single-argument calls keep working.
+  getFactSets: async (
+    classId: string | number,
+    filters: Omit<FactSetFilters, "class_id"> = {}
+  ): Promise<MathFactSet[]> => {
+    const qs = buildQuery({ class_id: classId, ...filters });
+    const res = await http.get(`/academics/math_facts/fact-sets/?${qs}`, {
       headers: { Authorization: `Bearer ${getAccessToken()}` },
     });
     return res.data;
 },
+
+  createFactSet: async (payload: FactSetPayload): Promise<MathFactSet> => {
+    const res = await http.post(`/academics/math_facts/fact-sets/`, payload, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return res.data;
+  },
+
+  updateFactSet: async (
+    id: number,
+    payload: Partial<FactSetPayload>
+  ): Promise<MathFactSet> => {
+    const res = await http.patch(`/academics/math_facts/fact-sets/${id}/`, payload, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return res.data;
+  },
+
+  deleteFactSet: async (id: number): Promise<void> => {
+    await http.delete(`/academics/math_facts/fact-sets/${id}/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+  },
+
+  // Shared sets cannot be edited. Copy one to get an editable version.
+  duplicateFactSet: async (id: number): Promise<MathFactSet> => {
+    const res = await http.post(`/academics/math_facts/fact-sets/${id}/duplicate/`, {}, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return res.data;
+  },
  
 getAssignments: async (classId: string | number): Promise<StudentMathOverview[]> => {
     const res = await http.get(`/academics/class/${classId}/math-facts/assignments/`, {
