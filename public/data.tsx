@@ -24,6 +24,7 @@ export interface IArticle {
 }
 
 export const articles = [
+   { id: "startupWorldCup", image: "/assets/blog/press/million.jpg", detailPage: "/startup-world-cup" },
   { id: "herStartup", image: "/assets/press/1.jpg", detailPage: "/her-start-up-needed-a-user-test-lab" },
   { id: "edtechPlatform", image: "/assets/blog/press/codealgopoto.jpg", detailPage: "/codeAlgo-academy-hits-as-edtech-platform" },
   { id: "codealgoStudents", image: "/assets/blog/press/demarris.webp", detailPage: "/codeAlgoStudents" },

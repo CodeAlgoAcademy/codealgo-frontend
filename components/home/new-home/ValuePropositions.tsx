@@ -1,54 +1,74 @@
 import { useTranslation } from "react-i18next";
 
 const ValuePropositions = () => {
-  const { t } = useTranslation("home");
+   const { t } = useTranslation("home");
 
-  const features = [
-    {
-      title: t("interactiveCoding"),
-      description: t("interactiveCodingDescription")
-    },
-    {
-      title: t("realProjects"),
-      description: t("realProjectsDescription")
-    },
-    {
-      title: t("progressTracking"),
-      description: t("progressTrackingDescription")
-    }
-  ];
+   const features = [
+      {
+         title: t("standardsAligned"),
+         description: t("standardsAlignedDesc"),
+         image: "/assets/landing/csta.png",
+         accent: "bg-mainColor",
+         clip: "clip-path-right-parallelogram",
+      },
+      {
+         title: t("safeAndSecure"),
+         description: t("safeAndSecureDesc"),
+         image: "/assets/landing/k-8.png",
+         accent: "bg-mainGreen",
+         clip: "clip-path-center-parallelogram",
+      },
+      {
+         title: t("funAndAccessible"),
+         description: t("funAndAccessibleDesc"),
+         image: "/assets/landing/mobile.png",
+         accent: "bg-mainPink",
+         clip: "clip-path-left-parallelogram",
+      },
+   ];
 
-  return (
-    <section className="relative bg-gray-50 py-20 ">
-      <div className="container mx-auto px-6">
-
-         <h2 className="mb-4 text-center text-3xl font-extrabold md:text-4xl">
-          {t("everythingYourChildNeeds")}
-        </h2>
-
-        <p className="mx-auto mb-12 max-w-2xl text-center text-gray-600">
-          {t("completeLearningExperience")}
-        </p>
-
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="rounded-xl bg-white p-6 shadow-lg transition hover:shadow-xl"
-            >
-              <h3 className="mb-2 text-xl font-bold">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600">
-                {feature.description}
-              </p>
+   return (
+      <section className="relative bg-white py-24">
+         <div className="container mx-auto px-6">
+            <div className="mb-16 flex flex-col gap-4 border-b border-mainBlack/10 pb-10 md:flex-row md:items-end md:justify-between">
+               <h2 className="max-w-lg font-tiltWarp text-3xl leading-tight text-mainBlack md:text-4xl">
+{t("perfectBalance")}
+                </h2>
+                <p className="max-w-xs font-workSans text-sm leading-relaxed text-mainBlack/60">
+                   {t("perfectBalanceSub")}
+                </p>
             </div>
-          ))}
-        </div>
 
-      </div>
-    </section>
-  );
+            <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
+               {features.map((feature) => (
+                  <div key={feature.title} className="flex flex-col items-start">
+                     <div className="relative mb-6 flex h-48 w-full items-center justify-center overflow-hidden">
+                        <div
+                           className={`${feature.clip} ${feature.accent} absolute inset-0 opacity-10`}
+                           aria-hidden="true"
+                        />
+                        <img
+                           src={feature.image}
+                           alt={feature.title}
+                           className="relative max-h-full max-w-[70%] object-contain"
+                        />
+                     </div>
+
+                     <div className={`mb-4 h-1 w-10 rounded-full ${feature.accent}`} />
+
+                     <h3 className="mb-3 font-tiltWarp text-xl text-mainBlack">
+                        {feature.title}
+                     </h3>
+
+                     <p className="font-workSans leading-relaxed text-mainBlack/60">
+                        {feature.description}
+                     </p>
+                  </div>
+               ))}
+            </div>
+         </div>
+      </section>
+   );
 };
 
 export default ValuePropositions;
