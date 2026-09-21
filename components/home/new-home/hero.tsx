@@ -1,107 +1,164 @@
 import Image from "next/image";
-import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { detect } from "detect-browser";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 
 const Hero = () => {
    const { push } = useRouter();
    const features = useSelector((state: RootState) => state.accessibility.features);
-   const videoRef = useRef<HTMLVideoElement>(null);
-   const [isSafari, setIsSafari] = useState(false);
    const { t } = useTranslation("home");
 
    const animationsPaused = useMemo(() => features["pause animations"], [features]);
-
-   useEffect(() => {
-      const video = videoRef.current;
-      if (!video) return;
-
-      if (animationsPaused) video.pause();
-      else video.play().catch(() => {});
-   }, [animationsPaused]);
-
-   useEffect(() => {
-      const browser = detect();
-      setIsSafari(browser?.name === "safari" || browser?.name === "ios" || browser?.name === "ios-webview");
-   }, []);
+   const floatStyle: React.CSSProperties = {
+      animationPlayState: animationsPaused ? "paused" : "running",
+   };
 
    const toSignUp = () => push("/signup");
-   const toLogin = () => push("/login");
    const toPricing = () => push("/pricing");
 
    return (
-      <header className="relative isolate">
-         {/* Media */}
-         <div className="relative h-[75vh] min-h-[600px] w-full md:h-[90vh]">
-            {isSafari ? (
-               <img src="/assets/landing/hero.png" alt="Kids learning to code online with CodeAlgo Academy" className="h-full w-full object-cover" />
-            ) : (
-               <video
-                  src="/assets/landing/hero.mp4"
-                  className="h-full w-full object-cover"
-                  loop
-                  muted
-                  autoPlay
-                  ref={videoRef}
-                  disablePictureInPicture
-               />
-            )}
+      <header className="relative isolate overflow-hidden bg-white">
+         <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:py-10">
+            <div className="flex flex-col-reverse items-center gap-12 lg:flex-row lg:justify-center lg:gap-16">
+               {/* Left Column: Text & Buttons */}
+               <div className="w-full max-w-lg lg:w-full">
+                  <h1 className="mb-6 text-3xl font-bold leading-[1.1] text-gray-900 sm:text-4xl md:text-5xl">
+                     {t("TheroTitle")}
+                  </h1>
 
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
-         </div>
+                  <p className="mb-2 text-lg text-gray-600">{t("TheroDescription")}</p>
+                  <p className="relative mb-8 inline-block text-lg text-gray-600">
+                     {t("TheroFreeLine")}
+                     <svg
+                        className="absolute -bottom-2 left-0 h-2 w-full text-mainRed"
+                        viewBox="0 0 200 8"
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                     >
+                        <path d="M0 5 Q 50 0, 100 4 T 200 3" stroke="currentColor" strokeWidth="3" fill="none" />
+                     </svg>
+                  </p>
 
-         {/* Content */}
-         <div className="pointer-events-none absolute inset-0 z-10 flex items-center">
-            <div className="container mx-auto px-6">
-               <div className="grid max-w-6xl grid-cols-1 items-center justify-center gap-5 sm:grid-cols-2 sm:gap-12">
-                  {/* Text */}
-                  <div className="pointer-events-auto pt-6 text-white sm:pt-0 md:pl-8">
-                     <h1 className="mb-2 max-w-xl text-lg font-extrabold leading-tight sm:mb-4 sm:text-xl md:text-4xl lg:text-5xl">
-                        {t("heroTitle")}
-                     </h1>
-                     <p className="mb-3 max-w-lg text-sm text-white/90 sm:mb-5 sm:max-w-md sm:text-xl md:text-xl">
-                        {t("heroDescription")}
-                     </p>
-                     <div className="flex flex-col gap-4 xs:flex-row">
-                        <button
-                           onClick={toLogin}
-                           className="bg-primary hover:bg-primary-dark rounded-lg px-8 py-4 text-sm font-bold text-white sm:px-2 lg:text-lg"
-                        >
-                           {t("tryForFree")}
-                        </button>
-                        <button
-                           onClick={toPricing}
-                           className="rounded-lg border-2 border-white px-4 py-4 text-sm font-bold text-white hover:bg-white/10 sm:px-2 lg:px-8 lg:text-lg"
-                        >
-                           {t("seePricingPlans")}
-                        </button>
-                     </div>
+                  <div className="flex w-full max-w-sm flex-col gap-4">
+                     <button
+                        onClick={toSignUp}
+                        className="w-full rounded-xl bg-mainColor px-8 py-4 text-base font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+                     >
+                        {t("teachersSignUpFree")}
+                     </button>
+                     <button
+                        onClick={toPricing}
+                        className="w-full rounded-xl border border-mainColor bg-[#EAF2F8] px-8 py-4 text-base font-bold text-[#0F3D5C] transition-colors hover:bg-[#DCE9F3]"
+                     >
+                        {t("parentsExplorePlans")}
+                     </button>
                   </div>
-                  {/* Offer Card */}
-                  <div className="pointer-events-auto flex justify-center lg:justify-end">
-                     <div className="w-full max-w-sm rounded-2xl border border-white/20 bg-white/10 p-3 text-white backdrop-blur-md sm:p-5">
-                        <div className="mb-3 text-center">
-                           <span className="rounded-full bg-mainRed px-3 py-1 text-sm font-bold uppercase">{t("annualOffer")}</span>
-                        </div>
-                        <h3 className="mb-1 text-center text-xl font-bold text-mainRed sm:mb-3">
-                           {t("getUpTo")} <br /> <span className="text-2xl text-white md:text-3xl">20% OFF</span> <br /> {t("offMonthlyPricing")}
-                        </h3>
-                        <div className="mb-3 text-center sm:mb-6">
-                           <span className="text-2xl font-extrabold md:text-4xl">$21</span> <span>{t("perMonth")}</span>
-                           <p className="mt-1 text-sm">{t("billedAnnuallyCancelAnytime")}</p>
-                        </div>
-                        <button onClick={toSignUp} className="w-full rounded-lg bg-mainRed py-3 font-bold text-white hover:opacity-90">
-                           {t("learnMoreArrow")}
-                        </button>
+               </div>
+
+               {/* Right Hero (Fixed Layout) */}
+               <div className="relative mx-auto flex min-h-[460px] w-full items-center justify-center lg:mt-0">
+                  <Image
+                     src="/assets/landing/heroshaped.avif"
+                     alt=""
+                     layout="fill"
+                     priority
+                     aria-hidden
+                     className="pointer-events-none absolute inset-0 -z-10 select-none object-contain"
+                  />
+
+                  <div className="relative w-[95%] max-w-[550px]">
+                     <div className="relative z-10 aspect-video w-full overflow-hidden rounded-lg border-[8px] border-black bg-black shadow-2xl sm:border-[10px]">
+                        <video
+                           src="/assets/landing/hero11.mp4"
+                           className="h-full w-full object-cover"
+                           autoPlay
+                           muted
+                           loop
+                           playsInline
+                           disablePictureInPicture
+                        />
+                     </div>
+
+                     {/* Math */}
+
+                     <div style={floatStyle} className="absolute -left-8 -top-20 z-20 sm:-left-16 sm:-top-16">
+                        <Image
+                           src="/assets/landing/math1.png"
+                           alt={t("heroAltMath")}
+                           width={180}
+                           height={180}
+                           className="object-contain drop-shadow-lg"
+                        />
+                     </div>
+
+                     {/* Science */}
+
+                     <div style={floatStyle} className="absolute -bottom-10 -left-12 z-20 sm:-bottom-12 sm:-left-16">
+                        <Image
+                           src="/assets/landing/block.png"
+                           alt={t("heroAltScience")}
+                           width={180}
+                           height={180}                                                                                                                        
+                           className="object-contain drop-shadow-lg"
+                        />
+                     </div>
+
+                     {/* English */}
+
+                     <div style={floatStyle} className="absolute -right-10 -top-10 z-20 sm:-right-14 sm:-top-12">
+                        <Image
+                           src="/assets/landing/aia.png"
+                           alt={t("heroAltEla")}
+                           width={180}
+                           height={180}
+                           className="object-contain drop-shadow-lg"
+                        />
+                     </div>
+
+                     <div className="absolute -right-20 z-20 sm:-bottom-8 sm:-right-8">
+                        <Image
+                           src="/assets/landing/python.png"
+                           alt={t("heroAltCoppa")}
+                           width={160}
+                           height={160}
+                           className="object-contain drop-shadow-md"
+                        />
                      </div>
                   </div>
                </div>
             </div>
          </div>
+
+         <style jsx>{`
+            @keyframes float {
+               0%,
+               100% {
+                  transform: translateY(0);
+               }
+               50% {
+                  transform: translateY(-8px);
+               }
+            }
+            .animate-float {
+               animation: float 4s ease-in-out infinite;
+            }
+            .animate-float-slow {
+               animation: float 5s ease-in-out infinite;
+            }
+            .animate-float-slower {
+               animation: float 6s ease-in-out infinite;
+            }
+            @media (prefers-reduced-motion: reduce) {
+               .animate-float,
+               .animate-float-slow,
+               .animate-float-slower {
+                  animation: none !important;
+                  transform: none !important;
+               }
+            }
+         `}</style>
       </header>
    );
 };
