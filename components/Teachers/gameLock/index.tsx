@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { RootState } from "store/store";
 import { getStudents } from "store/studentSlice"; // Import your fetch action
 import LockModal from "./lockModal";
+import SkipPinCard from "./SkipPinCard";
 import { useAppDispatch } from "store/hooks";
 import { BaseStudent } from "types/interfaces/teacherstudent.interface";
 import { fetchAllClassAccess } from "store/teacherStudentSlice";
@@ -41,6 +42,7 @@ useEffect(() => {
             <h1 className="text-3xl font-bold text-[#1e293b]">{t("classroomGameAccess")}</h1>
             <p className="text-slate-500">{t("gameAccessDescription")}</p>
          </header>
+         <SkipPinCard />
          {students.length === 0 ? (
             <div className="rounded-3xl bg-white p-12 text-center shadow-sm">
                <p className="text-slate-400">{t("noStudentsInThisClass")}</p>

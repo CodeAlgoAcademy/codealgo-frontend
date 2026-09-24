@@ -592,5 +592,20 @@
   "drills": "drills",
   "items": "items",
   "delete": "Delete",
-  "mathGradeLabel": "Grade {{grade}}"
+  "mathGradeLabel": "Grade {{grade}}",
+  "skipPinTitle": "Teacher PIN",
+  "skipPinDescription": "When a student is stuck in block coding, press ~ three times on their computer and type this PIN to show the solution or skip the level. Only works for your students. If a student sees it, hit New PIN.",
+  "skipPinNew": "New PIN",
+  "skipPinShow": "Show PIN",
+  "skipPinHide": "Hide PIN",
+  "skipPinFormat": "PIN must be 4 to 6 digits.",
+  "skipPinLoadError": "Couldn't load your PIN.",
+  "skipPinSaveError": "Couldn't save the PIN. Try again.",
+  "skipPinRecent": "Recent PIN use",
+  "skipPinRefresh": "Refresh",
+  "skipPinNoUses": "Nobody has used your PIN yet.",
+  "skipPinUsedSkip": "Skipped level",
+  "skipPinUsedSolution": "Showed solution",
+  "skipPinWrongGuess": "Wrong PIN tried",
+  "skipPinLimitHit": "Hit the help limit"
 }
