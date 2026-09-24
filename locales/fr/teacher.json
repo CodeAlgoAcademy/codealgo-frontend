@@ -592,5 +592,20 @@
   "drills": "exercices",
   "items": "questions",
   "delete": "Supprimer",
-  "mathGradeLabel": "Niveau {{grade}}"
+  "mathGradeLabel": "Niveau {{grade}}",
+  "skipPinTitle": "NIP enseignant",
+  "skipPinDescription": "Quand un élève est bloqué en codage par blocs, appuyez trois fois sur ~ sur son ordinateur et entrez ce NIP pour afficher la solution ou passer le niveau. Fonctionne seulement pour vos élèves. Si un élève le voit, cliquez sur Nouveau NIP.",
+  "skipPinNew": "Nouveau NIP",
+  "skipPinShow": "Afficher le NIP",
+  "skipPinHide": "Masquer le NIP",
+  "skipPinFormat": "Le NIP doit contenir de 4 à 6 chiffres.",
+  "skipPinLoadError": "Impossible de charger votre NIP.",
+  "skipPinSaveError": "Impossible d'enregistrer le NIP. Réessayez.",
+  "skipPinRecent": "Utilisation récente du NIP",
+  "skipPinRefresh": "Actualiser",
+  "skipPinNoUses": "Personne n'a encore utilisé votre NIP.",
+  "skipPinUsedSkip": "Niveau passé",
+  "skipPinUsedSolution": "Solution affichée",
+  "skipPinWrongGuess": "Mauvais NIP essayé",
+  "skipPinLimitHit": "Limite d'aide atteinte"
 }
