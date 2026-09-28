@@ -6,6 +6,8 @@ import {
    loginUser,
    signUpUser,
    loginWithGoogle,
+   loginWithApple,
+   signUpWithApple,
    updateFirstname,
    updateLastname,
    updateEmail,
@@ -156,6 +158,22 @@ export const userSlice = createSlice({
          };
       });
       builder.addCase(confirmAddRole.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         addUserToLocalStorage(action.payload);
+         return {
+            ...state,
+            ...action.payload,
+         };
+      });
+
+      builder.addCase(loginWithApple.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         addUserToLocalStorage(action.payload);
+         return {
+            ...state,
+            ...action.payload,
+         };
+      });
+
+      builder.addCase(signUpWithApple.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
          addUserToLocalStorage(action.payload);
          return {
             ...state,

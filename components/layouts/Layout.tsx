@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
 import Head from "next/head";
+import Script from "next/script";
 import { useRouter } from "next/router";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { getUserFromLocalStorage, refreshToken } from "utils/getTokens";
@@ -66,6 +67,10 @@ const Layout = ({ children }: Props) => {
 
    return (
       <GoogleOAuthProvider clientId={"354436342116-6kjbapf9ar5ad4rkho0hen2jndlcagff.apps.googleusercontent.com"}>
+         <Script
+            src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
+            strategy="lazyOnload"
+         />
          <div className={getAccessibilityClassName(features)}>
             <Head>
                <title>CodeAlgo Academy</title>

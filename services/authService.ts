@@ -270,6 +270,81 @@ export const confirmAddRole: any = createAsyncThunk("authSlice/confirmAddRole", 
    }
 });
 
+export const loginWithApple: any = createAsyncThunk(
+  "authSlice/loginWithApple",
+  async (
+    payload: { id_token: string; role: string },
+    thunkApi
+  ) => {
+    const dispatch = thunkApi.dispatch;
+    dispatch(openPreloader({ loadingText: "Signing in with Apple" }));
+
+    try {
+      const { data } = await http.post("/auth/apple/", {
+        id_token: payload.id_token,
+        role: payload.role,
+      });
+
+      dispatch(closePreloader());
+
+      return {
+        access_token: data.access,
+        refresh_token: data.refresh,
+        ...data.user,
+        is_new_user: data.is_new_user,
+      };
+    } catch (error: any) {
+      dispatch(closePreloader());
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const signUpWithApple: any = createAsyncThunk(
+  "authSlice/signUpWithApple",
+  async (
+    payload: {
+      id_token: string;
+      role: string;
+      first_name?: string;
+      last_name?: string;
+      dob?: string;
+      organization_code?: string;
+    },
+    thunkApi
+  ) => {
+    const dispatch = thunkApi.dispatch;
+    dispatch(openPreloader({ loadingText: "Registering your Apple account" }));
+
+    try {
+      const body: Record<string, any> = {
+        id_token: payload.id_token,
+        role: payload.role,
+      };
+      if (payload.first_name) body.first_name = payload.first_name;
+      if (payload.last_name) body.last_name = payload.last_name;
+      if (payload.dob) body.dob = payload.dob;
+      if (payload.organization_code) body.organization_code = payload.organization_code;
+
+      const { data } = await http.post("/auth/apple/", body);
+
+      dispatch(closePreloader());
+
+      return {
+        access_token: data.access,
+        refresh_token: data.refresh,
+        ...data.user,
+        is_new_user: data.is_new_user,
+      };
+    } catch (error: any) {
+      dispatch(closePreloader());
+      const errorMessage = errorResolver(error);
+      return thunkApi.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const updateFirstname: any = createAsyncThunk("authSlice/updateFirstname", async (_, thunkApi) => {
    const state = <RootState>thunkApi.getState();
    const { firstname } = state.user.auth;
