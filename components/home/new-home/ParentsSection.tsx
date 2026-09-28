@@ -13,7 +13,7 @@ const ParentsSection = () => {
 
                   <p className="mb-8 max-w-sm font-workSans text-lg leading-relaxed text-white">{t("parentsSubtitle")}</p>
 
-                  <button className="rounded-xl bg-mainRed px-10 py-4 font-workSans text-lg font-semibold text-white shadow-sm transition-colors hover:bg-mainRed">
+                  <button className="rounded-xl bg-white px-10 py-4 font-workSans text-lg font-semibold text-black shadow-sm transition-colors hover:bg-mainRed">
                      {t("signUpYourChild")}
                   </button>
 

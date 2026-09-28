@@ -29,15 +29,20 @@ const GetStarted = () => {
          </div>
 
          <div className="mt-0 flex h-[300px] items-center justify-center overflow-hidden md:mt-8 md:h-[650px]">
-            <article
+            {/* <article
                className={cn(
                   "relative hidden h-full flex-1 overflow-hidden",
                   "bg-whiteToBlueGradient",
                   "clip-path-right-parallelogram",
                   "md:-mr-24 md:block"
                )}
-            >
-               <div className="absolute inset-0 flex items-center justify-center p-10 md:p-16">
+            > */}
+         <article className="relative hidden h-full flex-1 clip-path-right-parallelogram overflow-hidden md:block md:-mr-10 bg-whiteToBlueGradient">
+
+            {/* <article className="relative hidden h-full flex-1 overflow-hidden md:block"> */}
+   {/* <div className="absolute inset-0 bg-whiteToBlueGradient" /> */}
+
+               <div className="absolute h-[50vw] w-[30vw] inset-0 flex items-center justify-center p-10 md:p-16">
                   <Image
                      src="/assets/landing/images14.png"
                      alt="Create your CodeAlgo avatar"
@@ -47,6 +52,16 @@ const GetStarted = () => {
                      className="object-contain"
                   />
                </div>
+               {/* <div className="absolute inset-0 z-10">
+      <Image
+         src="/assets/landing/images14.png"
+         alt="Customize and create your CodeAlgo avatar"
+         layout="fill"
+         priority
+         sizes="30vw"
+         className="object-contain object-center"
+      />
+   </div> */}
 
                <CustomButton onClick={toSignUp} className={buttonClassName} variant="filled" size="medium">
                   {t("createYourAvatar")}

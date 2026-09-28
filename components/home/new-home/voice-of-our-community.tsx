@@ -188,7 +188,7 @@ const VoiceOfOurCommunity = () => {
    const duration = isMobile ? 18 : 14;
 
    return (
-      <section className="overflow-hidden bg-[#F3F9FA] ">
+      <section className="overflow-hidden bg-[#F3F9FA] py-20">
          <style>{`
         @keyframes marquee-ltr {
           from { transform: translateX(calc(-1 * var(--marquee-distance, 50%))); }
@@ -205,7 +205,7 @@ const VoiceOfOurCommunity = () => {
         }
       `}</style>
 
-         <div className=" mx-auto mb-12 bg-mainRed px-4 text-center ">
+         <div className=" mx-auto mb-12 bg-mainColor px-4 text-center ">
             <h1 className=" py-4 text-center font-tiltWarp text-[2.1rem] text-white max-md:text-[1.5rem]">{t("whatsTheWord")}</h1>
             <p className="mx-auto max-w-2xl text-lg text-white">{t("communitySubtitle")}</p>
          </div>

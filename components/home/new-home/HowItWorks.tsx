@@ -26,8 +26,8 @@ const HowItWorks = () => {
    ];
 
    return (
-      <section className="bg-mainGreen/5 py-24">
-         <div className="container mx-auto max-w-6xl px-4">
+<section className="bg-mainOrange/10 py-24">
+            <div className="container mx-auto max-w-6xl px-4">
             <h2 className="mb-20 text-center font-tiltWarp text-3xl text-mainBlack md:text-4xl">{t("howItWorksTitle")}</h2>
 
             <div className="relative mb-16 grid grid-cols-1 gap-16 lg:grid-cols-3 lg:gap-8">
