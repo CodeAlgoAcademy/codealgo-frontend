@@ -20,8 +20,7 @@ const CharterSchoolsSection: React.FC = () => {
    ];
 
    return (
-      <section className="relative overflow-hidden bg-blueToBlackGradient py-20 md:py-28">
-         {/* Brand parallelogram accent, tucked behind the copy column */}
+      <section className="relative overflow-hidden bg-black py-20 md:py-28">
          <div
             className="clip-path-right-parallelogram pointer-events-none absolute -left-24 top-0 h-full w-72 bg-mainColor/20 lg:w-96"
             aria-hidden="true"
@@ -29,7 +28,7 @@ const CharterSchoolsSection: React.FC = () => {
 
          <div className="relative mx-auto max-w-6xl px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
-               <div className="lg:col-span-5">
+               <div className="lg:col-span-5 ">
                   <p className="font-workSans text-lg  font-semibold text-mainPink">
                      {t("charterEyebrow")}
                   </p>
@@ -39,7 +38,6 @@ const CharterSchoolsSection: React.FC = () => {
                   <p className="mt-5 max-w-sm font-workSans text-base leading-relaxed text-white/70">
                      {t("charterBody")}
                   </p>
-
                </div>
 
                <div className="lg:col-span-7">

@@ -33,10 +33,10 @@ const Home: NextPage = () => {
          <WinterBanner />
          <Hero />
          <CharterSchoolsSection />
-         <GetStarted />
 
+         <GetStarted />
          <ValuePropositions />
-         <WhatWeBuilt />
+         {/* <WhatWeBuilt /> */}
 
          <CodeToSuccess />
          <TeachersSection />
