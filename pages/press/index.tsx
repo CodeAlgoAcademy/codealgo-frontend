@@ -20,10 +20,10 @@ const Press = () => {
          <Navbar />
          <Header
             body=""
-            title={tp("pressIndex.featuredTitle")}
-            date={tp("pressIndex.featuredDate")}
-            image="/assets/press/1.jpg"
-            detailPage="/press/her-start-up-needed-a-user-test-lab"
+            title={tp("startupWorldCup.title")}
+            date={tp("startupWorldCup.date")}
+            image="/assets/blog/press/million.jpg"
+            detailPage="/press/startup-world-cup"
          />
 
          <section className="mx-auto mt-12 mb-12 w-full max-w-[1100px] px-4 sm:px-6">

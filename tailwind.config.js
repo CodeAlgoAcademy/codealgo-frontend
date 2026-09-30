@@ -20,6 +20,8 @@ module.exports = {
             mainBlack: "#191919",
             mainRed: "#FF0D11",
             mainGreen: "#038800",
+            mainOrange: "#F59E0B",
+
          },
          screens: {
             xs: "400px",
@@ -32,9 +34,9 @@ module.exports = {
          },
          clipPath: {
             wave: "polygon(0 75%, 50% 100%, 100% 75%, 100% 100%, 0 100%)",
-            "right-parallelogram": "polygon(0% 0, 100% 0, 75% 100%, 0% 100%)", // Left side straight
+            "right-parallelogram": "polygon(0% 0, 100% 0, 78% 100%, 0% 100%)", // Left side straight
             "left-parallelogram": "polygon(25% 0, 100% 0, 100% 100%, 0% 100%)", // Right side straight
-            "center-parallelogram": "polygon(25% 0, 100% 0, 75% 100%, 0% 100%)", // Both sides slanted
+            "center-parallelogram": "polygon(16% 0, 100% 0, 75% 100%, 0% 100%)", // Both sides slanted
          },
          fontFamily: {
             tiltWarp: ["TiltWarp"],
