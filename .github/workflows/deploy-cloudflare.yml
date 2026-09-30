@@ -42,6 +42,7 @@ jobs:
         env:
           API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
           STRIPE_PK: ${{ vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+          ANALYTICS_URL: ${{ vars.NEXT_PUBLIC_ANALYTICS_URL }}
         run: |
           if [ -z "$API_URL" ]; then
             echo "NEXT_PUBLIC_API_URL variable is not set on this repo."
@@ -51,6 +52,7 @@ jobs:
           {
             echo "NEXT_PUBLIC_API_URL=$API_URL"
             echo "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$STRIPE_PK"
+            echo "NEXT_PUBLIC_ANALYTICS_URL=$ANALYTICS_URL"
           } > .env.production
           echo "wrote .env.production:"
           sed 's/=.*/=<set>/' .env.production

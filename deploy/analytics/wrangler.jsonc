@@ -1,0 +1,68 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "codealgo-analytics",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+
+  // Off on purpose. Cloudflare Access protects admin.codealgoacademy.com, not
+  // codealgo-analytics.<subdomain>.workers.dev. Leaving workers.dev on would be
+  // a second door into the dashboard with no Access in front of it. The Worker
+  // checks the Access JWT itself as well, so that door would still be locked,
+  // but there is no reason to leave it there.
+  "workers_dev": false,
+  "preview_urls": false,
+
+  "observability": { "enabled": true },
+
+  // Two hostnames, one Worker.
+  //   admin.  the dashboard and its /api, behind Cloudflare Access
+  //   e.      the public collector the website posts events to
+  //
+  // The collector is a separate hostname because Access sits in front of the
+  // whole admin hostname and would bounce every visitor's beacon to a login
+  // page. It is a first party subdomain so it is not treated as a third party
+  // tracker by the browser.
+  "routes": [
+    { "pattern": "admin.codealgoacademy.com", "custom_domain": true },
+    { "pattern": "e.codealgoacademy.com", "custom_domain": true }
+  ],
+
+  // Dashboard files. run_worker_first so the Access check runs before any
+  // asset is served, otherwise index.html would be handed out to anyone who
+  // got past the edge somehow.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "codealgo-analytics",
+      // Filled in by `wrangler d1 create codealgo-analytics`, see README.
+      "database_id": "10007b4b-496f-4da3-bfc2-e91d27b6158d",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // Nightly prune of raw events past RETENTION_DAYS. 09:17 UTC is 02:17 local.
+  "triggers": { "crons": ["17 9 * * *"] },
+
+  "vars": {
+    "ADMIN_HOST": "admin.codealgoacademy.com",
+    "COLLECT_HOST": "e.codealgoacademy.com",
+    // Origins allowed to post events. Anything else gets a 403.
+    "ALLOWED_ORIGINS": "https://codealgoacademy.com,https://www.codealgoacademy.com,http://localhost:3000",
+    // The Zero Trust team domain, e.g. codealgo.cloudflareaccess.com, and the
+    // Application Audience (AUD) tag of the Access app for admin.
+    // Both are public values, not secrets. The Worker refuses every admin
+    // request until both are set.
+    "ACCESS_TEAM_DOMAIN": "codealgo.cloudflareaccess.com",
+    "ACCESS_AUD": "00b9dca44b1dcabe28d1b7500cc8c974e3fefb53e1c65e6c3ae0b6bfe87d8f15",
+    // Raw events older than this are deleted nightly. Sessions and visitors
+    // are kept, so traffic and retention history survive the prune, only the
+    // click by click detail goes.
+    "RETENTION_DAYS": "395"
+  }
+}

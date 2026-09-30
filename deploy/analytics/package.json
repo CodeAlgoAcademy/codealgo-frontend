@@ -1,0 +1,20 @@
+{
+  "name": "codealgo-analytics",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "tail": "wrangler tail",
+    "db:migrate": "wrangler d1 migrations apply codealgo-analytics --remote",
+    "db:migrate:local": "wrangler d1 migrations apply codealgo-analytics --local",
+    "seed:local": "node scripts/seed.mjs > .seed.sql && wrangler d1 execute codealgo-analytics --local --file .seed.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260804.1",
+    "chart.js": "^4.4.4",
+    "typescript": "~5.9.0",
+    "wrangler": "^4.119.0"
+  }
+}

@@ -1,0 +1,3 @@
+# Local dev only. Copy to .dev.vars. Skips the Access check for requests from
+# 127.0.0.1 so the dashboard opens at http://localhost:8787 without a login.
+DEV_NO_AUTH=1

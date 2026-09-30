@@ -61,6 +61,14 @@ jobs:
         working-directory: deploy/cloudflare
         run: npx tsc --noEmit
 
+      - name: Install analytics worker deps
+        working-directory: deploy/analytics
+        run: npm ci
+
+      - name: Typecheck analytics worker
+        working-directory: deploy/analytics
+        run: npx tsc --noEmit
+
       # The app's tsconfig excludes deploy/, so the Worker is typechecked
       # separately above. If that exclude is ever removed, `next build` starts
       # failing on `@cloudflare/containers` - which is not resolvable from the
@@ -101,3 +109,12 @@ jobs:
         # --containers-rollout=none skips the image build, which needs Docker
         # and a registry push. The deploy workflow builds it for real.
         run: npx wrangler deploy --dry-run --containers-rollout=none --outdir /tmp/w
+
+      # admin.codealgoacademy.com. Separate Worker, deployed by hand, see
+      # deploy/analytics/README.md. Only the config is checked here.
+      - name: Install analytics wrangler
+        working-directory: deploy/analytics
+        run: npm ci
+      - name: Validate analytics wrangler config
+        working-directory: deploy/analytics
+        run: npx wrangler deploy --dry-run --outdir /tmp/wa

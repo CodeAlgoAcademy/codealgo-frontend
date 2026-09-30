@@ -8,6 +8,13 @@ import { errorResolver } from "utils/errorResolver";
 import { ILoginReducerArg, IUser } from "types/interfaces";
 import { ILocalStorageItems } from "types/interfaces/localstorage.interface";
 import { referralHeaders } from "utils/referral";
+import { track } from "utils/siteTracker";
+
+// Same account type string getTokens stores, for analytics only.
+function roleOf(user: any): string {
+   if (!user) return "";
+   return user.is_student ? "student" : user.is_teacher ? "teacher" : user.is_parent ? "parent" : user.is_organizer ? "organizer" : "";
+}
 
 export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (name, thunkApi): Promise<ILoginReducerArg | any> => {
    const state = <RootState>thunkApi.getState();
@@ -27,6 +34,7 @@ export const loginUser: any = createAsyncThunk("authSlice/loginUser", async (nam
       const { data } = await http.post<ILoginReducerArg>("/auth/login/", body);
       dispatch(clearFields());
       dispatch(closePreloader());
+      track("login", { method: body.email ? "email" : "username", role: roleOf(data.user) });
 
       return {
          access_token: data.access_token,
@@ -110,6 +118,7 @@ export const signUpUser: any = createAsyncThunk("authSlice/signUpUser", async (n
          const { data } = await http.post("/auth/registration/", { ...options, source: "web" }, { headers: referralHeaders() });
          dispatch(clearFields());
          dispatch(closePreloader());
+         track("signup_completed", { method: "email", role: is_teacher ? "teacher" : is_parent ? "parent" : is_organizer ? "organizer" : "student" });
 
          return data;
       } catch (error: any) {
@@ -148,6 +157,7 @@ export const signUpWithGoogle: any = createAsyncThunk(
          }
 
          // ✅ Normal signup success
+         track("signup_completed", { method: "google", role: payload.role });
          return {
             access_token: res.data.access_token,
             refresh_token: res.data.refresh_token,
@@ -195,6 +205,7 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
       }
 
       const data = res.data;
+      track("login", { method: "google", role: roleOf(data.user) });
 
       return {
          access_token: data.access_token,
