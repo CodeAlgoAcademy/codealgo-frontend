@@ -6,9 +6,9 @@
   const SITE = location.hostname === "localhost" || location.hostname === "127.0.0.1" ? "http://localhost:3000" : "https://codealgoacademy.com";
   const FILTER_KEYS = ["country", "region", "city", "device", "browser", "os", "source", "medium", "campaign", "referrer", "role", "entry", "exit", "ref", "lang", "screen", "page"];
   const TITLES = {
-    overview: "Overview", realtime: "Realtime", acquisition: "Acquisition", audience: "Audience", pages: "Pages",
+    overview: "Overview", realtime: "Live", acquisition: "Traffic sources", audience: "Audience", pages: "Pages",
     clicks: "Clicks", heatmaps: "Heatmaps", journeys: "Journeys", events: "Events", funnels: "Funnels",
-    retention: "Retention", visitors: "Visitors", performance: "Performance",
+    retention: "Retention", visitors: "Visitors", performance: "Speed & errors",
   };
 
   const $ = (sel, root) => (root || document).querySelector(sel);
@@ -127,11 +127,11 @@
   // ----------------------------------------------------------------- charts
 
   function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
-  const PALETTE = ["#3b5bdb", "#12b76a", "#f79009", "#7a5af8", "#ee46bc", "#06aed4", "#f04438", "#667085"];
+  const PALETTE = ["#007bff", "#ff88af", "#412281", "#f39c3a", "#1a9e4b", "#06aed4", "#ff0d11", "#8a8f98"];
 
   function chart(canvas, config) {
-    Chart.defaults.color = css("--muted");
-    Chart.defaults.borderColor = css("--border");
+    Chart.defaults.color = "#8a8f98";
+    Chart.defaults.borderColor = "#eef0f4";
     Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
     const c = new Chart(canvas, config);
     charts.push(c);
@@ -159,7 +159,7 @@
   function barChart(canvas, labels, data, opts) {
     return chart(canvas, {
       type: "bar",
-      data: { labels, datasets: [{ data, backgroundColor: css("--accent"), borderRadius: 4, maxBarThickness: 36 }] },
+      data: { labels, datasets: [{ data, backgroundColor: css("--blue"), borderRadius: 4, maxBarThickness: 36 }] },
       options: Object.assign({
         responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
         scales: { y: { beginAtZero: true, ticks: { precision: 0 } }, x: { grid: { display: false } } },
@@ -290,19 +290,17 @@
     const c = o.current, p = o.previous;
     const cr = c.sessions ? c.converters / c.visitors : null;
     const pcr = p.sessions ? p.converters / p.visitors : null;
+    const signupLabel = o.goal === "signup_completed" ? "Signups" : `Goal: ${esc(o.goal)}`;
     const kpis = [
-      ["Live now", n(o.live), `<span class="muted">last 5 min</span>`, "live"],
-      ["Visitors", n(c.visitors), delta(c.visitors, p.visitors)],
-      ["Sessions", n(c.sessions), delta(c.sessions, p.sessions)],
-      ["Pageviews", n(c.pageviews), delta(c.pageviews, p.pageviews)],
-      ["Pages / session", dec(c.pps), delta(c.pps, p.pps)],
-      ["Avg engaged time", dur(c.engaged), delta(c.engaged, p.engaged)],
+      ["Visitors", n(c.visitors), delta(c.visitors, p.visitors), "hero"],
+      ["Visits", n(c.sessions), delta(c.sessions, p.sessions)],
+      ["Page views", n(c.pageviews), delta(c.pageviews, p.pageviews)],
+      ["Time on site", dur(c.engaged), delta(c.engaged, p.engaged)],
       ["Bounce rate", pct(c.bounce), delta(c.bounce, p.bounce, true)],
-      ["Clicks", n(c.clicks), delta(c.clicks, p.clicks)],
       ["New visitors", n(c.new_visitors), delta(c.new_visitors, p.new_visitors)],
-      ["Logged in users", n(c.users), delta(c.users, p.users)],
-      [`Goal: ${esc(o.goal)}`, n(c.conversions), delta(c.conversions, p.conversions)],
-      ["Visitor conv. rate", pct(cr, 2), delta(cr, pcr)],
+      [signupLabel, n(c.conversions), delta(c.conversions, p.conversions)],
+      ["Conversion rate", pct(cr, 1), delta(cr, pcr)],
+      ["On the site now", n(o.live), "last 5 minutes"],
     ];
     $("#kpis", root).innerHTML = kpis.map(([l, v, d, cls]) => `<div class="kpi ${cls || ""}"><div class="label">${l}</div><div class="value">${v}</div><div class="delta">${d}</div></div>`).join("");
 
@@ -363,7 +361,7 @@
     const d = await api("realtime");
     root.innerHTML = `
       <div class="grid g3" style="margin-bottom:14px">
-        <div class="kpi live"><div class="label"><span class="live-dot"></span> Active visitors (5 min)</div><div class="value" style="font-size:40px">${n(d.active)}</div><div class="delta muted">updates every 10s</div></div>
+        <div class="kpi hero"><div class="label"><span class="live-dot"></span>On the site now</div><div class="value" style="font-size:40px">${n(d.active)}</div><div class="delta">last 5 minutes, refreshes every 10s</div></div>
         ${card("On which pages now", `<div id="rt-pages"></div>`)}
         ${card("Where from", `<div id="rt-src"></div>`)}
       </div>
@@ -373,7 +371,10 @@
     const mins = [];
     for (let t = Math.floor((d.now - 29 * 60000) / 60000) * 60000; t <= d.now; t += 60000) mins.push(t);
     const byMin = new Map(d.perMinute.map((r) => [r.b, r.pageviews]));
-    barChart($("#rt-c", root), mins.map((t) => new Date(t).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })), mins.map((t) => byMin.get(t) || 0), { animation: false });
+    barChart($("#rt-c", root), mins.map((t) => new Date(t).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })), mins.map((t) => byMin.get(t) || 0), {
+      animation: false,
+      scales: { y: { beginAtZero: true, ticks: { precision: 0 } }, x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 8 } } },
+    });
     table($("#rt-pages", root), [{ key: "path", label: "Page", bar: "n" }, { key: "n", label: "Visitors", num: true, fmt: n }], d.pagesNow);
     table($("#rt-src", root), [{ key: "source", label: "Source", bar: "n" }, { key: "n", label: "Visitors", num: true, fmt: n }], d.sourcesNow);
     table($("#rt-feed", root), [
@@ -395,7 +396,7 @@
       <div class="card" style="margin-bottom:14px"><h3><span>Channels over time</span></h3><div class="chart-box"><canvas id="acq-c"></canvas></div></div>
       <div class="card"><h3><span>Breakdown</span><span class="tools">${csvBtn("acq-t")}</span></h3>
       <div class="tabs">${dims.map(([k, l]) => `<button data-d="${k}" class="${k === cur ? "active" : ""}">${l}</button>`).join("")}</div>
-      <div id="acq-t"></div><p class="small muted">Click a row to filter the whole dashboard by it. Conversion rate is sessions that fired the goal event.</p></div>`;
+      <div id="acq-t"></div><p class="hint">Click a row to filter everything by it.</p></div>`;
     root.querySelectorAll("[data-d]").forEach((b) => b.addEventListener("click", () => setOpt("dim", b.dataset.d)));
     wireCsv(root);
     const def = dims.find((x) => x[0] === cur) || dims[0];
@@ -452,7 +453,7 @@
   };
 
   VIEWS.pages = async function (root) {
-    root.innerHTML = card("All pages", `<div id="p-t"></div><p class="small muted">Engaged is visible, focused time on the page. Scroll is the average deepest point reached. Click a row for where people came from and went next.</p>`, csvBtn("p-t"));
+    root.innerHTML = card("All pages", `<div id="p-t"></div><p class="hint">Click a page to see where visitors came from and went next.</p>`, csvBtn("p-t"));
     wireCsv(root);
     const d = await api("pages");
     table($("#p-t", root), [
@@ -474,13 +475,13 @@
     const pages = (await api("pages")).rows.map((r) => r.path);
     const cur = state.opts.cpath || "";
     root.innerHTML = `
-      <div class="toolbar"><label>Page <select id="cp"><option value="">All pages</option>${pages.map((p) => `<option ${p === cur ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></label></div>
+      <div class="bar-row"><label>Page <select id="cp"><option value="">All pages</option>${pages.map((p) => `<option ${p === cur ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></label></div>
       <div class="card" style="margin-bottom:14px"><h3><span>Most clicked elements</span><span class="tools">${csvBtn("c-top")}</span></h3>
         <div id="c-top"></div>
-        <p class="small muted">CTR is unique clickers over unique visitors to that page. Set <code>data-track="name"</code> on an element in the site to give it a stable name here.</p></div>
+        <p class="hint">CTR = people who clicked / people who saw the page. Add <code>data-track="name"</code> to a button to name it here.</p></div>
       <div class="grid g3">
-        ${card("Rage clicks", `<div id="c-rage"></div><p class="small muted">3+ fast clicks in one spot. Usually something that looks clickable and is not, or is slow.</p>`)}
-        ${card("Dead clicks", `<div id="c-dead"></div><p class="small muted">Clicks on text and images that do nothing.</p>`)}
+        ${card("Rage clicks", `<div id="c-rage"></div><p class="hint">3+ quick clicks in one spot. Usually something that looks clickable but isn't.</p>`)}
+        ${card("Dead clicks", `<div id="c-dead"></div><p class="hint">Clicks on text or images that don't do anything.</p>`)}
         ${card("Outbound links", `<div id="c-out"></div>`)}
       </div>`;
     $("#cp", root).addEventListener("change", (e) => setOpt("cpath", e.target.value));
@@ -508,7 +509,7 @@
     const mode = state.opts.mode || "clicks";
     const opacity = Number(state.opts.op || "0.75");
     root.innerHTML = `
-      <div class="toolbar">
+      <div class="bar-row">
         <label>Page <select id="hp">${[...new Set([path, ...pages])].map((p) => `<option ${p === path ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></label>
         <div class="tabs" style="margin:0">${["desktop", "tablet", "mobile"].map((d) => `<button data-dev="${d}" class="${d === device ? "active" : ""}">${d}</button>`).join("")}</div>
         <div class="tabs" style="margin:0">${["clicks", "scroll"].map((m) => `<button data-mode="${m}" class="${m === mode ? "active" : ""}">${m} map</button>`).join("")}</div>
@@ -516,7 +517,7 @@
         <a href="${SITE + path}" target="_blank" rel="noopener">open page</a>
       </div>
       <div class="card"><div id="hinfo" class="small muted" style="margin-bottom:8px"></div><div class="heat-wrap" id="hwrap"><div class="heat-stage" id="stage"></div></div>
-      <p class="small muted">The page behind the overlay is the live site today, so a layout that changed since the clicks happened will not line up. Clicks are stored as a fraction of page width and pixels from the top, grouped by device width.</p></div>`;
+      <p class="hint">Drawn over today's version of the page. If the layout changed since, dots won't line up.</p></div>`;
     $("#hp", root).addEventListener("change", (e) => setOpt("path", e.target.value));
     root.querySelectorAll("[data-dev]").forEach((b) => b.addEventListener("click", () => setOpt("hdevice", b.dataset.dev)));
     root.querySelectorAll("[data-mode]").forEach((b) => b.addEventListener("click", () => setOpt("mode", b.dataset.mode)));
@@ -556,14 +557,22 @@
       for (let i = 0; i <= 10; i++) {
         const reach = total ? remaining / total : 0;
         const y0 = (i / 10) * dh, y1 = ((i + 1) / 10) * dh;
-        ctx.fillStyle = `hsla(${Math.round(reach * 120)}, 85%, 50%, 0.55)`;
+        ctx.fillStyle = `hsla(${Math.round(reach * 120)}, 85%, 45%, 0.45)`;
         ctx.fillRect(0, y0, vw, y1 - y0);
-        ctx.fillStyle = "#fff";
-        ctx.font = "600 28px sans-serif";
-        ctx.shadowColor = "#000";
-        ctx.shadowBlur = 6;
-        if (i < 10) ctx.fillText(`${Math.round(reach * 100)}% reached ${i * 10}%`, 16, y0 + 40);
-        ctx.shadowBlur = 0;
+        ctx.strokeStyle = "rgba(0,0,0,.35)";
+        ctx.setLineDash([8, 6]);
+        ctx.beginPath(); ctx.moveTo(0, y0); ctx.lineTo(vw, y0); ctx.stroke();
+        ctx.setLineDash([]);
+        if (i < 10) {
+          const label = `${Math.round(reach * 100)}% of views reached ${i * 10}%`;
+          ctx.font = "600 24px sans-serif";
+          const w = ctx.measureText(label).width + 24;
+          // Right edge, so it does not sit on top of the page's nav.
+          ctx.fillStyle = "rgba(15,17,21,.82)";
+          ctx.fillRect(vw - w - 16, y0 + 12, w, 38);
+          ctx.fillStyle = "#fff";
+          ctx.fillText(label, vw - w - 4, y0 + 39);
+        }
         remaining -= counts[i];
       }
     }
@@ -616,9 +625,9 @@
     const pages = (await api("pages")).rows.map((r) => r.path);
     const path = state.opts.path || pages[0] || "/";
     root.innerHTML = `
-      <div class="toolbar"><label>Page <select id="jp">${[...new Set([path, ...pages])].map((p) => `<option ${p === path ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></label></div>
+      <div class="bar-row"><label>Page <select id="jp">${[...new Set([path, ...pages])].map((p) => `<option ${p === path ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></label></div>
       <div class="card" style="margin-bottom:14px"><div class="journey"><div><h3>Came from</h3><div id="j-prev"></div></div><div class="center">${esc(path)}</div><div><h3>Went to</h3><div id="j-next"></div></div></div></div>
-      ${card("Most common journeys", `<div id="j-top"></div><p class="small muted">First five distinct pages of each session. Click a journey step on the left or right to walk the path.</p>`, csvBtn("j-top"))}`;
+      ${card("Most common journeys", `<div id="j-top"></div>`, csvBtn("j-top"))}`;
     $("#jp", root).addEventListener("change", (e) => setOpt("path", e.target.value));
     wireCsv(root);
     const d = await api("paths", { path });
@@ -637,7 +646,7 @@
     const name = state.opts.ev || "";
     root.innerHTML = `
       <div class="grid g2">
-        ${card("Custom events", `<div id="e-list"></div><p class="small muted">Sent from the site with <code>track("name", {props})</code>. Click one to break it down.</p>`, csvBtn("e-list"))}
+        ${card("Custom events", `<div id="e-list"></div><p class="hint">Click an event to see its details.</p>`, csvBtn("e-list"))}
         ${card(name ? `Properties of <code>${esc(name)}</code>` : "Properties", `<div id="e-props">${name ? "" : `<div class="empty">Pick an event</div>`}</div>`)}
       </div>
       <div style="height:14px"></div>
@@ -673,11 +682,11 @@
       <div class="grid g2" style="grid-template-columns: 360px 1fr">
         <div class="card">
           <h3>Saved</h3>
-          <div id="f-saved">${saved.map((f) => `<div class="flow-row" data-id="${f.id}"><span>${esc(f.name)}</span><span><button class="small ghost" data-del="${f.id}">delete</button></span></div>`).join("") || `<div class="empty">None yet</div>`}</div>
+          <div id="f-saved">${saved.map((f) => `<div class="saved-row" data-id="${f.id}"><span>${esc(f.name)}</span><span><button class="small ghost" data-del="${f.id}">delete</button></span></div>`).join("") || `<div class="empty">None yet</div>`}</div>
           <h3 style="margin-top:16px">Steps</h3>
           <div id="f-steps"></div>
           <button class="small" id="f-add">+ step</button>
-          <p class="small muted">Page steps match the path exactly, or use <code>*</code> as a wildcard (<code>/signup*</code>). Event steps match a custom event name. Click steps match button text or selector.</p>
+          <p class="hint">Use <code>*</code> for any page under a path, e.g. <code>/signup*</code>.</p>
           <label class="small">Count within <select id="f-scope"><option value="session" ${scope === "session" ? "selected" : ""}>one session</option><option value="visitor" ${scope === "visitor" ? "selected" : ""}>any session in range (same browser)</option></select></label>
           <div style="margin-top:12px;display:flex;gap:8px"><button class="primary" id="f-run">Run</button><button id="f-save">Save as...</button></div>
         </div>
@@ -722,7 +731,7 @@
       return `<div class="funnel-step">
         <div class="muted">${i + 1}</div>
         <div><div class="small" style="margin-bottom:3px"><span class="type">${esc(s.kind)}</span> ${esc(s.value)}</div>
-          <div class="funnel-bar"><div class="fill" style="width:${(s.count / top) * 100}%"></div><div class="txt">${n(s.count)}</div></div></div>
+          <div class="funnel-bar ${s.count / top < 0.2 ? "low" : ""}"><div class="fill" style="width:${(s.count / top) * 100}%"></div><div class="txt">${n(s.count)}</div></div></div>
         <div class="small">${i ? `<b>${pct(stepRate)}</b> of prev<br><span class="down">-${n(prev - s.count)}</span> dropped<br><span class="muted">median ${dur(s.median_ms)}</span>` : `<b>${pct(s.count / top, 0)}</b> start`}</div>
       </div>`;
     }).join("");
@@ -734,14 +743,14 @@
     const unit = state.opts.unit || "week";
     const by = state.opts.by || "visitors";
     root.innerHTML = `
-      <div class="toolbar">
+      <div class="bar-row">
         <div class="tabs" style="margin:0">${["day", "week", "month"].map((u) => `<button data-u="${u}" class="${u === unit ? "active" : ""}">by ${u}</button>`).join("")}</div>
         <div class="tabs" style="margin:0">${[["visitors", "Browsers"], ["users", "Logged in users"]].map(([k, l]) => `<button data-b="${k}" class="${k === by ? "active" : ""}">${l}</button>`).join("")}</div>
-        <span class="small muted">Tip: use Last 90 days or longer for weekly and monthly cohorts.</span>
+        
       </div>
       <div class="kpis" id="r-k"></div>
       <div class="card" style="margin-bottom:14px"><h3>Retention curve</h3><div class="chart-box"><canvas id="r-c"></canvas></div></div>
-      ${card("Cohorts", `<div id="r-t" class="table-wrap long"></div><p class="small muted">Each row is everyone first seen in that ${unit}. Columns are the share who came back ${unit}s later. Country, device and source filters apply to how the cohort arrived.</p>`)}`;
+      ${card("Cohorts", `<div id="r-t" class="table-wrap long"></div><p class="hint">Each row is everyone who first visited that ${unit}, and the share who came back.</p>`)}`;
     root.querySelectorAll("[data-u]").forEach((b) => b.addEventListener("click", () => setOpt("unit", b.dataset.u)));
     root.querySelectorAll("[data-b]").forEach((b) => b.addEventListener("click", () => setOpt("by", b.dataset.b)));
 
@@ -761,7 +770,7 @@
     const unitMs = unit === "day" ? DAY : unit === "week" ? 7 * DAY : 30 * DAY;
     const rows = d.table.filter((r) => r.size > 0);
     if (!rows.length) { $("#r-t", root).innerHTML = `<div class="empty">No cohorts in this range</div>`; return; }
-    const accent = css("--accent");
+    const accent = css("--blue");
     const cell = (v, size, future) => {
       if (future) return `<td></td>`;
       const r = size ? v / size : 0;
@@ -789,7 +798,7 @@
     const q = state.opts.q || "";
     const users = state.opts.users === "1";
     root.innerHTML = `
-      <div class="toolbar"><input id="vq" placeholder="visitor id prefix or user id" value="${esc(q)}" size="34"><button id="vgo">Search</button>
+      <div class="bar-row"><input id="vq" placeholder="visitor id prefix or user id" value="${esc(q)}" size="34"><button id="vgo">Search</button>
         <label><input type="checkbox" id="vu" ${users ? "checked" : ""}> logged in only</label></div>
       ${card("Recently active", `<div id="v-t"></div>`, csvBtn("v-t"))}`;
     wireCsv(root);
@@ -818,7 +827,7 @@
     const bySession = new Map();
     d.events.forEach((e) => { if (!bySession.has(e.sid)) bySession.set(e.sid, []); bySession.get(e.sid).push(e); });
     root.innerHTML = `
-      <div class="toolbar"><button id="back">Back to list</button><span class="mono muted">${esc(vid)}</span></div>
+      <div class="bar-row"><button id="back">Back to list</button><span class="mono muted">${esc(vid)}</span></div>
       <div class="kpis">
         ${[["User", v.uid ? `${esc(v.uid)} ${esc(v.role || "")}` : "anonymous"], ["First seen", when(v.first_ts)], ["Last seen", ago(v.last_ts)], ["Sessions", n(v.sessions)], ["Pageviews", n(v.pageviews)], ["First source", esc(v.first_source || "-")], ["Landed on", esc(v.first_path || "-")], ["Where", FLAGS(v.country) + esc(v.country || "") + " · " + esc(v.device || "")]]
           .map(([l, x]) => `<div class="kpi"><div class="label">${l}</div><div class="value" style="font-size:15px">${x}</div></div>`).join("")}
@@ -907,11 +916,12 @@
   }
 
   function init() {
-    try {
-      const t = localStorage.getItem("ca_theme");
-      if (t) document.documentElement.dataset.theme = t;
-    } catch (e) { /* storage blocked */ }
     readHash();
+    const shell = document.querySelector(".shell");
+    $("#menu").addEventListener("click", () => shell.classList.add("open"));
+    $("#side-close").addEventListener("click", () => shell.classList.remove("open"));
+    $("#scrim").addEventListener("click", () => shell.classList.remove("open"));
+    document.querySelectorAll("#nav a").forEach((a) => a.addEventListener("click", () => shell.classList.remove("open")));
     window.addEventListener("hashchange", () => { readHash(); render(); });
     $("#range").addEventListener("change", (e) => {
       state.range = e.target.value;
@@ -933,14 +943,7 @@
     $("#internal").addEventListener("change", (e) => { state.internal = e.target.checked; writeHash(); });
     $("#goal").addEventListener("change", (e) => { state.goal = e.target.value.trim() || "signup_completed"; writeHash(); });
     $("#refresh").addEventListener("click", () => render());
-    $("#theme").addEventListener("click", () => {
-      const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-      const next = dark ? "light" : "dark";
-      document.documentElement.dataset.theme = next;
-      try { localStorage.setItem("ca_theme", next); } catch (e) { /* ignore */ }
-      render(true);
-    });
-    fetch("/api/me").then((r) => r.json()).then((d) => { $("#who").textContent = "Signed in as " + d.email; }).catch(() => {});
+    fetch("/api/me").then((r) => r.json()).then((d) => { $("#who").textContent = d.email; }).catch(() => {});
     render();
   }
 

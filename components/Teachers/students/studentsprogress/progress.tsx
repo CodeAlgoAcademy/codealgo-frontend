@@ -13,6 +13,14 @@ interface ILevelProps {
   isBlockProgress?: boolean
 }
 
+const questCaption = (item: IChildProgress, t: (key: string, opts?: any) => any): string | undefined => {
+  if (item.source !== "quest") return undefined;
+  const count: string = t("questCount", { done: item.completed_quests ?? 0, total: item.total_quests ?? 0 });
+  const next = item.current_quest ? ` - ${t("questNext", { quest: item.current_quest })}` : "";
+  const codes = item.standards?.length ? ` (${item.standards.join(", ")})` : "";
+  return `${count}${next}${codes}`;
+};
+
 const TeacherStudentProgress = ({
   size,
   level,
@@ -69,6 +77,7 @@ const TeacherStudentProgress = ({
                     // Fallback: Line coding might use standard_name or name
                     title={lesson.standard_code || lesson.name || lesson.title || "Lesson"} 
                     level={lesson.unit_level || lesson.level}
+                    caption={questCaption(lesson, t)}
                     titleSize="base"
                     containerSize={size} 
                   />
@@ -93,6 +102,7 @@ const TeacherStudentProgress = ({
                         titleSize="base"
                         containerSize={size} 
                     level={lesson.unit_level || lesson.level}
+                        caption={questCaption(lesson, t)}
                         // grade={lesson.grade}
                   />
                     ))}
