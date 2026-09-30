@@ -1,12 +1,19 @@
 /** @type {import('next').NextConfig} */
 
+// frame-ancestors lets the analytics dashboard (admin.codealgoacademy.com,
+// behind Cloudflare Access) show the live page under its click heatmap.
+// Browsers that understand frame-ancestors ignore X-Frame-Options, so the
+// SAMEORIGIN below only applies to very old ones.
+const frameAncestors = ["'self'", "https://admin.codealgoacademy.com"];
+if (process.env.NODE_ENV !== "production") frameAncestors.push("http://localhost:8787");
 const ContentSecurityPolicy = `
+   frame-ancestors ${frameAncestors.join(" ")};
 `;
 // next.config.js
 
 const securityHeaders = [
-   // Prevent clickjacking
-   { key: "X-Frame-Options", value: "DENY" },
+   // Prevent clickjacking. See frame-ancestors above for the one exception.
+   { key: "X-Frame-Options", value: "SAMEORIGIN" },
    // Enable XSS protection
    { key: "X-XSS-Protection", value: "1; mode=block" },
    // Prevent MIME sniffing

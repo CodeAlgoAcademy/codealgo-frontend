@@ -17,10 +17,11 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "../i18n";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import i18n, { detectLanguage, loadTranslations, syncLanguageToBackend } from "../i18n";
 import { captureReferral } from "utils/referral";
 import { trackSiteVisit } from "utils/siteVisit";
+import { initAnalytics, onRouteChange } from "utils/siteTracker";
 
 const GA_ID = "G-80CZZG1HG5";
 
@@ -75,6 +76,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       router.events.on("routeChangeComplete", trackSiteVisit);
       return () => {
          router.events.off("routeChangeComplete", trackSiteVisit);
+      };
+   }, [router.events]);
+
+   // First party analytics for admin.codealgoacademy.com, see utils/siteTracker.ts.
+   // Dynamic routes report their pattern (/change-password/[uid]) so tokens in
+   // the url never reach the dashboard and the page groups as one row.
+   useEffect(() => {
+      initAnalytics(() => (Router.pathname.includes("[") ? Router.pathname : window.location.pathname));
+      router.events.on("routeChangeComplete", onRouteChange);
+      return () => {
+         router.events.off("routeChangeComplete", onRouteChange);
       };
    }, [router.events]);
 
