@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CodeAlgo Analytics</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='8' width='3' height='7' fill='%233b5bdb'/%3E%3Crect x='6' y='4' width='3' height='11' fill='%233b5bdb'/%3E%3Crect x='11' y='1' width='3' height='14' fill='%233b5bdb'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <div class="layout">
+    <nav class="side" id="nav">
+      <div class="brand"><span class="dot"></span>CodeAlgo Analytics</div>
+      <div class="group">Traffic</div>
+      <a href="#overview" data-tab="overview">Overview</a>
+      <a href="#realtime" data-tab="realtime">Realtime <span class="live-dot"></span></a>
+      <a href="#acquisition" data-tab="acquisition">Acquisition</a>
+      <a href="#audience" data-tab="audience">Audience</a>
+      <a href="#pages" data-tab="pages">Pages</a>
+      <div class="group">Behaviour</div>
+      <a href="#clicks" data-tab="clicks">Clicks</a>
+      <a href="#heatmaps" data-tab="heatmaps">Heatmaps</a>
+      <a href="#journeys" data-tab="journeys">Journeys</a>
+      <a href="#events" data-tab="events">Events</a>
+      <div class="group">Growth</div>
+      <a href="#funnels" data-tab="funnels">Funnels</a>
+      <a href="#retention" data-tab="retention">Retention</a>
+      <a href="#visitors" data-tab="visitors">Visitors</a>
+      <div class="group">Health</div>
+      <a href="#performance" data-tab="performance">Performance</a>
+      <div class="who" id="who"></div>
+    </nav>
+    <main>
+      <div class="toolbar">
+        <h1 id="title">Overview</h1>
+        <select id="range" title="Date range">
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="7d" selected>Last 7 days</option>
+          <option value="30d">Last 30 days</option>
+          <option value="90d">Last 90 days</option>
+          <option value="365d">Last 12 months</option>
+          <option value="custom">Custom</option>
+        </select>
+        <span id="custom" hidden>
+          <input type="date" id="dfrom"> <input type="date" id="dto">
+        </span>
+        <label title="Traffic marked internal with ?ca_internal=1">
+          <input type="checkbox" id="internal"> internal
+        </label>
+        <label title="The custom event counted as a conversion">
+          goal <input id="goal" value="signup_completed" size="16">
+        </label>
+        <button id="refresh" title="Reload">Refresh</button>
+        <button id="theme" class="ghost" title="Toggle theme">Theme</button>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div id="view"></div>
+    </main>
+  </div>
+  <script src="/vendor/chart.umd.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
