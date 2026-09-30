@@ -81,13 +81,28 @@ const getStudentLinecodingSkillsNewByTeacher = async (studentId: string, classId
 
 
 
+// Quest line progress. Quests are how students play line coding now, and the
+// game only syncs to /academics/quests, which line-progress above never reads.
+const getStudentQuestProgressByTeacher = async (studentId: string, classId: string) => {
+  try {
+    const response = await http.get(`/academics/class/${classId}/student/${studentId}/quest-progress/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return Array.isArray(response?.data) ? response.data : [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 const teachersClassBaseServices = {
   bulkUpdateClassLevelThreshold,
   bulkUpdateClassScreenTime,
   getStudentLineProgressByTeacher,
   getStudentLinecodingSkillsByTeacher,
   getStudentLinecodingSkillsNewByTeacher,
-  getStudentLineProgressNewByTeacher
+  getStudentLineProgressNewByTeacher,
+  getStudentQuestProgressByTeacher,
 };
 
 export default teachersClassBaseServices;

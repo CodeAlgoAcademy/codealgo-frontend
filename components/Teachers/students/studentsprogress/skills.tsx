@@ -48,9 +48,10 @@ useEffect(() => {
   const studentId = currentStudent?.student_id || currentStudent?.id;
   const dob = currentStudent?.dob;
 
-  if (classId && studentId && dob) {
-    const age = calculateAge(dob);
-    
+  if (classId && studentId) {
+    // No dob falls through to line coding, same as the progress widget.
+    const age = dob ? calculateAge(dob) : 99;
+
     if (age < 14) {
       dispatch(fetchStudentBlockGameSkill({ 
         classId: classId.toString(), 
@@ -63,7 +64,7 @@ useEffect(() => {
       }));
     }
   }
-}, [classId, currentStudent?.id, currentStudent?.dob]);
+}, [classId, currentStudent?.id, currentStudent?.student_id, currentStudent?.dob]);
 
   const hasSkills = skills && skills.length > 0;
 

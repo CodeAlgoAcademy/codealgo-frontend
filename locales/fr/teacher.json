@@ -607,5 +607,7 @@
   "skipPinUsedSkip": "Niveau passé",
   "skipPinUsedSolution": "Solution affichée",
   "skipPinWrongGuess": "Mauvais NIP essayé",
-  "skipPinLimitHit": "Limite d'aide atteinte"
+  "skipPinLimitHit": "Limite d'aide atteinte",
+  "questCount": "Quêtes : {{done}}/{{total}}",
+  "questNext": "suivante : {{quest}}"
 }

@@ -607,5 +607,7 @@
   "skipPinUsedSkip": "Skipped level",
   "skipPinUsedSolution": "Showed solution",
   "skipPinWrongGuess": "Wrong PIN tried",
-  "skipPinLimitHit": "Hit the help limit"
+  "skipPinLimitHit": "Hit the help limit",
+  "questCount": "Quest line: {{done}}/{{total}} quests",
+  "questNext": "next: {{quest}}"
 }

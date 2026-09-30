@@ -8,9 +8,10 @@ interface Props {
    color: "red" | "green";
    containerSize: "large" | "base";
    level: string | number;
+   caption?: string;
 }
 
-const ProgressBar = ({ title, titleSize, percentage, color, containerSize, level }: Props) => {
+const ProgressBar = ({ title, titleSize, percentage, color, containerSize, level, caption }: Props) => {
    const { t } = useTranslation("parent");
    percentage = parseFloat((percentage * 100).toFixed(1));
    const progressBarStyle = {
@@ -24,7 +25,7 @@ const ProgressBar = ({ title, titleSize, percentage, color, containerSize, level
       <div className="flex flex-col">
          <div className="flex items-center mb-1">
              <span className="text-xs font-bold text-gray-600">
-               {t("levelLabel", { level })}
+               {caption ?? t("levelLabel", { level })}
              </span>
          </div>
          <div className="flex h-5 items-center">
