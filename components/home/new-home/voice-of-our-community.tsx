@@ -188,7 +188,7 @@ const VoiceOfOurCommunity = () => {
    const duration = isMobile ? 18 : 14;
 
    return (
-      <section className="overflow-hidden bg-[#F3F9FA] py-20">
+      <section className="overflow-hidden bg-[#F3F9FA] pt-44">
          <style>{`
         @keyframes marquee-ltr {
           from { transform: translateX(calc(-1 * var(--marquee-distance, 50%))); }

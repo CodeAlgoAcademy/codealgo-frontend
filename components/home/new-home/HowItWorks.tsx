@@ -26,9 +26,9 @@ const HowItWorks = () => {
    ];
 
    return (
-<section className="bg-mainOrange/10 py-24">
+<section className="bg-black py-24">
             <div className="container mx-auto max-w-6xl px-4">
-            <h2 className="mb-20 text-center font-tiltWarp text-3xl text-mainBlack md:text-4xl">{t("howItWorksTitle")}</h2>
+            <h2 className="mb-20 text-center font-tiltWarp text-3xl text-white md:text-4xl">{t("howItWorksTitle")}</h2>
 
             <div className="relative mb-16 grid grid-cols-1 gap-16 lg:grid-cols-3 lg:gap-8">
                <div className="absolute left-0 right-0 top-6 hidden h-px bg-mainRed/30 lg:block" aria-hidden="true" />
@@ -43,9 +43,9 @@ const HowItWorks = () => {
                         <img src={step.image} alt={step.title} className="max-h-full max-w-[70%] object-contain" />
                      </div>
 
-                     <h3 className="mb-3 font-thabitBold text-xl text-mainBlack">{step.title}</h3>
+                     <h3 className="mb-3 font-thabitBold text-xl text-white">{step.title}</h3>
 
-                     <p className="max-w-xs font-workSans text-sm leading-relaxed text-mainBlack/60 md:text-base">{step.description}</p>
+                     <p className="max-w-xs font-workSans text-sm leading-relaxed text-white md:text-base">{step.description}</p>
                   </div>
                ))}
             </div>

@@ -19,15 +19,17 @@ const Hero = () => {
    const toPricing = () => push("/pricing");
 
    return (
-      <header className="relative isolate overflow-hidden bg-white">
+      <header className="relative isolate overflow-hidden bg-white py-8">
          <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:py-10">
             <div className="flex flex-col-reverse items-center gap-12 lg:flex-row lg:justify-center lg:gap-16">
                {/* Left Column: Text & Buttons */}
                <div className="w-full max-w-lg lg:w-full">
-                  <h1 className="mb-3 text-3xl font-bold leading-[1.1] text-gray-900 sm:text-4xl md:text-5xl">{t("TheroTitle")}</h1>
-                  <h2 className="mb-2 text-xl font-bold leading-[1.1] text-gray-900 sm:text-2xl md:text-xl">{t("TheroTitle2")}</h2>
+                  <h1 className="mb-5 text-3xl font-bold leading-[1.1] text-gray-900 sm:text-4xl md:text-5xl">{t("TheroTitle")}</h1>
+                  <h2 className="mb-4 text-2xl font-bold leading-[1.1] text-gray-900 sm:text-2xl md:text-2xl">{t("TheroTitle2")}</h2>
 
                   <p className="mb-2 text-lg text-gray-600">{t("TheroDescription")}</p>
+                  <p className="mb-2 text-lg text-gray-600">{t("ThereDescription2")}</p>
+ <p className="mb-2 text-lg text-gray-600">{t("ThereDescription3")}</p>
                   <p className="relative mb-8 inline-block text-lg text-gray-600">
                      {t("TheroFreeLine")}
                      <svg
@@ -40,7 +42,7 @@ const Hero = () => {
                      </svg>
                   </p>
 
-                  <div className="flex w-full max-w-sm flex-col gap-4">
+                  <div className="flex w-full max-w-sm flex-col gap-5">
                      <button
                         onClick={toSignUp}
                         className="w-full rounded-xl bg-mainRed px-8 py-4 text-base font-bold text-white shadow-sm transition-opacity hover:opacity-90"
@@ -58,14 +60,6 @@ const Hero = () => {
 
                {/* Right Hero (Fixed Layout) */}
              <div className="relative mx-auto flex min-h-[460px] w-full items-center justify-center lg:mt-0">
-   <Image
-      src="/assets/landing/heroshaped.avif"
-      alt=""
-      layout="fill"
-      priority
-      aria-hidden
-      className="pointer-events-none absolute inset-0 -z-10 select-none object-contain"
-   />
 
    <div className="relative w-[95%] max-w-[550px]">
       <div className="relative z-10 aspect-video w-full overflow-hidden rounded-lg border-[8px] border-black bg-black shadow-2xl sm:border-[10px]">

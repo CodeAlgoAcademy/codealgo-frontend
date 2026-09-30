@@ -30,7 +30,7 @@ const Home: NextPage = () => {
             <meta name="google-site-verification" content="eGB3Olxnsy0kXPD_3EoaI1Fzl7xsQVK4R1WxbBSCrFI" />
          </Head>
          <Navbar />
-         <WinterBanner />s
+         <WinterBanner />
          <Hero />
          <CharterSchoolsSection />
 
