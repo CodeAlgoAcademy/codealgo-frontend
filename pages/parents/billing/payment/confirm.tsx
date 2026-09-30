@@ -5,6 +5,7 @@ import { useAppDispatch } from "store/hooks";
 import { attachPaymentMethod, getActiveSubscription } from "services/pricingService";
 import { loadStripe } from "@stripe/stripe-js";
 import { useTranslation } from "react-i18next";
+import { track } from "utils/siteTracker";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -46,12 +47,14 @@ const PaymentConfirmPage = () => {
         );
 
         if (!paymentIntent || paymentIntent.status !== "succeeded") {
+          track("payment_failed", { kind: "payment", status: paymentIntent?.status || "missing" });
           setStatus("error");
           setMessage(t("paymentNotConfirmed"));
           return;
         }
 
         await dispatch(getActiveSubscription());
+        track("payment_succeeded", { kind: "payment", subscription_id: subscriptionId || null });
         setStatus("success");
         setMessage(t("paymentUpdated"));
       }
@@ -80,6 +83,7 @@ const PaymentConfirmPage = () => {
         );
 
         if (attachPaymentMethod.fulfilled.match(result)) {
+          track("payment_method_saved", { subscription_id: subscriptionId || null });
           await dispatch(getActiveSubscription());
           setStatus("success");
           setMessage(t("paymentMethodSaved"));
