@@ -34,7 +34,7 @@ const GetStarted = () => {
    ];
 
    return (
-      <section className="bg-white py-12">
+      <section className="bg-white py-28">
          <button
             onClick={toSignUp}
             className="mx-auto mb-10 block rounded-3xl bg-mainRed px-6 py-2 font-tiltWarp text-[1.5rem] text-white md:text-[1.8rem]"

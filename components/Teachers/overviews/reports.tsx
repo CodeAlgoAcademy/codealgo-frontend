@@ -12,6 +12,31 @@ const TIME_RANGE_OPTIONS = [
    { value: "all", labelKey: "allTime" },
 ];
 
+const SKELETON_COUNT = 6;
+
+const StudentProgressSkeleton = () => (
+   <div
+      className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+      role="status"
+      aria-busy="true"
+      aria-live="polite"
+   >
+      {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+         <div key={i} className="animate-pulse rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div className="mb-4 flex items-center gap-3">
+               <div className="h-10 w-10 rounded-full bg-gray-200" />
+               <div className="h-4 w-32 rounded bg-gray-200" />
+            </div>
+            <div className="mb-3 h-3 w-full rounded bg-gray-200" />
+            <div className="mb-5 h-2 w-full rounded-full bg-gray-200" />
+            <div className="flex gap-3">
+               <div className="h-8 w-20 rounded bg-gray-200" />
+               <div className="h-8 w-20 rounded bg-gray-200" />
+            </div>
+         </div>
+      ))}
+   </div>
+);
 
 export default function Reports() {
    const { t } = useTranslation("teacher");
@@ -20,13 +45,20 @@ export default function Reports() {
    const loading = useSelector((state: RootState) => state.students.loading);
    const currentClassId = useSelector((state: RootState) => state.currentClass.id);
    const [selectedRange, setSelectedRange] = useState("all");
-   const [sortBy, setSortBy] = useState("name");
+   const [sortBy] = useState("name");
+
+   // Remembers which class we've already requested data for, so the empty
+   // state never flashes between first render and the fetch starting.
+   const [requestedClassId, setRequestedClassId] = useState<typeof currentClassId | null>(null);
 
    useEffect(() => {
       if (currentClassId) {
          dispatch(getStudentsClassProgresss());
+         setRequestedClassId(currentClassId);
       }
    }, [dispatch, currentClassId]);
+
+const showSkeleton = Boolean(loading) || (!!currentClassId && requestedClassId !== currentClassId);
 
    const handleTimeRangeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
       setSelectedRange(event.target.value);
@@ -36,7 +68,7 @@ export default function Reports() {
       if (!progressSummary?.students) return [];
 
       const students = progressSummary.students;
-   
+
       if (selectedRange === "all") {
          return students;
       }
@@ -59,11 +91,12 @@ export default function Reports() {
             return students;
       }
 
-      return students.filter(student => {
+      return students.filter((student) => {
          if (!student.current_level) return false;
 
-         const activityDate = student.current_level.started_at ? 
-            new Date(student.current_level.started_at) : null;
+         const activityDate = student.current_level.started_at
+            ? new Date(student.current_level.started_at)
+            : null;
 
          if (!activityDate) return false;
 
@@ -76,34 +109,28 @@ export default function Reports() {
          switch (sortBy) {
             case "name":
                return a.student_username.localeCompare(b.student_username);
-            
+
             case "progress":
                return b.overall_progress - a.overall_progress;
-            
+
             case "completed":
                return b.completed_count - a.completed_count;
-            
+
             case "in_progress":
                return b.in_progress_count - a.in_progress_count;
-            
-            case "recent_activity":
+
+            case "recent_activity": {
                const dateA = a.current_level?.started_at ? new Date(a.current_level.started_at).getTime() : 0;
                const dateB = b.current_level?.started_at ? new Date(b.current_level.started_at).getTime() : 0;
                return dateB - dateA;
-            
+            }
+
             default:
                return a.student_username.localeCompare(b.student_username);
          }
       });
    }, [filteredStudents, sortBy]);
 
-    if (loading) {
-      return (
-         <div className="flex h-screen items-center justify-center bg-gray-50">
-            <div className="text-xl text-gray-600">{t("loadingStudentData")}</div>
-         </div>
-      );
-   }
    const hasStudents = sortedAndFilteredStudents.length > 0;
 
    return (
@@ -113,7 +140,7 @@ export default function Reports() {
                <h1 className="text-2xl font-medium text-mainColor sm:text-[30px] lg:mb-0">
                   {t("classroomInsights")}
                </h1>
-               
+
                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                   {/* Filter by Time Range */}
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -125,7 +152,8 @@ export default function Reports() {
                            id="time-range"
                            value={selectedRange}
                            onChange={handleTimeRangeChange}
-                           className="w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 pr-8 text-sm font-medium text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                           disabled={showSkeleton}
+                           className="w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 pr-8 text-sm font-medium text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-60"
                         >
                            {TIME_RANGE_OPTIONS.map((option) => (
                               <option key={option.value} value={option.value}>
@@ -143,14 +171,14 @@ export default function Reports() {
                </div>
             </div>
 
-            {!hasStudents ? (
+            {showSkeleton ? (
+               <StudentProgressSkeleton />
+            ) : !hasStudents ? (
                <div className="flex h-64 items-center justify-center bg-gray-50">
                   <div className="text-center">
                      <div className="mb-2 text-xl text-gray-600">{t("noStudentsFound")}</div>
                      <div className="text-gray-500">
-                        {selectedRange !== "all" 
-                           ? t("noActivityInRange")
-                           : t("noStudentsInThisClass")}
+                        {selectedRange !== "all" ? t("noActivityInRange") : t("noStudentsInThisClass")}
                      </div>
                   </div>
                </div>

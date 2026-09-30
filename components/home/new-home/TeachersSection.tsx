@@ -20,7 +20,7 @@ const TeachersSection = () => {
       },
       {
          title: t("mathFactsFeatures"),
-         image: "/assets/landing/mathfact.png",
+         image: "/assets/landing/rename1.png",
       },
    ];
 
