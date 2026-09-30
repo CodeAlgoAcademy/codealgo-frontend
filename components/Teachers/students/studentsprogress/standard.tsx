@@ -10,6 +10,7 @@ interface ICompletedStandardProps {
 const TeacherStudentCompletedStandard = ({ completedItems, isLoading }: ICompletedStandardProps) => {
   const { t } = useTranslation("teacher");
   const filteredItems = completedItems?.filter(item => {
+    if (item.source === "quest") return false;
     const bothNoCurriculum = 
       item.iready_math_desc?.includes("(No direct curriculum unit)") && 
       item.common_core_math_desc?.includes("(No direct curriculum unit)");

@@ -13,10 +13,34 @@ import TeacherStudentSkills from "@/components/Teachers/students/studentsprogres
 import TeacherStudentCompletedStandard from "@/components/Teachers/students/studentsprogress/standard";
 import TeacherStudentProgress from "@/components/Teachers/students/studentsprogress/progress";
 import { useAppDispatch } from "store/hooks";
+import teachersClassBaseServices from "services/teachersClassServices";
 
 interface TeachersTabs {
    students: boolean;
 }
+
+// The same standard can come back from two endpoints. Keep whichever row got
+// further so a quest-driven line standard doesn't also show at 0%.
+const dedupeByStandard = (rows: any[]) => {
+   const seen = new Map<string, any>();
+   const out: any[] = [];
+   for (const row of rows) {
+      const key = row?.source === "quest" ? `quest:${row.quest_line_id}` : row?.standard_code;
+      if (!key) {
+         out.push(row);
+         continue;
+      }
+      const prev = seen.get(key);
+      if (!prev) {
+         seen.set(key, row);
+         out.push(row);
+      } else if ((row.progress || 0) > (prev.progress || 0)) {
+         out[out.indexOf(prev)] = row;
+         seen.set(key, row);
+      }
+   }
+   return out;
+};
 
 const Dashboard = () => {
    const dispatch = useAppDispatch();
@@ -115,28 +139,55 @@ const calculateAge = (dob: string): number => {
 useEffect(() => {
    const studentId = currentStudent?.student_id || currentStudent?.id;
    const dob = currentStudent?.dob;
+   if (!classId || !studentId) return;
 
-   if (classId && studentId && dob) {
-      setIsLoading(true);
-      setProgressData([]);
+   let cancelled = false;
+   setIsLoading(true);
+   setProgressData([]);
 
-      const age = calculateAge(dob);
-      const isPythonStudent = age >= 14; 
-      setIsBlockProgress(!isPythonStudent);
+   // No dob used to mean nothing loaded at all. Line coding is the default
+   // now, so a student without one gets the line view.
+   const isPythonStudent = !dob || calculateAge(dob) >= 14;
+   setIsBlockProgress(!isPythonStudent);
 
-      const action = isPythonStudent
-         ? fetchStudentLineProgressNew({ classId: classId.toString(), studentId: studentId.toString() })
-         : fetchStudentBlockGameProgress({ classId, studentId });
+   const action = isPythonStudent
+      ? fetchStudentLineProgressNew({ classId: classId.toString(), studentId: studentId.toString() })
+      : fetchStudentBlockGameProgress({ classId, studentId });
 
-      dispatch(action)
-         .unwrap()
-         .then((res: any) => {
-            const normalizedData = Array.isArray(res) ? res : res?.topic || [];
-            setProgressData(normalizedData);
-         })
-         .finally(() => setIsLoading(false));
-   }
-}, [classId, currentStudent?.id, currentStudent?.dob]);
+   const legacy = dispatch(action)
+      .unwrap()
+      .then((res: any) => (Array.isArray(res) ? res : res?.topic || []))
+      .catch(() => []);
+
+   // Quests are fetched for every student. Whether line coding is open is
+   // decided by coding-access on the server, not by age, so a younger student
+   // can be working through quest lines too.
+   const quests = teachersClassBaseServices
+      .getStudentQuestProgressByTeacher(studentId.toString(), classId.toString())
+      .catch(() => []);
+
+   // Quests count towards line standards, so a block student who plays them
+   // gets those standards too. Only the ones with progress, or the list would
+   // fill up with every grade 6+ standard at 0%.
+   const lineForBlockStudent = isPythonStudent
+      ? Promise.resolve([])
+      : teachersClassBaseServices
+           .getStudentLineProgressNewByTeacher(studentId.toString(), classId.toString())
+           .then((rows: any) => (Array.isArray(rows) ? rows.filter((r: any) => (r.progress || 0) > 0) : []))
+           .catch(() => []);
+
+   Promise.all([quests, legacy, lineForBlockStudent])
+      .then(([questRows, legacyRows, lineRows]) => {
+         if (!cancelled) setProgressData(dedupeByStandard([...questRows, ...legacyRows, ...lineRows]));
+      })
+      .finally(() => {
+         if (!cancelled) setIsLoading(false);
+      });
+
+   return () => {
+      cancelled = true;
+   };
+}, [classId, currentStudent?.id, currentStudent?.student_id, currentStudent?.dob]);
 
 const allProgressItems = Array.isArray(progressData) ? progressData : [];
 const inProgressItems = allProgressItems.filter((item) => (item.progress || 0) < 1.0);
@@ -146,6 +197,7 @@ const completedItems = allProgressItems.filter((item) => (item.progress || 0) >=
    
 
    const filteredCompletedItems = completedItems.filter((item) => {
+      if (item.source === "quest") return false;
       const hasNoCurriculum =
          item.iready_math_desc?.includes("(No direct curriculum unit)") && item.common_core_math_desc?.includes("(No direct curriculum unit)");
       return !hasNoCurriculum;

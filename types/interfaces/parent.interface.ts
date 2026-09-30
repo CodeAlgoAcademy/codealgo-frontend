@@ -22,6 +22,12 @@ export interface IChildProgress {
    unit_level?:string;
    grade?:string;
    name?:string;
+   source?: "quest";
+   quest_line_id?: string;
+   completed_quests?: number;
+   total_quests?: number;
+   current_quest?: string | null;
+   standards?: string[];
 }
 
 export interface IChildTopics {
