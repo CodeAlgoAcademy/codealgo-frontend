@@ -41,7 +41,7 @@
       "binding": "DB",
       "database_name": "codealgo-analytics",
       // Filled in by `wrangler d1 create codealgo-analytics`, see README.
-      "database_id": "10007b4b-496f-4da3-bfc2-e91d27b6158d",
+      "database_id": "00000000-0000-0000-0000-000000000000",
       "migrations_dir": "migrations"
     }
   ],
@@ -58,8 +58,8 @@
     // Application Audience (AUD) tag of the Access app for admin.
     // Both are public values, not secrets. The Worker refuses every admin
     // request until both are set.
-    "ACCESS_TEAM_DOMAIN": "codealgo.cloudflareaccess.com",
-    "ACCESS_AUD": "00b9dca44b1dcabe28d1b7500cc8c974e3fefb53e1c65e6c3ae0b6bfe87d8f15",
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": "",
     // Raw events older than this are deleted nightly. Sessions and visitors
     // are kept, so traffic and retention history survive the prune, only the
     // click by click detail goes.
