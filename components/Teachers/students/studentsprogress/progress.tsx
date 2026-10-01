@@ -21,6 +21,18 @@ const questCaption = (item: IChildProgress, t: (key: string, opts?: any) => any)
   return `${count}${next}${codes}`;
 };
 
+// No level means a standard row. Its name is what a teacher reads, the code
+// alone (k.ap.a.01) means nothing to most of them.
+const rowCaption = (item: IChildProgress, t: (key: string, opts?: any) => any): string | undefined => {
+  const quest = questCaption(item, t);
+  if (quest) return quest;
+  if (item.unit_level || item.level) return undefined;
+  return item.standard_name || undefined;
+};
+
+// Started work first, then the untouched 0% rows.
+const byProgress = (a: IChildProgress, b: IChildProgress) => (b.progress || 0) - (a.progress || 0);
+
 const TeacherStudentProgress = ({
   size,
   level,
@@ -69,7 +81,7 @@ const TeacherStudentProgress = ({
               <h3 className="font-semibold">{t("comprehensionTracking")}</h3>
               <div className="mt-3 flex flex-col gap-5">
                 {hasProgressData ? (
-                  progressItems.map((lesson, index) => (
+                  [...progressItems].sort(byProgress).map((lesson, index) => (
                     <ProgressBar
                     key={`inprogress-${index}`}
                     color="red"
@@ -77,7 +89,7 @@ const TeacherStudentProgress = ({
                     // Fallback: Line coding might use standard_name or name
                     title={lesson.standard_code || lesson.name || lesson.title || "Lesson"} 
                     level={lesson.unit_level || lesson.level}
-                    caption={questCaption(lesson, t)}
+                    caption={rowCaption(lesson, t)}
                     titleSize="base"
                     containerSize={size} 
                   />
@@ -102,7 +114,7 @@ const TeacherStudentProgress = ({
                         titleSize="base"
                         containerSize={size} 
                     level={lesson.unit_level || lesson.level}
-                        caption={questCaption(lesson, t)}
+                        caption={rowCaption(lesson, t)}
                         // grade={lesson.grade}
                   />
                     ))}
