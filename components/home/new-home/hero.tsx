@@ -20,7 +20,7 @@ const Hero = () => {
 
    return (
       <header className="relative isolate overflow-hidden bg-white py-8 sm:py-3">
-         <div className="relative z-10 mx-auto max-w-7xl px-6 sm:py-2 py-16 md:py-10 border">
+         <div className="relative z-10 mx-auto max-w-7xl px-6 sm:py-2 py-16 md:py-10">
             <div className="flex flex-col-reverse items-center gap-12 lg:flex-row lg:justify-center lg:gap-16">
                {/* Left Column: Text & Buttons */}
                <div className="w-full max-w-lg sm:py-14 lg:w-full">
