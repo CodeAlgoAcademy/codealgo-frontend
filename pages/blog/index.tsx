@@ -11,7 +11,7 @@ const Blog = () => {
    const { t } = useTranslation("pages");
    const { t: tp } = useTranslation("blog");
    return (
-      <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
+      <section className="min-h-screen w-full bg-[#ffffff]">
          <Head>
             <title>{t("blogTitle")}</title>
             <meta name="description" content={t("blogDescription")} />

@@ -51,7 +51,7 @@ const HowItWorks = () => {
             </div>
 
             <div className="mx-auto flex w-full max-w-md flex-col gap-4">
-               <button className="w-full rounded-xl bg-mainRed py-4 font-workSans text-lg font-semibold text-white shadow-md transition-colors hover:bg-mainPurple">
+               <button className="w-full rounded-xl bg-mainRed py-4 font-workSans text-lg font-semibold text-white shadow-md transition-colors hover:bg-mainRed">
                   {t("signUpAsTeacher")}
                </button>
 

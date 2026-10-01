@@ -168,7 +168,7 @@ const CaseStudies = () => {
         <section className="bg-white border-y border-gray-200 shadow-sm">
           <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3">
             <StatCard
-              value="+28,324"
+              value="41,928+"
               label={t("codingProblemsSolved")}
               source={t("platformData")}
             />

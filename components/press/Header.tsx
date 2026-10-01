@@ -14,7 +14,7 @@ const Header: FC<IArticle> = (props) => {
                <img src={props.image} alt="" className="h-full w-full object-cover object-center" />
             </div>
             <div className="flex-1">
-               <h1 className="text-[1.5rem] font-bold leading-[1.2] text-[#2073f] md:text-[2.4rem]">{props.title}</h1>
+               <h1 className=" text-2xl font-bold leading-[1.2] text-black md:text-4xl">{props.title}</h1>
                <p className="mt-3 text-[1.1rem] text-[#222]">{props.body}</p>
                <div className="mt-8 flex max-w-[400px] flex-wrap items-center justify-between gap-4">
                   <p>{props.date}</p>
