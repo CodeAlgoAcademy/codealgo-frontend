@@ -1,6 +1,7 @@
 import http from "axios.config";
 import { IChildTopics } from "types/interfaces";
 import { getAccessToken } from "utils/getTokens";
+import { IMathQuestReport } from "types/interfaces/teacherstudent.interface";
 
 const bulkUpdateClassLevelThreshold = async (
   class_id: string | number,
@@ -95,6 +96,28 @@ const getStudentQuestProgressByTeacher = async (studentId: string, classId: stri
   }
 };
 
+// Math Quest (the math game): stars and mastery per Common Core standard, plus
+// per grade totals and the last few rounds. Rows are shaped like the other
+// progress rows so the dashboard can list them alongside.
+const emptyMathQuestReport: IMathQuestReport = { rows: [], totals: [], recent_rounds: [] };
+
+const getStudentMathQuestProgressByTeacher = async (studentId: string, classId: string): Promise<IMathQuestReport> => {
+  try {
+    const response = await http.get(`/academics/class/${classId}/student/${studentId}/math-quest-progress/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    const data = response?.data;
+    return {
+      rows: Array.isArray(data?.rows) ? data.rows : [],
+      totals: Array.isArray(data?.totals) ? data.totals : [],
+      recent_rounds: Array.isArray(data?.recent_rounds) ? data.recent_rounds : [],
+    };
+  } catch (error) {
+    console.error(error);
+    return emptyMathQuestReport;
+  }
+};
+
 const teachersClassBaseServices = {
   bulkUpdateClassLevelThreshold,
   bulkUpdateClassScreenTime,
@@ -103,6 +126,7 @@ const teachersClassBaseServices = {
   getStudentLinecodingSkillsNewByTeacher,
   getStudentLineProgressNewByTeacher,
   getStudentQuestProgressByTeacher,
+  getStudentMathQuestProgressByTeacher,
 };
 
 export default teachersClassBaseServices;

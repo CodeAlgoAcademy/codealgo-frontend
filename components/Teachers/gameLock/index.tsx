@@ -8,6 +8,7 @@ import SkipPinCard from "./SkipPinCard";
 import { useAppDispatch } from "store/hooks";
 import { BaseStudent } from "types/interfaces/teacherstudent.interface";
 import { fetchAllClassAccess } from "store/teacherStudentSlice";
+import { mathGradeLabel } from "constants/mathQuest";
 
 export default function GameLocksPage() {
    const { t } = useTranslation("teacher");
@@ -52,8 +53,14 @@ useEffect(() => {
                {students.map((student) => {
                   const access = student.codingAccess;
                   const relockedCount = access?.locked_levels?.length || 0;
+                  const mathRedoCount = access?.math_locked_standards?.length || 0;
                   const isLocked =
-                     access?.line_coding_locked || (access?.block_coding_max_level && access?.block_coding_max_level !== "") || relockedCount > 0;
+                     access?.line_coding_locked ||
+                     (access?.block_coding_max_level && access?.block_coding_max_level !== "") ||
+                     relockedCount > 0 ||
+                     access?.math_locked ||
+                     !!access?.math_max_grade ||
+                     mathRedoCount > 0;
 
                   return (
                      <div
@@ -94,6 +101,19 @@ useEffect(() => {
                               <p className={`text-sm font-bold ${relockedCount > 0 ? "text-amber-500" : "text-slate-600"}`}>
                                  {relockedCount > 0 ? relockedCount : t("none")}
                               </p>
+                           </div>
+                           <div className="border-l border-slate-100 pl-12 text-right">
+                              <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">{t("mathQuest")}</p>
+                              <p className={`text-sm font-bold ${access?.math_locked ? "text-red-400" : "text-green-500"}`}>
+                                 {access?.math_locked
+                                    ? t("locked")
+                                    : access?.math_max_grade
+                                    ? t("upToGrade", { grade: mathGradeLabel(access.math_max_grade, t) })
+                                    : t("active")}
+                              </p>
+                              {mathRedoCount > 0 && (
+                                 <p className="text-[11px] font-bold text-amber-500">{t("mathRedoCount", { count: mathRedoCount })}</p>
+                              )}
                            </div>
                            <button
                               onClick={() => {

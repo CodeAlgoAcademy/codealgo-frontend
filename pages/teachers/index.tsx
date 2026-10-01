@@ -14,6 +14,8 @@ import TeacherStudentCompletedStandard from "@/components/Teachers/students/stud
 import TeacherStudentProgress from "@/components/Teachers/students/studentsprogress/progress";
 import { useAppDispatch } from "store/hooks";
 import teachersClassBaseServices from "services/teachersClassServices";
+import TeacherStudentMathQuest from "@/components/Teachers/students/studentsprogress/mathQuest";
+import { IMathQuestReport } from "types/interfaces/teacherstudent.interface";
 
 interface TeachersTabs {
    students: boolean;
@@ -25,7 +27,8 @@ const dedupeByStandard = (rows: any[]) => {
    const seen = new Map<string, any>();
    const out: any[] = [];
    for (const row of rows) {
-      const key = row?.source === "quest" ? `quest:${row.quest_line_id}` : row?.standard_code;
+      const key =
+         row?.source === "quest" ? `quest:${row.quest_line_id}` : row?.source === "math" ? `math:${row.standard_code}` : row?.standard_code;
       if (!key) {
          out.push(row);
          continue;
@@ -50,6 +53,7 @@ const Dashboard = () => {
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [isBlockProgress, setIsBlockProgress] = useState<boolean>(false);
    const [progressData, setProgressData] = useState<any[]>([]);
+   const [mathReport, setMathReport] = useState<IMathQuestReport>({ rows: [], totals: [], recent_rounds: [] });
    const [tabs, setTabs] = useState<TeachersTabs>({ students: false });
 
    const toggleTab = (key: keyof TeachersTabs, open: boolean) => {
@@ -144,6 +148,7 @@ useEffect(() => {
    let cancelled = false;
    setIsLoading(true);
    setProgressData([]);
+   setMathReport({ rows: [], totals: [], recent_rounds: [] });
 
    // No dob used to mean nothing loaded at all. Line coding is the default
    // now, so a student without one gets the line view.
@@ -176,9 +181,17 @@ useEffect(() => {
            .then((rows: any) => (Array.isArray(rows) ? rows.filter((r: any) => (r.progress || 0) > 0) : []))
            .catch(() => []);
 
-   Promise.all([quests, legacy, lineForBlockStudent])
-      .then(([questRows, legacyRows, lineRows]) => {
-         if (!cancelled) setProgressData(dedupeByStandard([...questRows, ...legacyRows, ...lineRows]));
+   // Math Quest is its own subject, played by every student whatever their
+   // age, so it is fetched for everyone and listed with the rest.
+   const math = teachersClassBaseServices
+      .getStudentMathQuestProgressByTeacher(studentId.toString(), classId.toString())
+      .catch((): IMathQuestReport => ({ rows: [], totals: [], recent_rounds: [] }));
+
+   Promise.all([quests, legacy, lineForBlockStudent, math])
+      .then(([questRows, legacyRows, lineRows, mathData]) => {
+         if (cancelled) return;
+         setMathReport(mathData);
+         setProgressData(dedupeByStandard([...questRows, ...legacyRows, ...lineRows, ...mathData.rows]));
       })
       .finally(() => {
          if (!cancelled) setIsLoading(false);
@@ -220,6 +233,7 @@ const completedItems = allProgressItems.filter((item) => (item.progress || 0) >=
                />
                <TeacherStudentCompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
                <TeacherStudentSkills size="base" allProgressItems={allProgressItems} />
+               <TeacherStudentMathQuest report={mathReport} isLoading={isLoading} />
                <div className="dashboard-widget">
                   <StudentBarChart showEditLink={false} />
                </div>

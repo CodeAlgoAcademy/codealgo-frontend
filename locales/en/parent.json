@@ -323,5 +323,8 @@
   "actionRequiredToComplete": "Action required to complete plan change.",
   "planUpdatedSuccessfully": "Plan updated successfully!",
   "failedToChangePlan": "Failed to change plan.",
-  "errorOccurred": "An error occurred."
+  "errorOccurred": "An error occurred.",
+  "mathQuest": "Math Quest",
+  "mathUpToGrade": "Up to grade {{grade}}",
+  "mathRedoCount": "{{count}} to redo"
 }

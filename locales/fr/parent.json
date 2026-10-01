@@ -323,5 +323,8 @@
   "actionRequiredToComplete": "Action requise pour compléter le changement de plan.",
   "planUpdatedSuccessfully": "Plan mis à jour avec succès !",
   "failedToChangePlan": "Échec du changement de plan.",
-  "errorOccurred": "Une erreur s'est produite."
+  "errorOccurred": "Une erreur s'est produite.",
+  "mathQuest": "Math Quest",
+  "mathUpToGrade": "Jusqu'au niveau {{grade}}",
+  "mathRedoCount": "{{count}} à refaire"
 }
