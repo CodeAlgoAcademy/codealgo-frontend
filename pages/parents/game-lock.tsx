@@ -35,7 +35,14 @@ export default function GameLocksParentPage() {
                {children.map((child) => {
                   const access = child.codingAccess;
                   const relockedCount = access?.locked_levels?.length || 0;
-                  const isLocked = access?.line_coding_locked || (access?.block_coding_max_level !== "") || relockedCount > 0;
+                  const mathRedoCount = access?.math_locked_standards?.length || 0;
+                  const isLocked =
+                     access?.line_coding_locked ||
+                     (!!access?.block_coding_max_level && access?.block_coding_max_level !== "") ||
+                     relockedCount > 0 ||
+                     access?.math_locked ||
+                     !!access?.math_max_grade ||
+                     mathRedoCount > 0;
 
                   return (
                      <div key={child.id} className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm flex items-center justify-between transition-all hover:shadow-md">
@@ -67,6 +74,19 @@ export default function GameLocksParentPage() {
                               <p className={`text-sm font-bold ${relockedCount > 0 ? 'text-amber-500' : 'text-slate-600'}`}>
                                  {relockedCount > 0 ? relockedCount : t("none")}
                               </p>
+                           </div>
+                           <div className="text-right border-l pl-10">
+                              <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">{t("mathQuest")}</p>
+                              <p className={`text-sm font-bold ${access?.math_locked ? 'text-red-400' : 'text-green-500'}`}>
+                                 {access?.math_locked
+                                    ? t("disabled")
+                                    : access?.math_max_grade
+                                    ? t("mathUpToGrade", { grade: access.math_max_grade })
+                                    : t("enabled")}
+                              </p>
+                              {mathRedoCount > 0 && (
+                                 <p className="text-[11px] font-bold text-amber-500">{t("mathRedoCount", { count: mathRedoCount })}</p>
+                              )}
                            </div>
                            <button 
                               onClick={() => {

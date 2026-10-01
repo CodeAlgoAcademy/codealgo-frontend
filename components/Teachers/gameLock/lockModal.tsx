@@ -4,7 +4,14 @@ import { useAppDispatch } from "store/hooks";
 import { updateCodingAccess, fetchCodingAccess } from "store/teacherStudentSlice";
 import { BLOCK_CURRICULUM } from "constants/blockCurriculum";
 import { updateChildCodingAccess } from "store/parentChildSlice";
-import { ICodingAccess, IPlayedLevel } from "types/interfaces/teacherstudent.interface";
+import { ICodingAccess, IPlayedLevel, IPlayedMathStandard } from "types/interfaces/teacherstudent.interface";
+import { MATH_QUEST_GRADES, mathGradeLabel } from "constants/mathQuest";
+
+// Common Core codes sort by grade (K first), then as written.
+const mathCodeSort = (code: string) => {
+   const grade = code.split(".")[0];
+   return (grade === "K" ? 0 : Number(grade) || 99) * 1000;
+};
 
 const formatUnitLevel = (unitLevel: string) => {
    const [unit, level] = unitLevel.split("_");
@@ -31,6 +38,10 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
    const [blockLevel, setBlockLevel] = useState(student?.codingAccess?.block_coding_max_level || "");
    const [lockedLevels, setLockedLevels] = useState<string[]>(student?.codingAccess?.locked_levels || []);
    const [playedLevels, setPlayedLevels] = useState<IPlayedLevel[]>([]);
+   const [mathLocked, setMathLocked] = useState<boolean>(student?.codingAccess?.math_locked || false);
+   const [mathMaxGrade, setMathMaxGrade] = useState<string>(student?.codingAccess?.math_max_grade || "");
+   const [mathLockedStandards, setMathLockedStandards] = useState<string[]>(student?.codingAccess?.math_locked_standards || []);
+   const [playedMath, setPlayedMath] = useState<IPlayedMathStandard[]>([]);
    const [loading, setLoading] = useState(false);
 
    useEffect(() => {
@@ -46,6 +57,10 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
             setBlockLevel(access.block_coding_max_level || "");
             setLockedLevels(access.locked_levels || []);
             setPlayedLevels(access.played_levels || []);
+            setMathLocked(access.math_locked || false);
+            setMathMaxGrade(access.math_max_grade || "");
+            setMathLockedStandards(access.math_locked_standards || []);
+            setPlayedMath(access.played_math_standards || []);
          })
          .catch(() => undefined);
    }, [student?.student_id, dispatch]);
@@ -65,6 +80,19 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
          .map((code) => ({ unit_level: code, sort_index: levelSortIndex(code), completed: false })),
    ].sort((a, b) => a.sort_index - b.sort_index || a.unit_level.localeCompare(b.unit_level));
 
+   const toggleMathStandard = (code: string) => {
+      setMathLockedStandards((current) => (current.includes(code) ? current.filter((c) => c !== code) : [...current, code]));
+   };
+
+   // Same as the block levels: a standard sent back has had its stars wiped, so
+   // it is no longer in played_math_standards. Keep it listed so it can be undone.
+   const mathRows: IPlayedMathStandard[] = [
+      ...playedMath,
+      ...mathLockedStandards
+         .filter((code) => !playedMath.some((row) => row.code === code))
+         .map((code) => ({ code, grade: code.split(".")[0], description: "", stars: 0, mastered: false })),
+   ].sort((a, b) => mathCodeSort(a.code) - mathCodeSort(b.code) || a.code.localeCompare(b.code, undefined, { numeric: true }));
+
    const handleSave = async () => {
     setLoading(true);
     const id = student.student_id; 
@@ -74,7 +102,14 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
 
     await dispatch(action({ 
         studentId: id, 
-        data: { line_coding_locked: lineLocked, block_coding_max_level: blockLevel, locked_levels: lockedLevels } 
+        data: {
+           line_coding_locked: lineLocked,
+           block_coding_max_level: blockLevel,
+           locked_levels: lockedLevels,
+           math_locked: mathLocked,
+           math_max_grade: mathMaxGrade,
+           math_locked_standards: mathLockedStandards,
+        }
     })).unwrap();
     
     setLoading(false);
@@ -173,6 +208,77 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
                      </div>
                   )}
                   <p className="px-2 text-[11px] font-medium italic leading-relaxed text-slate-400">{t("relockDescription")}</p>
+               </div>
+
+               <div className="flex items-center justify-between rounded-3xl border border-slate-100 bg-slate-50 p-6">
+                  <div>
+                     <h3 className="text-lg font-bold text-slate-800">{t("mathQuest")}</h3>
+                     <p className="text-sm text-slate-400">{t("allowMathQuest")}</p>
+                  </div>
+                  <button
+                     onClick={() => setMathLocked(!mathLocked)}
+                     className={`relative h-9 w-16 rounded-full transition-all ${!mathLocked ? "bg-green-500" : "bg-slate-300"}`}
+                  >
+                     <div
+                        className={`absolute top-1.5 h-6 w-6 rounded-full bg-white shadow-sm transition-all ${!mathLocked ? "left-8" : "left-1.5"}`}
+                     />
+                  </button>
+               </div>
+
+               <div className="space-y-4">
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{t("mathGradeLimit")}</label>
+                  <select
+                     value={mathMaxGrade}
+                     onChange={(e) => setMathMaxGrade(e.target.value)}
+                     className="w-full rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700"
+                  >
+                     <option value="">{t("noLimitUnrestricted")}</option>
+                     {MATH_QUEST_GRADES.map((grade) => (
+                        <option key={grade} value={grade}>
+                           {t("upToGrade", { grade: mathGradeLabel(grade, t) })}
+                        </option>
+                     ))}
+                  </select>
+                  <p className="px-2 text-[11px] font-medium italic leading-relaxed text-slate-400">{t("mathGradeLimitHelp")}</p>
+               </div>
+
+               <div className="space-y-4">
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{t("mathStandardsToRedo")}</label>
+                  {mathRows.length === 0 ? (
+                     <p className="rounded-3xl border border-slate-100 bg-slate-50 p-6 text-sm text-slate-400">{t("noMathStandardsPlayedYet")}</p>
+                  ) : (
+                     <div className="max-h-56 divide-y divide-slate-50 overflow-y-auto rounded-3xl border border-slate-100">
+                        {mathRows.map((row) => {
+                           const isLocked = mathLockedStandards.includes(row.code);
+                           return (
+                              <div key={row.code} className="flex items-center justify-between gap-4 px-6 py-4">
+                                 <div className="min-w-0">
+                                    <p className="text-sm font-bold text-slate-700">{row.code}</p>
+                                    <p className="truncate text-[11px] font-medium text-slate-400">
+                                       {isLocked
+                                          ? t("locked")
+                                          : row.mastered
+                                          ? t("mathMastered")
+                                          : t("mathStars", { stars: row.stars })}
+                                       {row.description ? ` - ${row.description}` : ""}
+                                    </p>
+                                 </div>
+                                 <button
+                                    onClick={() => toggleMathStandard(row.code)}
+                                    className={`shrink-0 rounded-xl border-2 px-5 py-1.5 text-sm font-bold transition-all ${
+                                       isLocked
+                                          ? "border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100"
+                                          : "border-slate-100 bg-white text-blue-600 hover:border-blue-200 hover:bg-blue-50"
+                                    }`}
+                                 >
+                                    {isLocked ? t("unlock") : t("lock")}
+                                 </button>
+                              </div>
+                           );
+                        })}
+                     </div>
+                  )}
+                  <p className="px-2 text-[11px] font-medium italic leading-relaxed text-slate-400">{t("mathRelockDescription")}</p>
                </div>
             </div>
 

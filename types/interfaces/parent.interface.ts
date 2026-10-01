@@ -22,7 +22,7 @@ export interface IChildProgress {
    unit_level?:string;
    grade?:string;
    name?:string;
-   source?: "quest";
+   source?: "quest" | "math";
    quest_line_id?: string;
    completed_quests?: number;
    total_quests?: number;
@@ -39,6 +39,9 @@ export interface ICodingAccess {
    line_coding_locked: boolean;
    block_coding_max_level: string;
    locked_levels?: string[];
+   math_locked?: boolean;
+   math_max_grade?: string;
+   math_locked_standards?: string[];
    played_levels?: IPlayedLevel[];
 }
 
