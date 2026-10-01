@@ -23,11 +23,14 @@ const ProgressBar = ({ title, titleSize, percentage, color, containerSize, level
    
    return (
       <div className="flex flex-col">
-         <div className="flex items-center mb-1">
-             <span className="text-xs font-bold text-gray-600">
-               {caption ?? t("levelLabel", { level })}
-             </span>
-         </div>
+         {/* Rows with no level used to print a bare "Level:" */}
+         {(caption || (level !== undefined && level !== null && level !== "")) && (
+            <div className="flex items-center mb-1">
+               <span className="text-xs font-bold text-gray-600">
+                  {caption ?? t("levelLabel", { level })}
+               </span>
+            </div>
+         )}
          <div className="flex h-5 items-center">
             <p title={title} className={`w-full overflow-hidden truncate whitespace-nowrap ${titleSize === "large" ? largeTitle : baseTitle}`}>
                {title}

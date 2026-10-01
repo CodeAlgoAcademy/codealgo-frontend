@@ -1,13 +1,10 @@
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 import React, { useEffect, useState } from "react";
-import RecentInteraction from "@/components/parents/multiplayer/RecentInteraction";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import StudentsList from "@/components/Teachers/UI/StudentsList";
 import { getStudents } from "store/studentSlice";
-import StudentBarChart from "@/components/Teachers/students/screentime/BarChart";
 import { useRouter } from "next/router";
-import StudentLevelChart from "@/components/Teachers/students/level-threshold/BarChart";
 import { fetchStudentBlockGameProgress, fetchStudentLineProgress, fetchStudentLineProgressNew } from "store/teacherStudentSlice";
 import TeacherStudentSkills from "@/components/Teachers/students/studentsprogress/skills";
 import TeacherStudentCompletedStandard from "@/components/Teachers/students/studentsprogress/standard";
@@ -16,6 +13,9 @@ import { useAppDispatch } from "store/hooks";
 import teachersClassBaseServices from "services/teachersClassServices";
 import TeacherStudentMathQuest from "@/components/Teachers/students/studentsprogress/mathQuest";
 import { IMathQuestReport } from "types/interfaces/teacherstudent.interface";
+import ClassOverview from "@/components/Teachers/dashboard/ClassOverview";
+import StudentLimitsCard from "@/components/Teachers/dashboard/StudentLimitsCard";
+import { useTranslation } from "react-i18next";
 
 interface TeachersTabs {
    students: boolean;
@@ -46,6 +46,7 @@ const dedupeByStandard = (rows: any[]) => {
 };
 
 const Dashboard = () => {
+   const { t } = useTranslation("teacher");
    const dispatch = useAppDispatch();
    const router = useRouter();
    const { currentStudent } = useSelector((state: RootState) => state.teacherStudentSlice);
@@ -218,6 +219,11 @@ const completedItems = allProgressItems.filter((item) => (item.progress || 0) >=
 
    return (
       <TeacherLayout>
+         <ClassOverview />
+
+         <div id="student-detail" className="mb-2 flex scroll-mt-24 flex-wrap items-center gap-2">
+            <h2 className="text-xl font-semibold text-gray-900">{t("studentDetail")}</h2>
+         </div>
          <StudentsList isOpen={tabs.students} open={() => toggleTab("students", true)} close={() => toggleTab("students", false)} />
 
          <div className="relative bottom-14 mb-[-120px] h-auto scale-90 overflow-scroll 
@@ -234,13 +240,11 @@ const completedItems = allProgressItems.filter((item) => (item.progress || 0) >=
                <TeacherStudentCompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
                <TeacherStudentSkills size="base" allProgressItems={allProgressItems} />
                <TeacherStudentMathQuest report={mathReport} isLoading={isLoading} />
+               {/* Screen time + level threshold settings. RecentInteraction was
+                   hardcoded sample avatars, not this class. */}
                <div className="dashboard-widget">
-                  <StudentBarChart showEditLink={false} />
+                  <StudentLimitsCard />
                </div>
-               <div className="dashboard-widget">
-                  <StudentLevelChart showEditLink={false} />
-               </div>
-               <RecentInteraction />
             </div>
          </div>
       </TeacherLayout>
