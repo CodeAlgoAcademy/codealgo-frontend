@@ -39,6 +39,37 @@
     "p22": "CodeAlgo Academy is also continuing to pilot the platform in classrooms where students use it daily, while continuing to build new consumer features inspired by conversations at Union Station.",
     "p23": "\u201cSeeing them go from beginners to where they can actually write little programs and understand logical statements is pretty wonderful,\u201d said Fulks of the student users. \u201cWhen they start, they all take a placement test, so we know exactly where everyone is. Seeing that growth, while we\u2019re also getting tremendous feedback about what to add and improve, tells us we\u2019re headed in the right direction.\u201d"
   },
+  "startupWorldCup": {
+    "title": "Million-dollar prize: Meet 10 KC companies vying for Startup World Cup, attention of global investors",
+    "date": "September 3, 2026",
+    "by": "Startland News Staff",
+    "link": "https://startlandnews.com",
+    "caption1": "Among the Kansas City contenders for the Startup World Cup: Zaydan Ahmed, AcuSera; Brandy Archie, AskSAMIE; Triumfia Houmbie Fulks, CodeAlgo; Nick Love, Love Lifesciences; Ashley McClellan, MedCurate; and Jacob Schlittenhardt, Planetary Talent; not pictured: Melissa Footlick, Catalyst; Matthew Leming, Enhance Health; Erin Minoski, KaBloom; and Chad Brausen, Tolair",
+    "dropCaps": "KCSourceLink on Wednesday revealed the 10 companies advancing to the Startup World Cup\u2019s Kansas City regional tournament, where selected entrepreneurs will compete for a chance to represent the region at a Silicon Valley grand finale event later this month \u2014 and a shot at the global pitch event\u2019s $1 million investment prize.",
+    "p1": "\u201cThis competition helps put Kansas City entrepreneurs on the map nationwide,\u201d said Adam Larson, senior program coordinator for KCSourceLink, which is organizing the local leg of the tournament in partnership with Pegasus Tech Ventures, the Silicon Valley venture capital firm that coordinates Startup World Cup globally. \u201cIt\u2019s an exciting opportunity and we are proud to be a part of it.\u201d",
+    "p2": "The Startup World Cup is the largest startup conference and pitch competition, drawing champion teams from more than 100 regions worldwide to compete for the grand prize.",
+    "p3": "\u201cThrough this partnership, we aim to create meaningful opportunities for local startups and connect them more closely with the global innovation ecosystem,\u201d said Anis Uzzaman, chairman of Startup World Cup, as well as founder and CEO of Pegasus.",
+    "p4": "Selected Kansas City companies will take the stage Sept. 22 at CPKC Stadium, each delivering a four-minute pitch before a panel of judges and a live audience, giving founders the opportunity to showcase their ventures in front of investors, ecosystem leaders and supporters.",
+    "p5": "After presentations conclude, judges will score each company using official Startup World Cup criteria and deliberate to select the Kansas City Regional Tournament winner, who will be announced live at the event, awarded the regional tournament trophy, and earn the opportunity to represent Kansas City at the Nov. 6 Grand Finale in San Francisco.",
+    "h1": "Kansas City\u2019s competitors include:",
+    "competitors": [
+      "AcuSera, Zaydan Ahmed",
+      "AskSAMIE, Brandy Archie",
+      "Catalyst, Melissa Footlick",
+      "CodeAlgo, Triumfia Houmbie Fulks",
+      "Enhance Health, Matthew Leming",
+      "KaBloom, Erin Minoski",
+      "Love Lifesciences, Nick Love",
+      "MedCurate, Ashley McClellan",
+      "Planetary Talent, Jacob Schlittenhardt",
+      "Tolair, Chad Brausen"
+    ],
+    "p6": "The Startup World Cup initiative addresses access to growth capital \u2014 one of the clearest gaps identified by Forging the Future, the coordinated regional effort KCSourceLink leads to strengthen Kansas City\u2019s entrepreneur ecosystem, Larson said.",
+    "p7": "By putting local founders directly in front of global investors and a $1 million investment prize, the Kansas City tournament gives Kansas City companies a high-visibility shot at the kind of capital connections that are hardest for early-stage businesses to find close to home, he emphasized.",
+    "p8": "\u201cThis tournament is one more way we\u2019re driving Forging the Future forward by convening organizations, aligning priorities around the region\u2019s clearest gaps, and mobilizing Action Teams that turn shared problems into shared, funded solutions,\u201d said Larson.",
+    "p9": "Support for Kansas City\u2019s regional tournament includes sponsorships from Ewing Marion Kauffman Foundation, Missouri Technology Corporation, Keystone Innovation District, Digital Sandbox KC (Technology Venture Studio), KU Innovation Park, LaunchKC, eGrowth Ventures (Network Kansas), and KC Digital Drive.",
+    "readFullStory": "READ FULL STORY ON STARTLAND NEWS"
+  },
   "edtechPlatform": {
     "title": "CodeAlgo Academy hits classrooms as the edtech platform (and founder) proves independence",
     "date": "February 03, 2026",
@@ -512,6 +543,11 @@
     "title": "Her startup needed a user test lab: Access to KC’s World Cup marketplace opened door to rapid, live iteration",
     "body": "CodeAlgo Academy left Union Station with more than just new customers. The edtech startup wrapped its FIFA World Cup-timed residency with a new product roadmap shaped by thousands of conversations throughout the five-week City of Entrepreneurs marketplace.",
     "date": "July 16, 2026"
+  },
+  "startupWorldCup": {
+    "title": "Million-dollar prize: Meet 10 KC companies vying for Startup World Cup, attention of global investors",
+    "body": "KCSourceLink revealed the 10 companies advancing to the Startup World Cup’s Kansas City regional tournament, where selected entrepreneurs will compete for a shot at the global pitch event’s $1 million investment prize.",
+    "date": "September 3, 2026"
   },
   "edtechPlatform": {
     "title": "CodeAlgo Academy hits classrooms as the edtech platform (and founder) proves independence.",

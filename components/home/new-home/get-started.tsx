@@ -1,69 +1,73 @@
-import Button, { CustomButton } from "@/components/UI/Button";
-import { useMediaQuery } from "@mui/material";
+import { CustomButton } from "@/components/UI/Button";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
-import { cn } from "utils";
 import { useTranslation } from "react-i18next";
 
 const GetStarted = () => {
-   const isMobile = useMediaQuery("(max-width:768px)");
    const { push } = useRouter();
    const { t } = useTranslation("home");
 
-   const buttonClassName = cn(
-      "!bg-white !text-black !shadow-md absolute bottom-10 left-[40%] max-md:left-[40%] -translate-x-[50%] max-w-fit min-w-fit min-w-[150px] !mx-auto font-thabit font-bold text-[1.1rem] max-md:text-[.9rem] justify-center"
-   );
-
    const toSignUp = () => push("/signup");
 
-   return (
-      <section className="bg-redToBlackGradient">
-         <div className="px-2 pt-12 pb-12">
-            <button
-               className="mx-auto block cursor-pointer rounded-3xl bg-white px-6 py-2 text-center font-tiltWarp text-[1.8rem] text-black max-md:text-[1.5rem]"
-               onClick={toSignUp}
-            >
-               {t("signUpToday")}
-            </button>
-         </div>
+   const cards = [
+      {
+         title: t("createYourAvatar"),
+         image: "/assets/landing/images14.png",
+         alt: "Customize and create your CodeAlgo avatar",
+         fit: "object-contain",
+         background: "bg-whiteToBlueGradient",
+      },
+      {
+         title: t("learnByPlaying"),
+         image: "/assets/landing/rename.png",
+         alt: "Learn coding by playing in CodeAlgo",
+         fit: "object-cover",
+         background: "bg-mainColor/10",
+      },
+      {
+         title: t("codeYourWorld"),
+         image: "/assets/landing/image13.png",
+         alt: "Practice coding with CodeAlgo",
+         fit: "object-cover",
+         background: "bg-mainPurple/10",
+      },
+   ];
 
-         <div className="mt-8 flex h-[650px] items-center justify-center max-md:mt-0 max-md:h-[300px]">
-            {!isMobile && (
-               <article className="relative -mr-24 grid h-full w-full flex-1 place-content-center bg-whiteToBlueGradient clip-path-right-parallelogram">
-                  <img src={"/assets/landing/get-started-1.png"} 
-                  className="h-[550px] w-[450px]" 
-                  alt="Kids learning to code on CodeAlgo platform"/>
-                  <CustomButton onClick={toSignUp} className={buttonClassName} variant="filled" size="medium">
-                     {t("createYourAvatar")}
+   return (
+      <section className="bg-white py-28">
+         <button
+            onClick={toSignUp}
+            className="mx-auto mb-10 block rounded-3xl bg-mainRed px-6 py-2 font-tiltWarp text-[1.5rem] text-white md:text-[1.8rem]"
+         >
+            {t("signUpToday")}
+         </button>
+
+         <div className="grid grid-cols-1 gap-5 px-5 md:grid-cols-3 md:px-8">
+            {cards.map((card) => (
+               <article
+                  key={card.title}
+                  className={`relative h-[420px] overflow-hidden rounded-3xl md:h-[580px] ${card.background}`}
+               >
+                  <div className="absolute inset-5 bottom-24">
+                     <Image
+                        src={card.image}
+                        alt={card.alt}
+                        layout="fill"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className={`${card.fit} object-center`}
+                     />
+                  </div>
+
+                  <CustomButton
+                     onClick={toSignUp}
+                     className="!absolute bottom-8 left-1/2 !mx-auto min-w-[170px] -translate-x-1/2 justify-center !bg-white !text-black !shadow-md"
+                     variant="filled"
+                     size="medium"
+                  >
+                     {card.title}
                   </CustomButton>
                </article>
-            )}
-
-            <article className="relative -mx-8 grid h-[650px] w-full flex-1 place-content-center bg-red-500 clip-path-center-parallelogram max-md:-ml-0 max-md:-mr-10 max-md:h-[300px] max-md:clip-path-right-parallelogram">
-               <img src={"/assets/landing/get-started-2.png"} 
-               className="h-[650px] w-full object-cover max-md:h-[300px]"
-               alt="Kids learning to code on CodeAlgo platform" />
-               <CustomButton onClick={toSignUp} className={cn(buttonClassName)} variant="filled" size={isMobile ? "extra-small" : "medium"}>
-                  {t("learnByPlaying")}
-               </CustomButton>
-            </article>
-
-            <article className="relative -ml-24 grid h-full w-full flex-1 place-content-center overflow-hidden clip-path-left-parallelogram max-md:-ml-0">
-               <img
-                  src={"/assets/landing/get-started-3.png"}
-                  className="h-[650px] min-w-[40vw] object-cover object-right-top max-md:h-[300px] max-sm:min-w-[58vw]"
-                  alt="Kids learning to code on CodeAlgo platform"
-               />
-               <CustomButton
-                  onClick={toSignUp}
-                  className={cn(buttonClassName, "left-[50%] max-md:left-[50%]")}
-                  variant="filled"
-                  size={isMobile ? "extra-small" : "medium"}
-               >
-                  {t("codeYourWorld")}
-               </CustomButton>
-            </article>
+            ))}
          </div>
       </section>
    );
