@@ -19,17 +19,17 @@ const Hero = () => {
    const toPricing = () => push("/pricing");
 
    return (
-      <header className="relative isolate overflow-hidden bg-white py-8">
-         <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:py-10">
+      <header className="relative isolate overflow-hidden bg-white py-8 sm:py-3">
+         <div className="relative z-10 mx-auto max-w-7xl px-6 sm:py-2 py-16 md:py-10">
             <div className="flex flex-col-reverse items-center gap-12 lg:flex-row lg:justify-center lg:gap-16">
                {/* Left Column: Text & Buttons */}
-               <div className="w-full max-w-lg lg:w-full">
+               <div className="w-full max-w-lg sm:py-14 lg:w-full">
                   <h1 className="mb-5 text-3xl font-bold leading-[1.1] text-gray-900 sm:text-4xl md:text-5xl">{t("TheroTitle")}</h1>
                   <h2 className="mb-4 text-2xl font-bold leading-[1.1] text-gray-900 sm:text-2xl md:text-2xl">{t("TheroTitle2")}</h2>
 
                   <p className="mb-2 text-lg text-gray-600">{t("TheroDescription")}</p>
                   <p className="mb-2 text-lg text-gray-600">{t("ThereDescription2")}</p>
- <p className="mb-2 text-lg text-gray-600">{t("ThereDescription3")}</p>
+                  <p className="mb-2 text-lg text-gray-600">{t("ThereDescription3")}</p>
                   <p className="relative mb-8 inline-block text-lg text-gray-600">
                      {t("TheroFreeLine")}
                      <svg
@@ -59,61 +59,51 @@ const Hero = () => {
                </div>
 
                {/* Right Hero (Fixed Layout) */}
-             <div className="relative mx-auto flex min-h-[460px] w-full items-center justify-center lg:mt-0">
+               <div className="relative mx-auto  flex min-h-[460px] w-full items-center justify-center lg:mt-0">
+                  <div className="relative w-[95%] max-w-[550px]">
+                     <div className="relative z-10 aspect-video w-full overflow-hidden rounded-lg border-[8px] border-black bg-black shadow-2xl sm:border-[10px]">
+                        <video
+                           src="/assets/landing/hero11.mp4"
+                           className="h-full w-full object-cover"
+                           autoPlay
+                           muted
+                           loop
+                           playsInline
+                           disablePictureInPicture
+                        />
+                     </div>
 
-   <div className="relative w-[95%] max-w-[550px]">
-      <div className="relative z-10 aspect-video w-full overflow-hidden rounded-lg border-[8px] border-black bg-black shadow-2xl sm:border-[10px]">
-         <video
-            src="/assets/landing/hero11.mp4"
-            className="h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            disablePictureInPicture
-         />
-      </div>
+                     <div style={floatStyle} className="absolute -left-8 -top-20 z-20 sm:-left-16 sm:-top-16">
+                        <Image
+                           src="/assets/landing/images16.png"
+                           alt={t("heroAltMath")}
+                           width={180}
+                           height={180}
+                           className="object-contain drop-shadow-lg"
+                        />
+                     </div>
 
-      <div
-         style={floatStyle}
-         className="absolute -left-8 -top-20 z-20 sm:-left-16 sm:-top-16"
-      >
-         <Image
-            src="/assets/landing/images16.png"
-            alt={t("heroAltMath")}
-            width={180}
-            height={180}
-            className="object-contain drop-shadow-lg"
-         />
-      </div>
+                     <div style={floatStyle} className="absolute -right-10 -top-10 z-20 sm:-right-14 sm:-top-12">
+                        <Image
+                           src="/assets/landing/image18.png"
+                           alt={t("heroAltEla")}
+                           width={180}
+                           height={180}
+                           className="object-contain drop-shadow-lg"
+                        />
+                     </div>
 
-      <div
-         style={floatStyle}
-         className="absolute -right-10 -top-10 z-20 sm:-right-14 sm:-top-12"
-      >
-         <Image
-            src="/assets/landing/image18.png"
-            alt={t("heroAltEla")}
-            width={180}
-            height={180}
-            className="object-contain drop-shadow-lg"
-         />
-      </div>
-
-      <div
-         style={floatStyle}
-         className="absolute left-1/2 top-full z-20 -translate-x-1/2 -translate-y-6"
-      >
-         <Image
-            src="/assets/landing/image15.png"
-            alt={t("heroAltCoppa")}
-            width={180}
-            height={180}
-            className="object-contain drop-shadow-md"
-         />
-      </div>
-   </div>
-</div>
+                     <div style={floatStyle} className="absolute left-1/2 top-full z-20 -translate-x-1/2 -translate-y-6">
+                        <Image
+                           src="/assets/landing/image15.png"
+                           alt={t("heroAltCoppa")}
+                           width={180}
+                           height={180}
+                           className="object-contain drop-shadow-md"
+                        />
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
 
