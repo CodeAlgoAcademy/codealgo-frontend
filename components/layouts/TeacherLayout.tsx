@@ -52,7 +52,8 @@ const TeacherLayout = ({ children, className }: Props) => {
          subLinks: [
             { name: tTeacher("lessonPlan"), url: "/teachers/curriculum" },
             { name: tTeacher("liveClass"), url: "/teachers/overview" },
-            { name: tTeacher("assignments"), url: "/teachers/assignments" },
+            { name: tTeacher("codingAssignments"), url: "/teachers/assignments" },
+            { name: tTeacher("mathAssignments"), url: "/teachers/math-assignments" },
          ],
       },
       {

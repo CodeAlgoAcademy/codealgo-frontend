@@ -166,7 +166,7 @@ export default function AssignmentCard({ assignment, onArchive, onEdit, onDelete
                   <span>{gameTypeBadge.label}</span>
                </span>
                <span className="text-slate-500">·</span>
-               <span className="text-slate-500">{t("skillsCountCapital", { count: assignment.standards?.length ?? 0 })}</span>
+               <span className="text-slate-500">{assignment.standards?.length ? t("skillsCountCapital", { count: assignment.standards.length }) : t("anySkill")}</span>
                <span className="text-slate-500">·</span>
                <span className="text-slate-500">
                   <strong>{assignment.question_count || t("all")}</strong> {t("questions")}

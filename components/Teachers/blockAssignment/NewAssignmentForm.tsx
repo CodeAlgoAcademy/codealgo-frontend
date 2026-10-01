@@ -92,7 +92,6 @@ const handleGameTypeChange = (type: "block" | "line") => {
 
    const handleSubmit = async () => {
       if (!title.trim()) return setError(t("titleRequired"));
-      if (selectedTopics.length === 0) return setError(t("selectAtLeastOneSkill"));
       if (!startNow && !scheduledAt) return setError(t("pickScheduledDate"));
 
       setError("");
@@ -214,9 +213,9 @@ const handleGameTypeChange = (type: "block" | "line") => {
 
             <div className="mb-10">
                <div className="mb-3.5 text-lg font-bold text-slate-900">{t("skill")}</div>
-               {selectedTopics.length > 0 && (
-                  <div className="mb-2.5 text-[13px] font-semibold text-blue-600">{t("skillsSelectedCount", { count: selectedTopics.length })}</div>
-               )}
+               <div className="mb-2.5 text-[13px] font-semibold text-blue-600">
+                  {selectedTopics.length > 0 ? t("skillsSelectedCount", { count: selectedTopics.length }) : t("anySkillHint")}
+               </div>
                <div className="flex flex-wrap items-center gap-2">
                   {selectedTopics.map((topic) => (
                      <div

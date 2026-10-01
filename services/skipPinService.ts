@@ -17,6 +17,10 @@ export interface SkipPinUse {
    level_name: string;
    success: boolean;
    reason: "" | "wrong_pin" | "limit";
+   owner_id: number | null;
+   owner_name: string;
+   bypass: boolean;
+   bypass_reason: string;
    created_at: string;
 }
 

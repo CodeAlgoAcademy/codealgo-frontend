@@ -12,12 +12,9 @@ import HeaderSection from "@/components/Teachers/blockAssignment/pagecomponents/
 import StudentDropdown from "@/components/Teachers/blockAssignment/pagecomponents/StudentDropdown";
 import TabsSection from "@/components/Teachers/blockAssignment/pagecomponents/TabsSection";
 import AssignmentsGrid from "@/components/Teachers/blockAssignment/pagecomponents/AssignmentsGrid";
-import AssignmentsHub from "@/components/Teachers/blockAssignment/pagecomponents/AssignmentsHub";
-import MathFactsPage from "@/components/Teachers/math_fact/mathfact";
-import MathReportsView from "@/components/Teachers/math_fact/components/mathReportsView";
 
 type Tab = "active" | "completed" | "archived";
-type View = "hub" | "list" | "new" | "edit" | "detail" | "mathfacts" | "mathreports";
+type View = "list" | "new" | "edit" | "detail";
 
 
 export default function AssignmentsPage() {
@@ -36,7 +33,7 @@ export default function AssignmentsPage() {
       [classStudents],
    );
 
-   const [view, setView] = useState<View>("hub");
+   const [view, setView] = useState<View>("list");
    const [activeTab, setActiveTab] = useState<Tab>("active");
    const [assignments, setAssignments] = useState<AssignmentListItem[]>([]);
    const [loading, setLoading] = useState(false);
@@ -121,60 +118,6 @@ export default function AssignmentsPage() {
       }
    };
 
-   if (view === "hub") {
-      return (
-         <TeacherLayout>
-            <AssignmentsHub onGoToCoding={() => setView("list")}
-             onGoToMathFacts={() => setView("mathfacts")} 
-            onGoToMathReports={() => setView("mathreports")}/>
-         </TeacherLayout>
-      );
-   }
-
-if (view === "mathreports") {
-   return (
-      <TeacherLayout>
-         <div className="mx-auto max-w-7xl px-6 py-8">
-            <button
-               onClick={() => setView("hub")}
-               className="mb-4 flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-800"
-            >
-               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-               </svg>
-               {t("backToAssignments")}
-            </button>
-            
-            <div className="mb-8">
-               <h1 className="text-3xl font-bold text-slate-900">{t("mathMasteryReports")}</h1>
-               <p className="text-slate-500">{t("mathReportsDescription")}</p>
-            </div>
-
-            <MathReportsView classId={classId} />
-         </div>
-      </TeacherLayout>
-   );
-}
-
-   if (view === "mathfacts") {
-      return (
-         <TeacherLayout>
-            <div className="relative">
-               <button
-                  onClick={() => setView("hub")}
-                  className=" flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-800"
-               >
-                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                  </svg>
-                  {t("backToAssignments")}
-               </button>
-               <MathFactsPage onViewReport={() => setView("mathreports")}/>
-            </div>
-         </TeacherLayout>
-      );
-   }
-
    if (view === "detail" && selectedId) {
       return (
          <TeacherLayout>
@@ -215,16 +158,6 @@ if (view === "mathreports") {
    return (
       <TeacherLayout>
          <div className="mx-auto max-w-7xl px-6 py-8">
-            <button
-               onClick={() => setView("hub")}
-               className="mb-4 flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-800"
-            >
-               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-               </svg>
-               {t("assignments")}
-            </button>
-
             <HeaderSection onRefresh={load} onNewAssignment={() => setView("new")} lastUpdated={lastUpdated} />
 
             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center">

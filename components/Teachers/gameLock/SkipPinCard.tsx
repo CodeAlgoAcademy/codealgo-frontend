@@ -153,14 +153,26 @@ export default function SkipPinCard() {
             ) : (
                <ul className="max-h-64 divide-y divide-slate-50 overflow-y-auto">
                   {log.map((row) => (
-                     <li key={row.id} className="flex items-center justify-between py-2 text-sm">
+                     <li key={row.id} className="flex items-center justify-between gap-3 py-2 text-sm">
                         <span className="font-semibold text-slate-700">
                            {row.first_name || row.last_name ? `${row.first_name} ${row.last_name}` : `@${row.username}`}
                         </span>
                         <span className={row.success ? "text-slate-600" : "font-semibold text-amber-500"}>
                            {describe(row)} {row.unit_level && <span className="text-slate-400">({row.unit_level.replace("_", "-")})</span>}
                         </span>
-                        <span className="text-xs text-slate-400">{new Date(row.created_at).toLocaleString()}</span>
+                        <span className="flex flex-col items-end text-xs">
+                           {row.bypass ? (
+                              <span className="text-slate-500">
+                                 <span className="rounded-full bg-amber-50 px-2 py-0.5 font-semibold text-amber-600">
+                                    {t("skipPinBypassed")}
+                                 </span>
+                                 {row.bypass_reason && <span className="ml-1">{row.bypass_reason}</span>}
+                              </span>
+                           ) : (
+                              row.owner_name && <span className="text-slate-500">{t("skipPinBy", { name: row.owner_name })}</span>
+                           )}
+                           <span className="text-slate-400">{new Date(row.created_at).toLocaleString()}</span>
+                        </span>
                      </li>
                   ))}
                </ul>
