@@ -33,11 +33,9 @@ const Home: NextPage = () => {
          <WinterBanner />
          <Hero />
          <CharterSchoolsSection />
-
          <GetStarted />
          <ValuePropositions />
          {/* <WhatWeBuilt /> */}
-
          <CodeToSuccess />
          <TeachersSection />
          <ParentsSection />
