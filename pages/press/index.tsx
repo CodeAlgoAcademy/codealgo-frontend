@@ -12,9 +12,9 @@ const Press = () => {
    const { t } = useTranslation("pages");
    const { t: tp } = useTranslation("press");
    return (
-      <section className="min-h-screen w-full bg-[#ffffff] font-thabit">
+      <section className="min-h-screen w-full bg-[#ffffff] ">
          <Head>
-            <title>{t("pressTitle")}</title>
+            <title className="">{t("pressTitle")}</title>
             <meta name="description" content={t("pressDescription")} />
          </Head>
          <Navbar />

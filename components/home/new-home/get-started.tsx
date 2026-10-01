@@ -15,21 +15,27 @@ const GetStarted = () => {
          image: "/assets/landing/images14.png",
          alt: "Customize and create your CodeAlgo avatar",
          fit: "object-contain",
+         position: "object-center",
          background: "bg-whiteToBlueGradient",
+         imageWrapper: "inset-5 bottom-24",
       },
       {
          title: t("learnByPlaying"),
          image: "/assets/landing/rename.png",
          alt: "Learn coding by playing in CodeAlgo",
          fit: "object-cover",
+         position: "object-center",
          background: "bg-mainColor/10",
+         imageWrapper: "inset-5 bottom-24",
       },
       {
          title: t("codeYourWorld"),
-         image: "/assets/landing/image13.png",
-         alt: "Practice coding with CodeAlgo",
+         image: "/assets/landing/pythoncode.png",
+         alt: "Practice Python coding with CodeAlgo",
          fit: "object-cover",
+         position: "object-center",
          background: "bg-mainPurple/10",
+         imageWrapper: "inset-5 bottom-24",
       },
    ];
 
@@ -48,16 +54,19 @@ const GetStarted = () => {
                   key={card.title}
                   className={`relative h-[420px] overflow-hidden rounded-3xl md:h-[580px] ${card.background}`}
                >
-                  <div className="absolute inset-5 bottom-24">
+                  {/* Image */}
+                  <div className={`absolute ${card.imageWrapper}`}>
                      <Image
                         src={card.image}
                         alt={card.alt}
                         layout="fill"
+                        quality={100}
                         sizes="(max-width: 768px) 100vw, 33vw"
-                        className={`${card.fit} object-center`}
+                        className={`${card.fit} ${card.position}`}
                      />
                   </div>
 
+                  {/* Button */}
                   <CustomButton
                      onClick={toSignUp}
                      className="!absolute bottom-8 left-1/2 !mx-auto min-w-[170px] -translate-x-1/2 justify-center !bg-white !text-black !shadow-md"
