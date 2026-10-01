@@ -1,6 +1,7 @@
 export interface BlockTopic {
   id: number;
   name: string;
+  question_count?: number;
 }
 
 export interface AssignmentTopic {
@@ -15,6 +16,7 @@ export interface BlockStandardWithTopics {
   grade: string;
   description: string;
   topic_count: number;
+  question_count?: number;
   topics: BlockTopic[];
 }
  

@@ -58,26 +58,32 @@ export default function SkillPickerModal({ selectedTopics, onConfirm, onClose, g
          .finally(() => setLoading(false));
    }, [grade, gameType, subject]);
 
-const filtered = standards
-   .filter((s) => {
-      if (!search) return true;
-      const q = search.toLowerCase();
-      return (
-         s.code.toLowerCase().includes(q) || 
-         s.name.toLowerCase().includes(q) || 
-         s.topics.some((t) => t.name.toLowerCase().includes(q))
-      );
-   })
-   .sort((a, b) => {
-      const aHasSkills = a.topic_count > 0;
-      const bHasSkills = b.topic_count > 0;
+   // Only show what can actually serve questions. Older API responses have no
+   // question_count, so fall back to "has topics".
+   const hasQuestions = (n: number | undefined, fallback: boolean) => (n === undefined ? fallback : n > 0);
 
-      if (aHasSkills && !bHasSkills) return -1;
-      
-      if (!aHasSkills && bHasSkills) return 1;
+   const available = standards
+      .map((s) => {
+         // Line pools come from the standard, so its topics all ride on it.
+         const topics =
+            gameType === "line"
+               ? s.topics
+               : s.topics.filter((t) => hasQuestions(t.question_count, true));
+         return { ...s, topics };
+      })
+      .filter((s) => s.topics.length > 0 && hasQuestions(s.question_count, true));
 
-      return a.code.localeCompare(b.code);
-   });
+   const q = search.trim().toLowerCase();
+   const filtered = available
+      .filter((s) => {
+         if (!q) return true;
+         return (
+            s.code.toLowerCase().includes(q) ||
+            s.name.toLowerCase().includes(q) ||
+            s.topics.some((t) => t.name.toLowerCase().includes(q))
+         );
+      })
+      .sort((a, b) => a.code.localeCompare(b.code));
 
    const toggleExpand = (id: number) =>
       setExpanded((prev) => {
@@ -214,8 +220,8 @@ const filtered = standards
                                               {t("selectedCount", { count: selCount })}
                                            </span>
                                         )}
-                                        <span className={`text-xs  ${std.topic_count ? "font-bold text-mainColor" : "text-slate-400"}`}>
-                                           {t("skillsCount", { count: std.topic_count })}
+                                        <span className="text-xs font-bold text-mainColor">
+                                           {t("skillsCount", { count: std.topics.length })}
                                         </span>
                                        <button
                                           className={`rounded-md border px-2 py-0.5 text-xs font-medium transition-colors ${
@@ -254,6 +260,11 @@ const filtered = standards
                                                 <span className={`ml-3 text-sm ${checked ? "font-medium text-blue-700" : "text-slate-700"}`}>
                                                    {topic.name}
                                                 </span>
+                                                {gameType === "block" && topic.question_count !== undefined && (
+                                                   <span className="ml-auto pr-3 text-xs text-slate-400">
+                                                      {t("questionsCount", { count: topic.question_count })}
+                                                   </span>
+                                                )}
                                              </label>
                                           );
                                        })}
@@ -269,17 +280,22 @@ const filtered = standards
 
             <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50/50 px-6 py-4">
                <span className="text-sm font-medium text-slate-600">
-                  {t("skillsSelectedCount", { count: localMap.size })}
+                  {localMap.size === 0 ? t("anySkillHint") : t("skillsSelectedCount", { count: localMap.size })}
                </span>
-               <button
-                  className={`rounded-lg px-6 py-2 text-sm font-bold text-white transition-all ${
-                     localMap.size === 0 ? "cursor-not-allowed bg-blue-300" : "cursor-pointer bg-blue-600 hover:bg-blue-700 active:scale-95"
-                  }`}
-                  disabled={localMap.size === 0}
-                  onClick={() => onConfirm(Array.from(localMap.entries()).map(([id, name]) => ({ id, name })))}
-               >
-                   {t("done")}
-                </button>
+               <div className="flex items-center gap-2">
+                  <button
+                     className="cursor-pointer rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+                     onClick={() => onConfirm([])}
+                  >
+                     {t("noSpecificSkill")}
+                  </button>
+                  <button
+                     className="cursor-pointer rounded-lg bg-blue-600 px-6 py-2 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95"
+                     onClick={() => onConfirm(Array.from(localMap.entries()).map(([id, name]) => ({ id, name })))}
+                  >
+                     {t("done")}
+                  </button>
+               </div>
             </div>
          </div>
       </div>
