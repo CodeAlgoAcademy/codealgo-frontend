@@ -6,6 +6,7 @@ import { SimpleAccordion } from "@/components/home/accordion";
 import { parentResources, howToGuidesParent } from "@/components/home/const";
 import Navbar from "@/components/navbar/home/Navbar";
 import { useTranslation } from "react-i18next";
+import ParentResourcesForm from "utils/kit";
 
 
 const ParentsResources = () => {
@@ -161,6 +162,8 @@ const ParentsResources = () => {
           </div>
         </div>
       </section>
+
+      <ParentResourcesForm />
 
       {/* FAQ Section */}
       <section className="bg-gray-50 py-16 lg:py-24 bg-background">

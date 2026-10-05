@@ -82,7 +82,7 @@ const Footer = () => {
             },
             {
                title: t("blog"),
-               href: "/blog",
+               href: "http://blog.codealgoacademy.com/",
             },
             {
                title: t("contactUs"),

@@ -31,42 +31,31 @@ const DistrictBulkPurchase = () => {
       setRequestBody((prev) => ({ ...prev, [key]: value }));
    };
 
-   const onSubmit = async (e: FormEvent) => {
-      e.preventDefault();
-      setIsSubmitting(true);
+ const onSubmit = async (e: FormEvent) => {
+   e.preventDefault();
+   setIsSubmitting(true);
 
-      try {
-         const data = await dispatch(submitInstituionInquiry(requestBody));
+   try {
+      const data = await dispatch(
+         submitInstituionInquiry(requestBody)
+      );
 
-         const mailtoUrl = `mailto:triumfia@codealgoacademy.com,info@codealgoacademy.com?subject=${encodeURIComponent(
-            t("districtInquiryMailSubject", { name: requestBody.name })
-         )}&body=${encodeURIComponent(
-            t("districtInquiryMailBody", {
-               name: requestBody.name,
-               email: requestBody.email,
-               category: requestBody.category,
-               institutionName: requestBody.institution_name,
-               studentCount: requestBody.student_count,
-               message: requestBody.message,
-            })
-         )}`;
-         window.open(mailtoUrl, "_blank");
+      if (!data.error) {
+         toast.success(t("requestSubmitted"), {
+            description: t("districtBulkSuccess"),
+            duration: 5000,
+         });
 
-         if (!data.error) {
-            toast.success(t("requestSubmitted"));
-            dispatch(
-               openSuccessModal({
-                  message: t("districtBulkSuccess"),
-               })
-            );
-            setRequestBody(initialValues);
-         }
-      } catch (error) {
+         setRequestBody(initialValues);
+      } else {
          toast.error(t("requestFailed"));
-      } finally {
-         setIsSubmitting(false);
       }
-   };
+   } catch (error) {
+      toast.error(t("requestFailed"));
+   } finally {
+      setIsSubmitting(false);
+   }
+};
 
    return (
       <div className="mx-auto mb-24 max-w-[1200px] md:mt-12">
