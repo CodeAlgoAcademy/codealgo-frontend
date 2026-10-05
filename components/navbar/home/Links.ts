@@ -12,7 +12,7 @@ export const links: NavbarLink[] = [
       sublinks: [
          { name: "aboutUs", link: "/about" },
          { name: "press", link: "/press" },
-         { name: "blog", link: "/blog" },
+         { name: "blog", link: "http://blog.codealgoacademy.com/" },
          { name: "learnMore", link: "/learn-more" },
          { name: "contactUs", link: "/contact" },
       ],

@@ -2,7 +2,6 @@ import React, { FC, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { TFunction } from "i18next";
 import { toast } from "sonner";
-import { openSuccessModal } from "store/modalSlice";
 import { submitInstituionInquiry } from "services/pricingService";
 
 interface SchoolCardProps {
@@ -14,43 +13,45 @@ const SchoolCard: FC<SchoolCardProps> = ({ t }) => {
    const [schoolForm, setSchoolForm] = useState({ name: "", email: "" });
    const [loading, setLoading] = useState(false);
 
-   const handleSchoolSubmit = async (e: FormEvent) => {
-      e.preventDefault();
-      if (!schoolForm.name.trim() || !schoolForm.email.trim()) return;
+const handleSchoolSubmit = async (e: FormEvent) => {
+   e.preventDefault();
 
-      setLoading(true);
-      try {
-         await dispatch(
-            submitInstituionInquiry({
-               name: schoolForm.name,
-               email: schoolForm.email,
-               category: "school",
-               institution_name: "School Inquiry",
-               student_count: 1,
-               message: `School Plan Request from pricing page: Name: ${schoolForm.name}, Email: ${schoolForm.email}`,
-            })
-         );
+   if (!schoolForm.name.trim() || !schoolForm.email.trim()) return;
 
-         const mailtoUrl = `mailto:triumfia@codealgoacademy.com,info@codealgoacademy.com?subject=${encodeURIComponent(
-            t("schoolInquiryMailSubject", { name: schoolForm.name })
-         )}&body=${encodeURIComponent(
-            t("schoolInquiryMailBody", { name: schoolForm.name, email: schoolForm.email })
-         )}`;
-         window.open(mailtoUrl, "_blank");
+   setLoading(true);
 
-         toast.success(t("requestSubmitted"));
-         dispatch(
-            openSuccessModal({
-               message: t("schoolPlanSuccess"),
-            })
-         );
-         setSchoolForm({ name: "", email: "" });
-      } catch (error) {
+   try {
+      const data = await dispatch(
+         submitInstituionInquiry({
+            name: schoolForm.name,
+            email: schoolForm.email,
+            category: "school",
+            institution_name: "School Inquiry",
+            student_count: 1,
+            message: `School Plan Request from pricing page: Name: ${schoolForm.name}, Email: ${schoolForm.email}`,
+         })
+      );
+
+      if (!data.error) {
+         toast.success(t("requestSubmitted"), {
+            description:
+               "Thanks for your interest in CodeAlgo for your school. Our team will contact you shortly.",
+            duration: 5000,
+         });
+
+         setSchoolForm({
+            name: "",
+            email: "",
+         });
+      } else {
          toast.error(t("requestFailed"));
-      } finally {
-         setLoading(false);
       }
-   };
+   } catch (error) {
+      toast.error(t("requestFailed"));
+   } finally {
+      setLoading(false);
+   }
+};
 
    return (
       <div className="relative flex flex-col rounded-lg border-2 border-gray-200 bg-white p-6 transition hover:border-mainColor hover:shadow-md">
