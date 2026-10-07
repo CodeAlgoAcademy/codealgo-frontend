@@ -42,10 +42,34 @@ const Contact = () => {
          dispatch(closePreloader());
       }
    };
+
+   const jsonLd = {
+   "@context": "https://schema.org",
+   "@type": "ContactPage",
+   name: "Contact CodeAlgo Academy",
+   description:
+      "Contact CodeAlgo Academy for questions about coding education, accounts, schools, and our learning platform.",
+   url: "https://codealgoacademy.com/contact",
+   isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+   },
+};
    return (
       <>
       <Head>
   <title>Contact Us | CodeAlgo Academy</title>
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com/contact"
+   />
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
+   />
   <meta name="description" content="Get in touch with the CodeAlgo Academy team. We're here to help with questions about our kids coding courses, pricing, and more." />
 </Head>
          <Navbar />

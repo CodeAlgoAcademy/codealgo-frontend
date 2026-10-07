@@ -6,10 +6,75 @@ import React, { FC, MutableRefObject, useEffect, useRef, useState } from "react"
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { cn } from "utils";
 import { useTranslation } from "react-i18next";
+import Head from "next/head";
 
 const FAQ = () => {
    const { t } = useTranslation("pages");
+   const jsonLd = {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   name: "CodeAlgo Academy FAQ",
+   url: "https://codealgoacademy.com/faq",
+   mainEntity: [
+      {
+         "@type": "Question",
+         name: "How do I create an account?",
+         acceptedAnswer: {
+            "@type": "Answer",
+            text: 'To create an account, visit the CodeAlgo Academy website, click on "Sign Up," and follow the prompts to complete the registration process.',
+         },
+      },
+      {
+         "@type": "Question",
+         name: "What information is required to create an account?",
+         acceptedAnswer: {
+            "@type": "Answer",
+            text: "You will need to provide a valid email address and some basic details to complete the registration form. Once submitted, your account will be activated.",
+         },
+      },
+      {
+         "@type": "Question",
+         name: "Can I create an account for my child?",
+         acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, parents can create accounts for their children. This feature ensures a secure and enjoyable learning experience while allowing parents to manage and monitor their child's progress.",
+         },
+      },
+      {
+         "@type": "Question",
+         name: "How do I log in to my account?",
+         acceptedAnswer: {
+            "@type": "Answer",
+            text: 'Visit the CodeAlgo Academy homepage, click on "Log In," and enter your registered email address and password to access your account.',
+         },
+      },
+      {
+         "@type": "Question",
+         name: "What should I do if I forget my password?",
+         acceptedAnswer: {
+            "@type": "Answer",
+            text: 'If you forget your password, select the "Forgot Password?" option on the login page. Follow the instructions to reset your password and regain access to your account.',
+         },
+      },
+   ],
+};
    return (
+      <>
+   <Head>
+   <title>FAQ | CodeAlgo Academy</title>
+
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com/faq"
+   />
+
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
+   />
+</Head>
       <div className="relative overflow-x-hidden bg-white font-thabit">
          <Navbar />
          <Banner />
@@ -129,6 +194,7 @@ const FAQ = () => {
 
          <Footer />
       </div>
+      </>
    );
 };
 
