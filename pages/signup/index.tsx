@@ -24,17 +24,25 @@ export default function SelectUserType() {
    return (
       <>
          <Head>
-            <link
-               rel="canonical"
-               href="https://codealgoacademy.com/signup"
-            />
-            <script
-               type="application/ld+json"
-               dangerouslySetInnerHTML={{
-                  __html: JSON.stringify(jsonLd),
-               }}
-            />
-         </Head>
+   <title>Sign Up | CodeAlgo Academy</title>
+
+   <meta
+      name="description"
+      content="Create your CodeAlgo Academy account and choose whether you're joining as a parent, teacher, or student to begin your coding journey."
+   />
+
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com/signup"
+   />
+
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
+   />
+</Head>
 
          <SelectAccountType />
       </>

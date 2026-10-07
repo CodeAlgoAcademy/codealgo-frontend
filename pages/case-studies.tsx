@@ -126,9 +126,28 @@ const CaseStudies = () => {
     </div>
   );
 
+  const jsonLd = {
+   "@context": "https://schema.org",
+   "@type": "CollectionPage",
+   name: "Case Studies | CodeAlgo Academy",
+   description:
+      "Explore CodeAlgo Academy case studies and measurable outcomes in coding education, mathematics, college readiness, and workforce development.",
+   url: "https://codealgoacademy.com/case-studies",
+   isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+   },
+   about: {
+      "@type": "EducationalOrganization",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+   },
+};
+
   return (
     <>
-     <Head>
+  <Head>
    <title>{t("caseStudiesTitle")}</title>
 
    <meta
@@ -139,6 +158,13 @@ const CaseStudies = () => {
    <link
       rel="canonical"
       href="https://codealgoacademy.com/case-studies"
+   />
+
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
    />
 </Head>
 

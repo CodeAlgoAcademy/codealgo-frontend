@@ -19,16 +19,48 @@ import HowItWorks from "@/components/home/new-home/HowItWorks";
 import CharterSchoolsSection from "@/components/home/new-home/CharterSchoolsSection";
 
 const Home: NextPage = () => {
+   const jsonLd = {
+   "@context": "https://schema.org",
+   "@type": "WebSite",
+   name: "CodeAlgo Academy",
+   url: "https://codealgoacademy.com",
+   description:
+      "CodeAlgo Academy teaches kids ages 5-14 coding through fun, game-based lessons, real projects, and interactive learning.",
+   publisher: {
+      "@type": "Organization",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+   },
+};
    return (
       <div className="relative bg-white" suppressHydrationWarning>
-         <Head>
-            <title>Kids Coding Classes Online | Learn Programming for Children | CodeAlgo Academy</title>
-            <meta
-               name="description"
-               content="CodeAlgo Academy teaches kids ages 5-14 to code through fun, game-based lessons. Build real projects, track progress, and learn Python & more. Try free today!"
-            />
-            <meta name="google-site-verification" content="eGB3Olxnsy0kXPD_3EoaI1Fzl7xsQVK4R1WxbBSCrFI" />
-         </Head>
+        <Head>
+   <title>
+      Kids Coding Classes Online | Learn Programming for Children | CodeAlgo Academy
+   </title>
+
+   <meta
+      name="description"
+      content="CodeAlgo Academy teaches kids ages 5-14 to code through fun, game-based lessons. Build real projects, track progress, and learn Python & more. Try free today!"
+   />
+
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com"
+   />
+
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
+   />
+
+   <meta
+      name="google-site-verification"
+      content="eGB3Olxnsy0kXPD_3EoaI1Fzl7xsQVK4R1WxbBSCrFI"
+   />
+</Head>
          <Navbar />
          <WinterBanner />
          <Hero />
