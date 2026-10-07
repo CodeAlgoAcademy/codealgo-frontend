@@ -23,14 +23,22 @@ export default function SelectAccountType() {
             </Link>
          </div>
 
-          <h1 className="text-mainRedmd:mt-[2rem] mt-[2rem] text-center text-xl font-bold md:text-3xl">
-             {t("whoAreYou")}
-          </h1>
-         <div className={`mx-6 mt-[2rem] grid items-center justify-center gap-y-6 md:mt-[7rem] md:gap-x-[5rem] 
-            ${itemCount === 4 
-               ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4" 
-               : "grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3"
-            }`}>
+          <h1 className="mt-[2rem] text-center text-xl font-bold text-mainRed md:mt-[2rem] md:text-3xl">
+   {t("whoAreYou")}
+</h1>
+
+<p className="mx-auto mt-3 max-w-2xl px-4 text-center text-sm text-gray-600 md:text-base">
+   Choose the account type that best describes you to get started with CodeAlgo Academy.
+</p>
+
+<div
+   className={`mx-6 mt-[2rem] grid items-center justify-center gap-y-6 md:mt-[7rem] md:gap-x-[5rem]
+      ${
+         itemCount === 4
+            ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"
+            : "grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3"
+      }`}
+>
             {/* Admin - Only show on login page */}
             {isLoginPage && (
                <Link href="/login/organizer">
