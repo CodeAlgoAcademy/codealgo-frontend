@@ -128,13 +128,19 @@ const CaseStudies = () => {
 
   return (
     <>
-      <Head>
-        <title>{t("caseStudiesTitle")}</title>
-        <meta
-          name="description"
-          content={t("caseStudiesDescription")}
-        />
-      </Head>
+     <Head>
+   <title>{t("caseStudiesTitle")}</title>
+
+   <meta
+      name="description"
+      content={t("caseStudiesDescription")}
+   />
+
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com/case-studies"
+   />
+</Head>
 
       <main className="bg-white min-h-screen font-thabit">
         <Navbar />

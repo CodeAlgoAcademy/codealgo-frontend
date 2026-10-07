@@ -33,13 +33,42 @@ const Pricing = () => {
       push(`/login/parent`);
    };
 
+   const jsonLd = {
+   "@context": "https://schema.org",
+   "@type": "WebPage",
+   name: "Pricing | CodeAlgo Academy",
+   description:
+      "Explore CodeAlgo Academy pricing plans for parents and schools.",
+   url: "https://codealgoacademy.com/pricing",
+   isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+   },
+};
 
    return (
       <div className="relative font-thabit bg-[#F5FAFF]">
-         <Head>
-            <title>{t("pricingTitle")}</title>
-            <meta name="description" content={t("pricingDescription")} />
-         </Head>
+<Head>
+   <title>{t("pricingTitle")}</title>
+
+   <meta
+      name="description"
+      content={t("pricingDescription")}
+   />
+
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com/pricing"
+   />
+
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
+   />
+</Head>
          <Navbar />
          <Banner />
          <section className="mt-20 px-6 py-16">
