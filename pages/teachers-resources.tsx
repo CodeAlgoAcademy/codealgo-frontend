@@ -6,11 +6,45 @@ import { howToGuides, teacherResources } from "@/components/home/const";
 import Link from "next/link";
 import { SimpleAccordion } from "@/components/home/accordion";
 import { useTranslation } from "react-i18next";
+import Head from "next/head";
 
 const TeachersResources = () => {
        const { t } = useTranslation("pages");
+
+
+       const jsonLd = {
+   "@context": "https://schema.org",
+   "@type": "WebPage",
+   name: "Teacher Resources | CodeAlgo Academy",
+   description:
+      "Resources, guides, and tools to help educators teach coding and use CodeAlgo Academy effectively in the classroom.",
+   url: "https://codealgoacademy.com/teachers-resources",
+   isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+   },
+   audience: {
+      "@type": "EducationalAudience",
+      educationalRole: "teacher",
+   },
+};
    
    return (
+      <>
+       <Head>
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com/teachers-resources"
+   />
+
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
+   />
+</Head>
       <div className="min-h-screen font-thabit">
          <Navbar />
 
@@ -18,7 +52,7 @@ const TeachersResources = () => {
             <div className="container mx-auto px-4 ">
                <div className="flex flex-col items-center gap-12 lg:flex-row">
                   <div className="lg:w-1/2">
-                     <h2 className="mb-4 text-3xl font-black text-mainBlack md:text-5xl">STEM resources for your classroom</h2>
+                     <h1 className="mb-4 text-3xl font-black text-mainBlack md:text-5xl">STEM resources for your classroom</h1>
                      <p className="tex-lg text-lg text-gray-600">Teaching technology is easier with the right tools.</p>
                   </div>
                   <div className="lg:w-1/2">
@@ -160,6 +194,7 @@ const TeachersResources = () => {
 
          <Footer />
       </div>
+      </>
    );
 };
 export default TeachersResources;

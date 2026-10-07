@@ -83,8 +83,9 @@ const FAQ = () => {
             <h1 className="text-center  font-thabit text-[2.4rem] font-bold">{t("codealgoFaq")}</h1>
 
             <section className="mx-auto mt-10 max-w-[700px] space-y-3">
-               <h1 className="!mb-6 font-thabit text-[1.5rem] font-bold">Account</h1>
-
+<h2 className="!mb-6 font-thabit text-[1.5rem] font-bold">
+   Account
+</h2>
                <SingleAccordion
                   question="How do I create an account?"
                   answer={`To create an account, visit the CodeAlgo Academy website, click on "Sign Up," and follow the prompts to complete the registration process.`}
@@ -213,10 +214,14 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
          setHeight(ref?.current?.getBoundingClientRect().height ?? 0);
       }
    }, [ref]);
+
    return (
       <article>
          <header className="mb-5 flex items-center justify-between gap-3 px-4">
-            <h1 className="flex-1 font-thabit font-bold">{question}</h1>
+            <h3 className="flex-1 font-thabit font-bold">
+               {question}
+            </h3>
+
             <span
                onClick={() => setIsOpen(!isOpen)}
                className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainRed text-black"
@@ -225,13 +230,18 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
             </span>
          </header>
 
-         <div className={cn("overflow-hidden transition-all duration-300")} style={{ height: isOpen ? height : 0 }}>
-            <p ref={ref as MutableRefObject<HTMLParagraphElement>} className="px-3 py-1 text-[.9rem]">
+         <div
+            className={cn("overflow-hidden transition-all duration-300")}
+            style={{ height: isOpen ? height : 0 }}
+         >
+            <p
+               ref={ref as MutableRefObject<HTMLParagraphElement>}
+               className="px-3 py-1 text-[.9rem]"
+            >
                {answer}
             </p>
          </div>
       </article>
    );
 };
-
 export default FAQ;

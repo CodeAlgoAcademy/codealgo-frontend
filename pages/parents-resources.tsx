@@ -5,12 +5,43 @@ import { SimpleAccordion } from "@/components/home/accordion";
 import { parentResources, howToGuidesParent } from "@/components/home/const";
 import Navbar from "@/components/navbar/home/Navbar";
 import { useTranslation } from "react-i18next";
+import Head from "next/head";
 
 
 const ParentsResources = () => {
     const { t } = useTranslation("pages");
-  
+  const jsonLd = {
+   "@context": "https://schema.org",
+   "@type": "WebPage",
+   name: "Parent Resources | CodeAlgo Academy",
+   description:
+      "Resources and guidance to help parents support their child's coding education and track their learning journey with CodeAlgo Academy.",
+   url: "https://codealgoacademy.com/parents-resources",
+   isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+   },
+   audience: {
+      "@type": "PeopleAudience",
+      audienceType: "Parents and guardians",
+   },
+};
   return (
+    <>
+     <Head>
+   <link
+      rel="canonical"
+      href="https://codealgoacademy.com/parents-resources"
+   />
+
+   <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+         __html: JSON.stringify(jsonLd),
+      }}
+   />
+</Head>
     <div className="min-h-screen font-thabit">
       <Navbar />
 
@@ -18,9 +49,9 @@ const ParentsResources = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center gap-12 lg:flex-row">
             <div className="lg:w-1/2">
-              <h2 className="mb-4 text-3xl font-black text-gray-900 md:text-5xl">
+              <h1 className="mb-4 text-3xl font-black text-gray-900 md:text-5xl">
                 Supporting your child's coding journey
-              </h2>
+              </h1>
               <p className="text-lg text-gray-600">
                 Empowering parents with the tools and knowledge to help their children succeed in tech.
               </p>
@@ -176,6 +207,7 @@ const ParentsResources = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 
