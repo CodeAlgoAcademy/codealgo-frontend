@@ -145,23 +145,37 @@ const Step1SelectPlan: React.FC<Step1Props> = ({ selectedPriceId, setSelectedPri
                      return (
                         <div key={plan.id} className="contents">
                            {yearlyPrice && (
-                              <PlanCard
-                                 title={`${plan.name} ${t("annual")}`}
-                                 price={yearlyPrice.amount_in_cent / 100 / 12}
-                                 originalPrice={monthlyPrice ? monthlyPrice.amount_in_cent / 100 : undefined}
-                                 interval="mo"
-                                 trialText={!hasExistingSubscription ? t("sevenDayFreeTrial") : undefined}
-                                 billingText={t("billedYearly", { amount: yearlyPrice.amount_in_cent / 100 })}
-                                 badge={t("save20")}
-                                 selected={selectedPriceId === yearlyPrice.id}
-                                 disabled={isPlanChanging(yearlyPrice.id)}
-                                 activeSubscriptionBadge={isPlanChanging(yearlyPrice.id)}
-                                 onSelect={() => {
-                                    if (!isPlanChanging(yearlyPrice.id)) {
-                                       setSelectedPriceId(yearlyPrice.id);
-                                    }
-                                 }}
-                              />
+                             <PlanCard
+   title={`${plan.name} ${t("annual")}`}
+   price={Number(
+      (yearlyPrice.amount_in_cent / 100 / 12).toFixed(2)
+   )}
+   originalPrice={
+      monthlyPrice
+         ? Number((monthlyPrice.amount_in_cent / 100).toFixed(2))
+         : undefined
+   }
+   interval="mo"
+   trialText={
+      !hasExistingSubscription
+         ? t("sevenDayFreeTrial")
+         : undefined
+   }
+   billingText={t("billedYearly", {
+      amount: Number(
+         (yearlyPrice.amount_in_cent / 100).toFixed(2)
+      ),
+   })}
+   badge={t("save20")}
+   selected={selectedPriceId === yearlyPrice.id}
+   disabled={isPlanChanging(yearlyPrice.id)}
+   activeSubscriptionBadge={isPlanChanging(yearlyPrice.id)}
+   onSelect={() => {
+      if (!isPlanChanging(yearlyPrice.id)) {
+         setSelectedPriceId(yearlyPrice.id);
+      }
+   }}
+/>
                            )}
                            {monthlyPrice && (
                               <PlanCard
