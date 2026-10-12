@@ -156,11 +156,11 @@ const VoiceOfOurCommunity = () => {
 
    const imageSlots = [
       "/assets/landing/fifa1.jpeg",
-      "/assets/landing/fifa9.jpg",
-      "/assets/landing/fifa2.jpeg",
-      "/assets/landing/fifa8.jpg",
+      "/assets/landing/fifa10.png",
+      "/assets/landing/fifa12.png",
+      "/assets/landing/fifa11.png",
       "/assets/landing/fifa3.jpeg",
-      "/assets/landing/fifa7.jpg",
+      "/assets/landing/fifa10.png",
       "/assets/landing/fifa4.jpeg",
    ];
 
@@ -207,7 +207,7 @@ const VoiceOfOurCommunity = () => {
 
          <div className=" mx-auto mb-12 bg-mainColor px-4 text-center ">
             <h1 className=" py-4 text-center font-tiltWarp text-[2.1rem] text-white max-md:text-[1.5rem]">{t("whatsTheWord")}</h1>
-            <p className="mx-auto max-w-2xl text-lg text-white">{t("communitySubtitle")}</p>
+            <p className="mx-auto max-w-2xl pb-5 text-lg text-white">{t("communitySubtitle")}</p>
          </div>
 
          <div className="relative w-full space-y-4">

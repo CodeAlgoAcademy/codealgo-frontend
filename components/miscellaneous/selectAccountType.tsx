@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { BiHome } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/UI/LanguageSwitcher";
 
 export default function SelectAccountType() {
    const slug = useRouter();
@@ -23,12 +24,16 @@ export default function SelectAccountType() {
             </Link>
          </div>
 
+         <div className="absolute right-[1rem] top-[1rem] md:right-[2rem] md:top-[2.4rem]">
+            <LanguageSwitcher variant="compact" />
+         </div>
+
           <h1 className="mt-[2rem] text-center text-xl font-bold text-mainRed md:mt-[2rem] md:text-3xl">
    {t("whoAreYou")}
 </h1>
 
 <p className="mx-auto mt-3 max-w-2xl px-4 text-center text-sm text-gray-600 md:text-base">
-   Choose the account type that best describes you to get started with CodeAlgo Academy.
+   {t("accountTypeDescription")}
 </p>
 
 <div
