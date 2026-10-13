@@ -48,6 +48,11 @@ const nextConfig = {
    // devDependencies or drop it from .eslintrc.json - and lint in CI, where a
    // failure is a red check rather than a failed deploy.
    eslint: { ignoreDuringBuilds: true },
+   // The footer used to link to /about-us, which never existed (the page is
+   // pages/about.tsx). Crawlers and backlinks already have the old URL.
+   async redirects() {
+      return [{ source: "/about-us", destination: "/about", permanent: true }];
+   },
    async headers() {
       return [
          {

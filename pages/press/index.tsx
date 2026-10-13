@@ -11,11 +11,39 @@ import { useTranslation } from "react-i18next";
 const Press = () => {
    const { t } = useTranslation("pages");
    const { t: tp } = useTranslation("press");
+   const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: t("pressTitle"),
+      description: t("pressDescription"),
+      url: "https://codealgoacademy.com/press",
+      isPartOf: {
+         "@type": "WebSite",
+         name: "CodeAlgo Academy",
+         url: "https://codealgoacademy.com",
+      },
+      mainEntity: {
+         "@type": "ItemList",
+         itemListElement: articles.map((article, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: `https://codealgoacademy.com/press${article.detailPage}`,
+            name: tp(`articleSummaries.${article.id}.title`),
+         })),
+      },
+   };
    return (
       <section className="min-h-screen w-full bg-[#ffffff] ">
          <Head>
             <title className="">{t("pressTitle")}</title>
             <meta name="description" content={t("pressDescription")} />
+            <link rel="canonical" href="https://codealgoacademy.com/press" />
+            <script
+               type="application/ld+json"
+               dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(jsonLd),
+               }}
+            />
          </Head>
          <Navbar />
          <Header
