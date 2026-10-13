@@ -14,11 +14,36 @@ import Leadership from "../components/about-us/leadership";
 import Banner from "@/components/home/new-home/banner";
 
 const AboutUs = () => {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About Us | CodeAlgo Academy",
+    description:
+      "CodeAlgo Academy teaches kids coding through game-based learning. Learn about our mission and team.",
+    url: "https://codealgoacademy.com/about",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+    },
+    about: {
+      "@type": "EducationalOrganization",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+    },
+  };
   return (
     <>
      <Head>
         <title>About Us | CodeAlgo Academy</title>
         <meta name="description" content="CodeAlgo Academy teaches kids coding through game-based learning. Learn about our mission and team." />
+        <link rel="canonical" href="https://codealgoacademy.com/about" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
       </Head>
       <section className="min-h-screen w-full bg-[#FFFFFF] pb-6 font-thabit">
         <Navbar />

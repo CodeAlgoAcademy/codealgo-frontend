@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Head from "next/head";
 import { FileText, Shield, Users, CheckCircle, Info } from "lucide-react";
 import Navbar from "@/components/navbar/home/Navbar";
 
@@ -47,8 +48,36 @@ const CodeAlgoLegalDocs = () => {
       setAcceptedDocs((prev) => ({ ...prev, [docType]: true }));
    };
 
+   const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Privacy Policy | CodeAlgo Academy",
+      description:
+         "CodeAlgo Academy's privacy policy, terms of service, EULA, COPPA compliance, data privacy agreement, and parental consent.",
+      url: "https://codealgoacademy.com/privacy-policy",
+      isPartOf: {
+         "@type": "WebSite",
+         name: "CodeAlgo Academy",
+         url: "https://codealgoacademy.com",
+      },
+   };
+
    return (
       <div className="min-h-screen bg-gray-50 ">
+         <Head>
+            <title>Privacy Policy | CodeAlgo Academy</title>
+            <meta
+               name="description"
+               content="Read how CodeAlgo Academy protects children's data, including our privacy policy, terms of service, COPPA compliance, and parental consent."
+            />
+            <link rel="canonical" href="https://codealgoacademy.com/privacy-policy" />
+            <script
+               type="application/ld+json"
+               dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(jsonLd),
+               }}
+            />
+         </Head>
          <Navbar />
          <div className="sticky top-0 z-10 border-b bg-white">
             <div className="mx-auto max-w-7xl">

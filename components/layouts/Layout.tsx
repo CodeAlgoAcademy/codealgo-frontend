@@ -41,7 +41,7 @@ const Layout = ({ children }: Props) => {
          "/signup/student",
          "/signup/parent",
          "/signup/organizer",
-         "/about-us",
+         "/about",
          "/contact",
          "/privacy-policy",
       ];

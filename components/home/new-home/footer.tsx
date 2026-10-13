@@ -74,7 +74,7 @@ const Footer = () => {
          sublinks: [
             {
                title: t("aboutUs"),
-               href: "/about-us",
+               href: "/about",
             },
             {
                title: t("press"),
