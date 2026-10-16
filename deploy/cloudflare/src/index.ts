@@ -22,6 +22,9 @@ export interface Env {
 
 const CONTAINER_PORT = 3000;
 
+/** The custom domains in wrangler.jsonc. */
+const PUBLIC_HOSTS = new Set(["codealgoacademy.com", "www.codealgoacademy.com"]);
+
 /**
  * How many containers to spread requests over. Must be <= max_instances in
  * wrangler.jsonc; anything above it just queues on containers that will never
@@ -101,6 +104,13 @@ export default {
     // check pointed here does not itself keep the thing warm and bill you.
     if (url.pathname === "/__edge/ping") {
       return new Response("pong", { status: 200 });
+    }
+
+    // Custom domains accept plain HTTP too, and nothing upstream upgrades it.
+    // Only the public hosts are redirected, so `wrangler dev` on localhost works.
+    if (url.protocol === "http:" && PUBLIC_HOSTS.has(url.hostname)) {
+      url.protocol = "https:";
+      return Response.redirect(url.toString(), 301);
     }
 
     // Random rather than round robin: there is no shared counter to keep at

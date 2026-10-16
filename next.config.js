@@ -18,6 +18,11 @@ const securityHeaders = [
    { key: "X-XSS-Protection", value: "1; mode=block" },
    // Prevent MIME sniffing
    { key: "X-Content-Type-Options", value: "nosniff" },
+   // Remember HTTPS for a year. No includeSubDomains: that would also force it
+   // on blog., play. and admin., which this config has no say over.
+   { key: "Strict-Transport-Security", value: "max-age=31536000" },
+   // Browsers' default, made explicit: full URL same-origin, origin only cross-origin.
+   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
    {
       key: "Content-Security-Policy",
       value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),

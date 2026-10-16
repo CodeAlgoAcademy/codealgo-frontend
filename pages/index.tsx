@@ -7,7 +7,7 @@ import VoiceOfOurCommunity from "@/components/home/new-home/voice-of-our-communi
 import GetStarted from "@/components/home/new-home/get-started";
 import CodeToSuccess from "@/components/home/new-home/code-to-success";
 import AsSeenIs from "@/components/home/new-home/as-seen-in";
-import Footer from "@/components/home/new-home/footer";
+import Footer, { socials } from "@/components/home/new-home/footer";
 import { WinterBanner } from "@/components/home/new-home/winter-banner";
 import ValuePropositions from "@/components/home/new-home/ValuePropositions";
 import Navbar from "@/components/navbar/home/Navbar";
@@ -21,23 +21,37 @@ import CharterSchoolsSection from "@/components/home/new-home/CharterSchoolsSect
 const Home: NextPage = () => {
    const jsonLd = {
    "@context": "https://schema.org",
-   "@type": "WebSite",
-   name: "CodeAlgo Academy",
-   url: "https://codealgoacademy.com",
-   description:
-      "CodeAlgo Academy teaches kids ages 5-14 coding through fun, game-based lessons, real projects, and interactive learning.",
-   publisher: {
-      "@type": "Organization",
-      name: "CodeAlgo Academy",
-      url: "https://codealgoacademy.com",
-   },
+   "@graph": [
+      {
+         "@type": "WebSite",
+         "@id": "https://codealgoacademy.com/#website",
+         name: "CodeAlgo Academy",
+         url: "https://codealgoacademy.com",
+         description:
+            "CodeAlgo Academy teaches kids ages 5-14 coding through fun, game-based lessons, real projects, and interactive learning.",
+         publisher: { "@id": "https://codealgoacademy.com/#organization" },
+      },
+      {
+         "@type": "EducationalOrganization",
+         "@id": "https://codealgoacademy.com/#organization",
+         name: "CodeAlgo Academy",
+         url: "https://codealgoacademy.com",
+         logo: "https://codealgoacademy.com/assets/CodeAlgo_Logo.png",
+         email: "info@codealgoacademy.com",
+         address: {
+            "@type": "PostalAddress",
+            addressLocality: "Kansas City",
+            addressRegion: "MO",
+            addressCountry: "US",
+         },
+         sameAs: socials.map((social) => social.link),
+      },
+   ],
 };
    return (
       <div className="relative bg-white" suppressHydrationWarning>
         <Head>
-   <title>
-      Kids Coding Classes Online | Learn Programming for Children | CodeAlgo Academy
-   </title>
+   <title>Kids Coding Classes Online | CodeAlgo Academy</title>
 
    <meta
       name="description"

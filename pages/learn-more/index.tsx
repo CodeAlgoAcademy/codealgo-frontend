@@ -8,6 +8,20 @@ import { useTranslation } from "react-i18next";
 
 export default function LearnMore() {
   const { t } = useTranslation("pages");
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "What Is Coding? A Beginner's Guide | CodeAlgo Academy",
+    description:
+      "New to coding? Learn what coding and software engineering are, what you can build, which big companies hire coders, and what beginners earn.",
+    url: "https://codealgoacademy.com/learn-more",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+    },
+    about: { "@type": "Thing", name: "Computer programming" },
+  };
   return (
     <>
       <Head>
@@ -17,6 +31,12 @@ export default function LearnMore() {
           content="New to coding? Learn what coding and software engineering are, what you can build, which big companies hire coders, and what beginners earn."
         />
         <link rel="canonical" href="https://codealgoacademy.com/learn-more" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
       </Head>
       <Navbar />
       <div className="max-w-6xl mx-auto px-4 py-8">
