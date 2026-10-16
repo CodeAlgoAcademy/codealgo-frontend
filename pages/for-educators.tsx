@@ -10,11 +10,34 @@ import { useTranslation } from "react-i18next";
 
 const TeachersResources = () => {
    const { t } = useTranslation("pages");
+   const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: t("forEducatorsTitle"),
+      description: t("forEducatorsDescription"),
+      url: "https://codealgoacademy.com/for-educators",
+      isPartOf: {
+         "@type": "WebSite",
+         name: "CodeAlgo Academy",
+         url: "https://codealgoacademy.com",
+      },
+      audience: {
+         "@type": "EducationalAudience",
+         educationalRole: "teacher",
+      },
+   };
    return (
       <div className="min-h-screen font-thabit">
   <Head>
         <title>{t("forEducatorsTitle")}</title>
         <meta name="description" content={t("forEducatorsDescription")} />
+        <link rel="canonical" href="https://codealgoacademy.com/for-educators" />
+        <script
+           type="application/ld+json"
+           dangerouslySetInnerHTML={{
+              __html: JSON.stringify(jsonLd),
+           }}
+        />
       </Head>
 
          <Navbar />

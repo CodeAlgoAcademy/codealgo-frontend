@@ -8,11 +8,33 @@ import { BsBagFill, BsPinMapFill } from "react-icons/bs";
 import Head from "next/head";
 
 const StudentInternships = () => {
+   // Plain WebPage on purpose: the job cards below are placeholders, and
+   // JobPosting markup must only describe real, open positions.
+   const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Student Internships | CodeAlgo Academy",
+      description:
+         "Real-world coding internship opportunities for student developers. Build your portfolio and gain experience with CodeAlgo Academy.",
+      url: "https://codealgoacademy.com/student-internships",
+      isPartOf: {
+         "@type": "WebSite",
+         name: "CodeAlgo Academy",
+         url: "https://codealgoacademy.com",
+      },
+   };
    return (
       <div className="relative overflow-x-hidden bg-white">
          <Head>
-  <title>Student Internships | Coding Experience for Teens | CodeAlgo Academy</title>
+  <title>Student Internships | CodeAlgo Academy</title>
   <meta name="description" content="Real-world coding internship opportunities for student developers. Build your portfolio and gain experience with CodeAlgo Academy." />
+  <link rel="canonical" href="https://codealgoacademy.com/student-internships" />
+  <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{
+        __html: JSON.stringify(jsonLd),
+     }}
+  />
 </Head>
          <Navbar />
          <Banner />

@@ -11,11 +11,34 @@ import ParentResourcesForm from "utils/kit";
 
 const ParentsResources = () => {
   const { t } = useTranslation("pages");
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: t("forParentsTitle"),
+    description: t("forParentsDescription"),
+    url: "https://codealgoacademy.com/for-parents",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "CodeAlgo Academy",
+      url: "https://codealgoacademy.com",
+    },
+    audience: {
+      "@type": "PeopleAudience",
+      audienceType: "Parents and guardians",
+    },
+  };
   return (
     <div className="min-h-screen font-thabit">
         <Head>
         <title>{t("forParentsTitle")}</title>
         <meta name="description" content={t("forParentsDescription")} />
+        <link rel="canonical" href="https://codealgoacademy.com/for-parents" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
       </Head>
       <Navbar />
 
