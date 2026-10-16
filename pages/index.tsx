@@ -49,6 +49,11 @@ const Home: NextPage = () => {
       href="https://codealgoacademy.com"
    />
 
+   {/* VoiceOfOurCommunity loads its avatars from DiceBear, and
+       TeachersSection embeds YouTube videos further down the page. */}
+   <link rel="preconnect" href="https://api.dicebear.com" />
+   <link rel="dns-prefetch" href="https://www.youtube.com" />
+
    <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{

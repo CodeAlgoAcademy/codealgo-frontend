@@ -30,6 +30,11 @@ const ParentsResources = () => {
   return (
     <>
      <Head>
+   <title>Parent Resources | CodeAlgo Academy</title>
+   <meta
+      name="description"
+      content="Help your child learn to code at home: getting-started guides, online safety tips, screen time controls, progress tracking, and family coding activities."
+   />
    <link
       rel="canonical"
       href="https://codealgoacademy.com/parents-resources"

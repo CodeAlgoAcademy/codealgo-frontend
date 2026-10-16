@@ -33,6 +33,11 @@ const TeachersResources = () => {
    return (
       <>
        <Head>
+   <title>Teacher Resources | CodeAlgo Academy</title>
+   <meta
+      name="description"
+      content="Coding resources for teachers: classroom setup guides, curriculum and lesson plans, assessment tools, and progress reports for teaching computer science."
+   />
    <link
       rel="canonical"
       href="https://codealgoacademy.com/teachers-resources"

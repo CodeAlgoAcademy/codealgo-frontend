@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
 import http from "axios.config";
 import Image from "next/image";
+import Link from "next/link";
 import TawkToWidget from "public/TawkToWidget";
 import { ChangeEvent, useState } from "react";
 import { BiEnvelopeOpen, BiMapPin } from "react-icons/bi";
@@ -13,6 +14,15 @@ import { TbThumbUp } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import { closePreloader, openErrorModal, openPreloader } from "store/fetchSlice";
 import { useTranslation } from "react-i18next";
+
+const contactTopics = [
+   { key: "parents", href: "/parents-resources" },
+   { key: "schools", href: "/teachers-resources" },
+   { key: "training", href: "/dev-forum" },
+   { key: "billing", href: "/pricing" },
+   { key: "support", href: "/faq" },
+   { key: "press", href: "/press" },
+];
 
 const Contact = () => {
    const [email, setEmail] = useState("");
@@ -203,6 +213,25 @@ const Contact = () => {
                      </form>
                   </div>
                </div>
+
+               <section className="mb-16 rounded-2xl bg-[#f4f6f9] p-8 max-md:p-4">
+                  <h2 className="text-center font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">{t("contactHelp.heading")}</h2>
+                  <p className="mx-auto mt-2 mb-10 max-w-[800px] text-center text-gray-600">{t("contactHelp.intro")}</p>
+
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                     {contactTopics.map(({ key, href }) => (
+                        <article key={key} className="flex flex-col rounded-2xl bg-white p-5">
+                           <h3 className="font-thabit text-[1.2rem] font-bold">{t(`contactHelp.topics.${key}.title`)}</h3>
+                           <p className="mt-2 flex-1 text-[.9rem] text-gray-700">{t(`contactHelp.topics.${key}.body`)}</p>
+                           <Link href={href}>
+                              <a className="mt-4 text-[.9rem] font-bold text-mainRed underline">{t(`contactHelp.topics.${key}.link`)}</a>
+                           </Link>
+                        </article>
+                     ))}
+                  </div>
+
+                  <p className="mx-auto mt-10 max-w-[800px] text-center text-gray-600">{t("contactHelp.closing")}</p>
+               </section>
             </div>
 
              <TawkToWidget />

@@ -12,10 +12,15 @@ class MyDocument extends Document {
       return (
          <Html lang="en" suppressHydrationWarning>
             <Head>
-               <meta
-                  name="description"
-                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
-               />
+               {/* No <title> or description here. _document tags can't be
+                   overridden by next/head, so every page would ship a second,
+                   identical description. The fallback lives in _app.tsx. */}
+
+               <link rel="icon" href="/favicon.ico" sizes="any" />
+               <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+               {/* gtag.js is loaded on every page (see <Script> below). */}
+               <link rel="preconnect" href="https://www.googletagmanager.com" />
 
                {/* <!-- Facebook Meta Tags --> */}
                <meta property="og:url" content="https://www.codealgoacademy.com" />
@@ -38,11 +43,6 @@ class MyDocument extends Document {
                   content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
                />
                <meta name="twitter:image" content="https://res.cloudinary.com/denettr1i/image/upload/v1742451547/codealgo.png" />
-               <meta name="title" content="CodeAlgo Academy" />
-               <meta
-                  name="description"
-                  content="3D games from CodeAlgo academy will bring students to computer sciences where they can teach themselves as they play."
-               />
             </Head>
             <body>
                <Main />
