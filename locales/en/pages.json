@@ -247,5 +247,42 @@
 "teacherFaqQ6": "How do I generate progress reports for parents?",
 "teacherFaqA6": "Go to Reports > Student Progress in your dashboard. Select individual students or entire classes, choose the date range, and click Generate Report. Reports can be exported as PDF or shared directly via email to parents.",
 "teacherFaqQ7": "How do I manage student accounts?",
-"teacherFaqA7": "In your Classroom Settings, you can add, remove, or edit student profiles. Reset passwords, transfer students between classes, and set individual learning paths. Bulk import is available via CSV for larger classes."
+"teacherFaqA7": "In your Classroom Settings, you can add, remove, or edit student profiles. Reset passwords, transfer students between classes, and set individual learning paths. Bulk import is available via CSV for larger classes.",
+  "contactHelp": {
+    "heading": "How can we help?",
+    "intro": "Choose the topic closest to your question. You can send us a message with the form above or email info@codealgoacademy.com, and the more detail you include, the faster we can help.",
+    "closing": "CodeAlgo Academy is based in Kansas City, Missouri, and works with families, teachers, schools, and partners who want every child to learn to code. You can also reach us through the chat window on this page or on social media using the links above.",
+    "topics": {
+      "parents": {
+        "title": "Parents and families",
+        "body": "Questions about creating your child's account, parental permissions, screen time limits, or tracking progress in the Parent Hub? Our parent resources cover the basics, and we are happy to help with anything else.",
+        "link": "Parent resources"
+      },
+      "schools": {
+        "title": "Teachers and schools",
+        "body": "Ask us about setting up a classroom, rostering students with Clever or Google Classroom, standards alignment with TEKS, CCSS, and B.E.S.T., or licensing for schools and charter networks.",
+        "link": "Teacher resources"
+      },
+      "training": {
+        "title": "Professional development",
+        "body": "Schedule an in-person or virtual workshop for your educators, from a first introduction to CodeAlgo through best practices and feature refreshers.",
+        "link": "Professional development program"
+      },
+      "billing": {
+        "title": "Plans and billing",
+        "body": "Questions about monthly or annual plans, the free trial, or cancelling a subscription? Compare plans on our pricing page or send us a message.",
+        "link": "View pricing"
+      },
+      "support": {
+        "title": "Technical support",
+        "body": "Report a bug or get help with logging in, devices, or browsers by emailing support@codealgoacademy.com. Tell us your account type and the device and browser you are using, and include a screenshot if you can.",
+        "link": "Read the FAQ"
+      },
+      "press": {
+        "title": "Press and partnerships",
+        "body": "Writing about CodeAlgo Academy, inviting us to an event, or interested in partnering with us? Send us a message and we will connect you with the right person on our team.",
+        "link": "Press and media"
+      }
+    }
+  }
 }

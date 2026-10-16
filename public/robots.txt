@@ -1,0 +1,21 @@
+# Public marketing pages are open to every crawler, including AI search bots.
+# Dashboards and one-off account flows are kept out of the crawl.
+#
+# /teachers and /parents are prefix matches, so the public resource pages that
+# share the prefix are allowed back in. Crawlers use the longest matching rule.
+
+User-agent: *
+Allow: /
+Allow: /teachers-resources
+Allow: /parents-resources
+Disallow: /api/
+Disallow: /teachers
+Disallow: /parents
+Disallow: /organizers
+Disallow: /payment
+Disallow: /add-student
+Disallow: /change-password
+Disallow: /verify-email
+Disallow: /r/
+
+Sitemap: https://codealgoacademy.com/sitemap.xml

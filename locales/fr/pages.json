@@ -247,5 +247,42 @@
 "teacherFaqQ6": "Comment générer des rapports de progression pour les parents ?",
 "teacherFaqA6": "Allez dans Rapports > Progression des élèves dans votre tableau de bord. Sélectionnez des élèves individuels ou des classes entières, choisissez la période et cliquez sur Générer le rapport. Les rapports peuvent être exportés en PDF ou partagés directement par e-mail aux parents.",
 "teacherFaqQ7": "Comment gérer les comptes des élèves ?",
-"teacherFaqA7": "Dans les paramètres de votre classe, vous pouvez ajouter, supprimer ou modifier les profils des élèves. Réinitialiser les mots de passe, transférer des élèves entre les classes et définir des parcours d'apprentissage individuels. L'importation groupée par CSV est disponible pour les classes plus grandes."
+"teacherFaqA7": "Dans les paramètres de votre classe, vous pouvez ajouter, supprimer ou modifier les profils des élèves. Réinitialiser les mots de passe, transférer des élèves entre les classes et définir des parcours d'apprentissage individuels. L'importation groupée par CSV est disponible pour les classes plus grandes.",
+  "contactHelp": {
+    "heading": "Comment pouvons-nous vous aider ?",
+    "intro": "Choisissez le sujet le plus proche de votre question. Vous pouvez nous écrire avec le formulaire ci-dessus ou par e-mail à info@codealgoacademy.com. Plus votre message est détaillé, plus nous pourrons vous aider rapidement.",
+    "closing": "CodeAlgo Academy est basée à Kansas City, dans le Missouri, et travaille avec des familles, des enseignants, des écoles et des partenaires qui veulent que chaque enfant apprenne à coder. Vous pouvez aussi nous joindre via la fenêtre de discussion de cette page ou sur les réseaux sociaux grâce aux liens ci-dessus.",
+    "topics": {
+      "parents": {
+        "title": "Parents et familles",
+        "body": "Des questions sur la création du compte de votre enfant, les autorisations parentales, les limites de temps d'écran ou le suivi des progrès dans l'espace parent ? Nos ressources pour les parents couvrent l'essentiel, et nous serons ravis de vous aider pour le reste.",
+        "link": "Ressources pour les parents"
+      },
+      "schools": {
+        "title": "Enseignants et écoles",
+        "body": "Interrogez-nous sur la configuration d'une classe, l'inscription des élèves avec Clever ou Google Classroom, l'alignement sur les normes TEKS, CCSS et B.E.S.T., ou les licences pour les écoles et les réseaux d'écoles à charte.",
+        "link": "Ressources pour les enseignants"
+      },
+      "training": {
+        "title": "Développement professionnel",
+        "body": "Planifiez un atelier en présentiel ou à distance pour vos enseignants, de la première découverte de CodeAlgo aux bonnes pratiques et aux mises à jour des fonctionnalités.",
+        "link": "Programme de développement professionnel"
+      },
+      "billing": {
+        "title": "Offres et facturation",
+        "body": "Des questions sur les abonnements mensuels ou annuels, l'essai gratuit ou la résiliation ? Comparez les offres sur notre page de tarifs ou envoyez-nous un message.",
+        "link": "Voir les tarifs"
+      },
+      "support": {
+        "title": "Assistance technique",
+        "body": "Signalez un bug ou obtenez de l'aide pour la connexion, les appareils ou les navigateurs en écrivant à support@codealgoacademy.com. Indiquez votre type de compte, l'appareil et le navigateur utilisés, et joignez une capture d'écran si possible.",
+        "link": "Lire la FAQ"
+      },
+      "press": {
+        "title": "Presse et partenariats",
+        "body": "Vous écrivez sur CodeAlgo Academy, souhaitez nous inviter à un événement ou envisagez un partenariat ? Envoyez-nous un message et nous vous mettrons en relation avec la bonne personne de notre équipe.",
+        "link": "Presse et médias"
+      }
+    }
+  }
 }

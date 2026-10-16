@@ -1,5 +1,6 @@
 import Footer, { socials } from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
+import Head from "next/head";
 import { codingLanguages, fortune10Companies, salaryByRegion, thingsYouCanCreate, whatTheyDo } from "public/learnmore.data";
 import React from 'react';
 import { FaCode, FaLaptopCode } from "react-icons/fa";
@@ -9,6 +10,14 @@ export default function LearnMore() {
   const { t } = useTranslation("pages");
   return (
     <>
+      <Head>
+        <title>What Is Coding? A Beginner&apos;s Guide | CodeAlgo Academy</title>
+        <meta
+          name="description"
+          content="New to coding? Learn what coding and software engineering are, what you can build, which big companies hire coders, and what beginners earn."
+        />
+        <link rel="canonical" href="https://codealgoacademy.com/learn-more" />
+      </Head>
       <Navbar />
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Hero Section */}

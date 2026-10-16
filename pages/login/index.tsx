@@ -1,4 +1,5 @@
 import SelectAccountType from "@/components/miscellaneous/selectAccountType";
+import AccountTypeGuide from "@/components/miscellaneous/accountTypeGuide";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,6 +24,11 @@ export default function SelectUserType() {
    return (
    <>
  <Head>
+   <title>Log In | CodeAlgo Academy</title>
+   <meta
+      name="description"
+      content="Log in to CodeAlgo Academy as a parent, teacher, organization admin, or student. Get help with student login cards, password resets, and account access."
+   />
    <link
       rel="canonical"
       href="https://codealgoacademy.com/login"
@@ -36,6 +42,7 @@ export default function SelectUserType() {
    />
 </Head>
    <SelectAccountType />
+   <AccountTypeGuide variant="login" />
    </>
 );
 }

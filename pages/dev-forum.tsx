@@ -3,6 +3,7 @@ import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 
 const DevForum = () => {
@@ -101,6 +102,64 @@ const DevForum = () => {
                         subtitle="This session offers a quick overview of our latest features and gives educators the chance to revisit tools and functions where they need extra guidance."
                      />
                   </div>
+               </section>
+
+               <section className="mt-16">
+                  <h2 className="text-center font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">
+                     Who the Program Is For
+                  </h2>
+
+                  <div className="mt-8 grid gap-8 md:grid-cols-3">
+                     <SingleForumInfo
+                        title="Classroom Teachers"
+                        subtitle="Teachers bringing coding into their classroom for the first time, as well as experienced CodeAlgo users who want to get more out of the platform."
+                     />
+
+                     <SingleForumInfo
+                        title="School and Program Leaders"
+                        subtitle="Administrators and coordinators rolling CodeAlgo out across a school, district, charter network, or after-school program."
+                     />
+
+                     <SingleForumInfo
+                        title="Technology and Curriculum Staff"
+                        subtitle="Staff who look after rostering, devices, and standards alignment, and need to know how CodeAlgo fits into the tools the school already uses."
+                     />
+                  </div>
+               </section>
+
+               <section className="mt-16 rounded-2xl bg-[#f4f6f9] p-8 max-md:p-4">
+                  <h2 className="text-center font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">
+                     What Educators Will Learn
+                  </h2>
+
+                  <ul className="mx-auto mt-8 max-w-[800px] list-disc space-y-3 pl-6 text-[1rem] max-md:text-[.9rem]">
+                     <li>Set up classes and add students with Clever, Google Classroom, or manual entry.</li>
+                     <li>Print student login cards with QR codes so younger students can sign in on their own.</li>
+                     <li>Assign lessons and use adaptive learning paths so each student works at their own level and pace.</li>
+                     <li>Read progress reports to spot who needs support and who is ready for a new challenge.</li>
+                     <li>Connect CodeAlgo lessons to state standards, including TEKS, CCSS, and B.E.S.T.</li>
+                     <li>Run CodeAlgo in the browser on the Chromebooks and computers your school already has.</li>
+                  </ul>
+               </section>
+
+               <section className="mt-16 text-center">
+                  <h2 className="font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">
+                     Bring a Workshop to Your School
+                  </h2>
+
+                  <p className="mx-auto mt-4 max-w-[800px] text-[1.1rem] font-light max-md:text-[.9rem]">
+                     Workshops run in person or virtually. Pick the session that
+                     matches your team&apos;s experience with CodeAlgo, from a first
+                     introduction to a refresher on our newest features. To schedule
+                     a session or ask about options for your school, get in touch
+                     with our team.
+                  </p>
+
+                  <Link href="/contact">
+                     <a className="mt-6 inline-block rounded-full bg-mainRed px-8 py-3 font-bold text-white">
+                        Contact Us
+                     </a>
+                  </Link>
                </section>
             </main>
 

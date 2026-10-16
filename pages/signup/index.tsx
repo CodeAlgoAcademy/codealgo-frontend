@@ -1,4 +1,5 @@
 import SelectAccountType from "@/components/miscellaneous/selectAccountType";
+import AccountTypeGuide from "@/components/miscellaneous/accountTypeGuide";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -45,6 +46,7 @@ export default function SelectUserType() {
 </Head>
 
          <SelectAccountType />
+         <AccountTypeGuide variant="signup" />
       </>
    );
 }

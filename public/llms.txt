@@ -1,0 +1,33 @@
+# CodeAlgo Academy
+
+> CodeAlgo Academy is a game-based coding platform for kids. Students learn block coding, Python, math, and AI literacy through quests and challenges in a 3D game world, while parents and teachers manage accounts, set screen time, and track progress.
+
+CodeAlgo Academy is based in Kansas City, Missouri, and serves families, classroom teachers, and schools, including charter school networks. Lessons run in any modern web browser, including on school Chromebooks, and adapt to each student's level. The curriculum is aligned with state computer science standards (TEKS, CCSS, B.E.S.T.), and teachers can roster students with Clever or Google Classroom. Parents get a Parent Hub with parental permissions, daily screen time limits, and progress tracking. Monthly and annual plans are available, with a free trial.
+
+## For families
+
+- [For Parents](https://codealgoacademy.com/for-parents): How CodeAlgo works for families, the kids coding curriculum, and how parents track their child's progress.
+- [Parent Resources](https://codealgoacademy.com/parents-resources): Getting-started guide, online safety tips, managing screen time, tracking progress, and family coding activities.
+- [Pricing](https://codealgoacademy.com/pricing): Monthly and annual subscription plans and the free trial.
+- [What's All This Coding About?](https://codealgoacademy.com/learn-more): A beginner's guide to coding, software engineering, and coding careers.
+
+## For educators and schools
+
+- [For Educators](https://codealgoacademy.com/for-educators): Bringing CodeAlgo Academy into the classroom, with tools and resources for teachers.
+- [Teacher Resources](https://codealgoacademy.com/teachers-resources): Classroom setup, curriculum guide, lesson plans, assessment tools, and progress reports.
+- [Professional Development Program](https://codealgoacademy.com/dev-forum): In-person and virtual workshops that help educators use CodeAlgo effectively.
+- [Impact and Case Studies](https://codealgoacademy.com/case-studies): Outcomes from CodeAlgo programs in math, AI literacy, coding, and workforce development for Kansas City students.
+
+## About CodeAlgo Academy
+
+- [About Us](https://codealgoacademy.com/about): Mission, leadership team, and approach to game-based learning.
+- [FAQ](https://codealgoacademy.com/faq): Answers about accounts, devices, saving progress, subscriptions, the free trial, and child safety.
+- [Press and Media](https://codealgoacademy.com/press): News coverage, awards, and announcements.
+- [Contact](https://codealgoacademy.com/contact): Contact form, info@codealgoacademy.com for general questions, and support@codealgoacademy.com for technical support.
+
+## Optional
+
+- [Blog](https://codealgoacademy.com/blog): Articles on kids coding education and learning to program.
+- [Student Internships](https://codealgoacademy.com/student-internships): Coding internship opportunities for student developers.
+- [Sign Up](https://codealgoacademy.com/signup): Create a parent, teacher, or student account.
+- [Privacy Policy](https://codealgoacademy.com/privacy-policy): Privacy policy, terms of service, EULA, COPPA compliance, data privacy agreement, and parental consent.
