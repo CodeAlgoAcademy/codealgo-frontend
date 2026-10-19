@@ -284,5 +284,30 @@
         "link": "Presse et médias"
       }
     }
+  },
+  "pricingFaq": {
+    "heading": "Questions sur les tarifs",
+    "items": [
+      {
+        "question": "Y a-t-il un essai gratuit ?",
+        "answer": "Oui. Vous pouvez commencer par un essai gratuit et découvrir CodeAlgo Academy avant de choisir une offre. Aucune carte bancaire n'est nécessaire pour commencer."
+      },
+      {
+        "question": "Puis-je payer au mois ou à l'année ?",
+        "answer": "Oui. Les offres pour les parents et les familles sont disponibles avec une facturation mensuelle ou annuelle. Choisissez l'offre qui convient à votre famille ci-dessus, puis connectez-vous à votre compte parent pour finaliser le paiement."
+      },
+      {
+        "question": "Puis-je résilier à tout moment ?",
+        "answer": "Oui. Vous pouvez résilier votre abonnement à tout moment et gardez ainsi toujours le contrôle de votre offre."
+      },
+      {
+        "question": "Comment fonctionnent les tarifs pour les écoles et les districts ?",
+        "answer": "Les tarifs pour les écoles et les districts dépendent du nombre d'écoles. Remplissez le formulaire d'achat groupé ci-dessous et notre équipe vous recontactera avec une proposition tarifaire pour votre district."
+      },
+      {
+        "question": "À qui m'adresser pour la facturation ?",
+        "answer": "Écrivez à info@codealgoacademy.com ou envoyez-nous un message depuis notre page de contact, et nous vous aiderons pour les offres et les paiements."
+      }
+    ]
   }
 }

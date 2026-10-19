@@ -23,9 +23,16 @@ const Pricing = () => {
 
    const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
    const [activeCategory, setActiveCategory] = useState<"parents" | "school">("parents");
+   // The slice starts with loading=false and no plans, which is also what "the
+   // fetch came back empty" looks like. Without this the server-rendered page
+   // (what crawlers read) and the first client frame both said "No Plan".
+   const [plansRequested, setPlansRequested] = useState(false);
+   const showShimmer = pricingHandlers.loading || (!plansRequested && plans.length === 0);
+   const pricingFaq = t("pricingFaq.items", { returnObjects: true }) as unknown as { question: string; answer: string }[];
 
    useEffect(() => {
       dispatch(getPricingPlans());
+      setPlansRequested(true);
    }, []);
 
    const handleGetStarted = () => {
@@ -83,7 +90,7 @@ const Pricing = () => {
                   t={t}
                />
 
-               {pricingHandlers.loading ? (
+               {showShimmer ? (
                   <div className="mt-16">
                      <PricingShimmer />
                   </div>
@@ -107,7 +114,7 @@ const Pricing = () => {
    />
 )}
 
-{activeCategory === "parents" && !pricingHandlers.loading && plans.length === 0 && (
+{activeCategory === "parents" && plans.length === 0 && (
    <p className="col-span-2 text-center text-[1.2rem] text-gray-500">{t("noPlan")}</p>
 )}
 
@@ -115,6 +122,18 @@ const Pricing = () => {
                      </div>
                   </div>
                )}
+            </div>
+         </section>
+
+         <section className="mx-auto mb-16 max-w-[850px] px-6">
+            <h2 className="text-center text-[1.5rem] font-bold text-[#0B2C4A]">{t("pricingFaq.heading")}</h2>
+            <div className="mt-8 space-y-6">
+               {pricingFaq.map((item) => (
+                  <div key={item.question}>
+                     <h3 className="text-[1.1rem] font-bold text-[#0B2C4A]">{item.question}</h3>
+                     <p className="mt-1 text-gray-700">{item.answer}</p>
+                  </div>
+               ))}
             </div>
          </section>
 
