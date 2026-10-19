@@ -43,9 +43,9 @@ const AsSeenIs = () => {
          </div>
 
          {/* Heading */}
-         <h1 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">
+         <h2 className="text-center font-tiltWarp text-[2.1rem] max-md:text-[1.5rem]">
             {t("asSeenIn")}
-         </h1>
+         </h2>
 
          {/* Existing combined logos */}
          <div className="mx-auto mt-12 max-w-[1200px]">

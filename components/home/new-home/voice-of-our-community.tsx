@@ -206,7 +206,7 @@ const VoiceOfOurCommunity = () => {
       `}</style>
 
          <div className=" mx-auto mb-12 bg-mainColor px-4 text-center ">
-            <h1 className=" py-4 text-center font-tiltWarp text-[2.1rem] text-white max-md:text-[1.5rem]">{t("whatsTheWord")}</h1>
+            <h2 className=" py-4 text-center font-tiltWarp text-[2.1rem] text-white max-md:text-[1.5rem]">{t("whatsTheWord")}</h2>
             <p className="mx-auto max-w-2xl pb-5 text-lg text-white">{t("communitySubtitle")}</p>
          </div>
 
