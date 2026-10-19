@@ -2,7 +2,9 @@ import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Head from "next/head";
-import Image from "next/image";
+// next/future/image renders a single <img>. The legacy component adds a hidden
+// sizer <img alt=""> that audits count as an image missing alt text.
+import Image from "next/future/image";
 import Link from "next/link";
 import { FC } from "react";
 

@@ -284,5 +284,30 @@
         "link": "Press and media"
       }
     }
+  },
+  "pricingFaq": {
+    "heading": "Pricing questions",
+    "items": [
+      {
+        "question": "Is there a free trial?",
+        "answer": "Yes. You can start with a free trial and explore CodeAlgo Academy before you choose a plan. No credit card is required to start."
+      },
+      {
+        "question": "Can I pay monthly or yearly?",
+        "answer": "Yes. Parent and family plans come with monthly or annual billing. Pick the plan that suits your family above, then log in to your parent account to complete payment."
+      },
+      {
+        "question": "Can I cancel at any time?",
+        "answer": "Yes. You can cancel your subscription at any time, so you always stay in control of your plan."
+      },
+      {
+        "question": "How does pricing work for schools and districts?",
+        "answer": "School and district prices depend on the number of schools. Fill in the district bulk purchase form below and our team will get back to you with pricing for your district."
+      },
+      {
+        "question": "Who can I ask about billing?",
+        "answer": "Email info@codealgoacademy.com or send us a message from our contact page, and we will help you with plans and payments."
+      }
+    ]
   }
 }

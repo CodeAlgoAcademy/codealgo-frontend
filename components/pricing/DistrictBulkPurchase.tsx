@@ -60,9 +60,9 @@ const DistrictBulkPurchase = () => {
    return (
       <div className="mx-auto mb-24 max-w-[1200px] md:mt-12">
          <div className="w-full bg-gray-50 p-7 md:rounded-[2rem] md:p-20">
-            <h1 className="text-center text-[1.5rem] font-bold">
+            <h2 className="text-center text-[1.5rem] font-bold">
                {t("institutionInquiry")}
-            </h1>
+            </h2>
             <p className="mt-2 text-center text-[1.1rem] text-gray-600">
                {t("institutionDescription")}
             </p>
