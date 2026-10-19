@@ -46,9 +46,9 @@ const ParentsResources = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center gap-12 lg:flex-row">
             <div className="lg:w-1/2">
-              <h2 className="mb-4 text-3xl font-black text-gray-900 md:text-5xl">
+              <h1 className="mb-4 text-3xl font-black text-gray-900 md:text-5xl">
                 {t("supportingYourChild")}
-              </h2>
+              </h1>
               <p className="text-lg text-gray-600">
                 {t("empoweringParents")}
               </p>

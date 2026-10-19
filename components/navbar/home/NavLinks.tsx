@@ -19,14 +19,14 @@ const NavLinks = () => {
          {links.map((link, index) => (
             <div key={index}>
                <div className="group px-3 text-left md:cursor-pointer">
-                  <h1
+                  <p
                      className="group flex items-center justify-between py-7 pr-5 text-base font-semibold opacity-80 hover:opacity-70 md:pr-0"
                      onClick={() => active(link.name)}
                      data-testid="nav-header"
                   >
                      {link.name}
                      <span className="inline text-xl md:hidden">{heading === link.name ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
-                  </h1>
+                  </p>
                   {link.subMenu && (
                      <div>
                         <div className="absolute top-20 z-50 hidden hover:md:block group-hover:md:block">

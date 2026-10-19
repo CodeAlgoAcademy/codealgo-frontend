@@ -119,7 +119,7 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link, close }, ref
                onClick={() => setIsOpen(!isOpen)}
                className="flex items-center justify-between p-4 hover:bg-black/10 cursor-pointer"
             >
-               <h1 className="text-[1.3rem]">{tHome(link.name)}</h1>
+               <p className="text-[1.3rem]">{tHome(link.name)}</p>
                <span className="text-white">{isOpen ? <BiChevronUp size={25} /> : <BiChevronDown size={25} />}</span>
             </header>
          ) : (
@@ -128,7 +128,7 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link, close }, ref
                onClick={close}
                className="flex items-center justify-between p-4 hover:bg-black/10 cursor-pointer"
             >
-               <h1 className="text-[1.3rem]">{tHome(link.name)}</h1>
+               <p className="text-[1.3rem]">{tHome(link.name)}</p>
             </Link>
          )}
 

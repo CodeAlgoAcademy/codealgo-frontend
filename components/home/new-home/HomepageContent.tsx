@@ -67,9 +67,9 @@ const HomepageContent = () => {
       <section className="bg-white px-4 py-20 sm:px-6">
          <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
-               <h1 className="mb-6 font-tiltWarp text-4xl leading-tight text-mainBlack md:text-5xl lg:text-6xl">
+               <h2 className="mb-6 font-tiltWarp text-4xl leading-tight text-mainBlack md:text-5xl lg:text-6xl">
                   {t("codingPlatformForKids")}
-               </h1>
+               </h2>
                <p className="mx-auto max-w-3xl font-workSans text-base text-mainBlack/60 md:text-xl">
                   {t("heroDescription")}
                </p>

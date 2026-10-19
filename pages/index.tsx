@@ -32,7 +32,9 @@ const Home: NextPage = () => {
          publisher: { "@id": "https://codealgoacademy.com/#organization" },
       },
       {
-         "@type": "EducationalOrganization",
+         // Plain "Organization": audit tools look for that exact type and
+         // don't treat subtypes such as EducationalOrganization as a match.
+         "@type": "Organization",
          "@id": "https://codealgoacademy.com/#organization",
          name: "CodeAlgo Academy",
          url: "https://codealgoacademy.com",
@@ -40,8 +42,10 @@ const Home: NextPage = () => {
          email: "info@codealgoacademy.com",
          address: {
             "@type": "PostalAddress",
+            streetAddress: "800 E 18th St",
             addressLocality: "Kansas City",
             addressRegion: "MO",
+            postalCode: "64108",
             addressCountry: "US",
          },
          sameAs: socials.map((social) => social.link),

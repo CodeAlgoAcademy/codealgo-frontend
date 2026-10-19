@@ -46,7 +46,7 @@ const TeachersResources = () => {
             <div className="container mx-auto px-4 ">
                <div className="flex flex-col items-center gap-12 lg:flex-row">
                   <div className="lg:w-1/2">
-                     <h2 className="mb-4 text-3xl font-black text-mainBlack md:text-5xl">{t("stemResourcesForClassroom")}</h2>
+                     <h1 className="mb-4 text-3xl font-black text-mainBlack md:text-5xl">{t("stemResourcesForClassroom")}</h1>
                      <p className="tex-lg text-lg text-gray-600">{t("teachingTechnologyEasier")}</p>
                   </div>
                   <div className="lg:w-1/2">
