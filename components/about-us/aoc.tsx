@@ -14,7 +14,12 @@ const Footer = () => {
                </button>
             </Link>
          </div>
-         <img src="/assets/0008_1.png" alt="" className="absolute right-0 top-0 z-[0] hidden h-[300px] w-fit object-contain md:block" />
+         <img
+            src="/assets/0008_1.png"
+            alt="CodeAlgo donut character"
+            loading="lazy"
+            className="absolute right-0 top-0 z-[0] hidden h-[300px] w-fit object-contain md:block"
+         />
       </footer>
    );
 };
