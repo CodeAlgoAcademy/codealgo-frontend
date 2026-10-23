@@ -220,6 +220,45 @@ export const loginWithGoogle: any = createAsyncThunk("authSlice/loginWithGoogle"
    }
 });
 
+export interface IAppleLoginArg {
+   id_token: string;
+   nonce: string;
+   first_name?: string;
+   last_name?: string;
+   role?: string;
+}
+
+/**
+ * Sign in with Apple. The id_token comes from Apple's JS in the browser; the raw
+ * nonce goes with it because Apple only saw its hash, and /auth/apple/ refuses a
+ * token whose nonce does not match. New accounts are made with `role`.
+ */
+export const loginWithApple: any = createAsyncThunk("authSlice/loginWithApple", async (arg: IAppleLoginArg, thunkApi) => {
+   const dispatch = thunkApi.dispatch;
+
+   dispatch(openPreloader({ loadingText: "Signing in with Apple" }));
+
+   try {
+      const { data } = await http.post<{ access: string; refresh: string; user: any; is_new_user: boolean }>(
+         "/auth/apple/",
+         arg,
+         { headers: referralHeaders() },
+      );
+
+      dispatch(closePreloader());
+      track("login", { method: "apple", role: roleOf(data.user) });
+
+      return {
+         access_token: data.access,
+         refresh_token: data.refresh,
+         ...data.user,
+      };
+   } catch (error: any) {
+      dispatch(closePreloader());
+      return thunkApi.rejectWithValue(errorResolver(error));
+   }
+});
+
 export const updateAccountType: any = createAsyncThunk("authSlice/updateAccountType", async (accountType: string, thunkApi) => {
    const is_parent: boolean = accountType === "Parent";
    const is_teacher: boolean = accountType === "Teacher";

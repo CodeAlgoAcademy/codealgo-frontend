@@ -6,6 +6,7 @@ import {
    loginUser,
    signUpUser,
    loginWithGoogle,
+   loginWithApple,
    updateFirstname,
    updateLastname,
    updateEmail,
@@ -140,6 +141,16 @@ export const userSlice = createSlice({
 
          addUserToLocalStorage(action.payload);
 
+         return {
+            ...state,
+            ...action.payload,
+         };
+      });
+
+      builder.addCase(loginWithApple.fulfilled, (state: IUser, action: PayloadAction<IUser>) => {
+         if (!action.payload?.access_token) return state;
+
+         addUserToLocalStorage(action.payload);
          return {
             ...state,
             ...action.payload,

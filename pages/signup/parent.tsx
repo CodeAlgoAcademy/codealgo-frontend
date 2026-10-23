@@ -1,4 +1,5 @@
 import GoogleBtn from "@/components/UI/googleBtn";
+import AppleBtn from "@/components/UI/appleBtn";
 import Form1 from "@/components/stepForm/general/Form1";
 import Form2 from "@/components/stepForm/general/Form2";
 import Form3 from "@/components/stepForm/general/Form3";
@@ -97,6 +98,7 @@ export default function Parent() {
                      </button>
                   )}
                   {isFirstStep && <GoogleBtn />}
+                  {isFirstStep && <AppleBtn />}
                </div>
             </form>
          </AuthLayout>
