@@ -10,6 +10,7 @@ import { clearFields, updateUser } from "store/authSlice";
 import { RootState } from "store/store";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
+import AppleBtn from "@/components/UI/appleBtn";
 import Form3 from "@/components/stepForm/general/Form3";
 import { checkEmail } from "utils/checkmail";
 import Link from "next/link";
@@ -89,6 +90,7 @@ export default function Teacher() {
                   </button>
                )}
                {isFirstStep && <GoogleBtn />}
+               {isFirstStep && <AppleBtn />}
             </div>
          </form>
       </AuthLayout>

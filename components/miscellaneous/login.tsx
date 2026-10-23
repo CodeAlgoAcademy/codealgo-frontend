@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { loginUser } from "services/authService";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import GoogleBtn from "@/components/UI/googleBtn";
+import AppleBtn from "@/components/UI/appleBtn";
 import { updateUser } from "store/authSlice";
 import { openErrorModal } from "store/fetchSlice";
 import { AuthButton } from "../UI/Button";
@@ -147,6 +148,7 @@ const Login = ({ route }: { route?: any }) => {
                   </div>
                   <AuthButton text={t("logIn")} />
                   <GoogleBtn />
+                  <AppleBtn />
                </form>
             </>
          </AuthLayout>
