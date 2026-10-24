@@ -755,5 +755,14 @@
   "importFinish": "Terminé",
   "importDone": "Élèves importés",
   "importCloseWarning": "Avez-vous enregistré les identifiants? Les mots de passe ne seront plus affichés.",
-  "importClassList": "Importer une liste de classe (Excel, CSV, PDF)"
+  "importClassList": "Importer une liste de classe (Excel, CSV, PDF)",
+  "importOr": "ou",
+  "importFromGoogle": "Importer depuis Google Classroom",
+  "importPickCourse": "Choisissez la classe Google Classroom à importer.",
+  "importNoCourses": "Aucune classe Google Classroom active où vous êtes enseignant.",
+  "importLoadingRoster": "Chargement des élèves depuis Google Classroom...",
+  "importBack": "Retour",
+  "importGoogleFailed": "Impossible de se connecter à Google Classroom.",
+  "importGoogleSource": "Google Classroom",
+  "importChooseAnotherClass": "Choisir une autre classe"
 }
