@@ -16,6 +16,7 @@ import {
    googleCourses,
    googlePreview,
    IMPORT_CHUNK,
+   ImportOptions,
    ImportPreview,
    ImportResult,
    ImportRow,
@@ -23,6 +24,7 @@ import {
    previewImport,
    recheckImport,
 } from "services/studentImportService";
+import ImportColumnFixer from "./ImportColumnFixer";
 
 type Step = "upload" | "courses" | "review" | "importing" | "done";
 type Filter = "all" | "issues";
@@ -115,6 +117,8 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
    const [mounted, setMounted] = useState(false);
    const [googleToken, setGoogleToken] = useState("");
    const [courses, setCourses] = useState<GoogleCourse[]>([]);
+   const [file, setFile] = useState<File | null>(null);
+   const [busyText, setBusyText] = useState("");
 
    // Portal to body. Rendered inline it inherits the add student modal's
    // stacking context and the sidebar ends up on top of it.
@@ -132,6 +136,7 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
       return c;
    }, [rows]);
 
+   const multiSheet = (meta?.sheets || []).filter((s) => s.used).length > 1;
    const visibleRows = filter === "issues" ? rows.filter((r) => r.status !== "new" || r.messages.length) : rows;
 
    const showPreview = (preview: ImportPreview) => {
@@ -142,17 +147,34 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
       setStep("review");
    };
 
-   const handleFile = async (file?: File | null) => {
-      if (!file || !classId) return;
+   const handleFile = async (picked?: File | null) => {
+      if (!picked || !classId) return;
       setError("");
-      setFileName(file.name);
+      setFileName(picked.name);
+      setFile(picked);
       setBusy(true);
       try {
-         showPreview(await previewImport(classId, file));
+         showPreview(await previewImport(classId, picked));
       } catch (e: any) {
          setError(importErrorMessage(e, t("importReadFailed")));
       } finally {
          setBusy(false);
+      }
+   };
+
+   // Re-read the same file with the teacher's corrections, or with AI.
+   const reparse = async (options: ImportOptions, ai = false) => {
+      if (!file || !classId) return;
+      setError("");
+      setBusy(true);
+      setBusyText(ai ? t("importAiReading") : t("importRereading"));
+      try {
+         showPreview(await previewImport(classId, file, options, ai));
+      } catch (e: any) {
+         setError(importErrorMessage(e, t("importReadFailed")));
+      } finally {
+         setBusy(false);
+         setBusyText("");
       }
    };
 
@@ -433,6 +455,15 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                               : ""}
                         </span>
                      </div>
+                     {meta && meta.source !== "google" && file && (
+                        <ImportColumnFixer
+                           meta={meta}
+                           busy={busy}
+                           onApply={(opts) => reparse(opts)}
+                           onAi={(sheet) => reparse(sheet ? { sheet } : {}, true)}
+                        />
+                     )}
+                     {busyText && <p className="mb-2 text-sm text-gray-600">{busyText}</p>}
                      <div className="mb-2 flex gap-2 text-sm">
                         <button
                            className={`rounded px-3 py-1 ${filter === "all" ? "bg-mainColor text-white" : "bg-gray-100"}`}
@@ -452,6 +483,7 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                            <thead className="sticky top-0 bg-gray-50 text-xs uppercase text-gray-500">
                               <tr>
                                  <th className="p-2"></th>
+                                 <th className="p-2">{t("importColRow")}</th>
                                  <th className="p-2">{t("importColFirst")}</th>
                                  <th className="p-2">{t("importColLast")}</th>
                                  <th className="p-2">{t("importColUsername")}</th>
@@ -473,6 +505,10 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                                              onChange={() => toggleInclude(r)}
                                              title={t("importInclude")}
                                           />
+                                       </td>
+                                       <td className="whitespace-nowrap p-2 text-xs text-gray-400">
+                                          {r.sourceRow ?? ""}
+                                          {multiSheet && r.sheet ? <span className="block">{r.sheet}</span> : null}
                                        </td>
                                        <td className="p-2">{input(r, "firstName", "w-28")}</td>
                                        <td className="p-2">{input(r, "lastName", "w-28")}</td>
@@ -500,6 +536,7 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                               })}
                            </tbody>
                         </table>
+                        {rows.length === 0 && <p className="p-6 text-center text-sm text-gray-500">{t("importNoRowsYet")}</p>}
                      </div>
                      <footer className="mt-4 flex flex-col-reverse items-stretch justify-between gap-3 md:flex-row md:items-center">
                         <button
