@@ -23,6 +23,7 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
   const dispatch = useAppDispatch();
   const { t } = useTranslation("parent");
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
+  const { children: allChildren } = useSelector((state: RootState) => state.parentChild);
 
   const hasExistingSubscription = !!current_subscription?.id;
 
@@ -46,6 +47,14 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
       setSelectedChildIds(current_subscription.children.map((c) => c.id));
     }
   }, [current_subscription]);
+
+  // New plan: start with every kid ticked, most families buy for all of them.
+  useEffect(() => {
+    if (!current_subscription?.id && step === 2 && selectedChildIds.length === 0 && allChildren.length > 0) {
+      setSelectedChildIds(allChildren.map((c) => Number(c.id)));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, allChildren, current_subscription?.id]);
 
   const reset = useCallback(() => {
     setStep(1);
@@ -103,6 +112,7 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
           setSelectedChildIds={setSelectedChildIds}
           goBack={() => setStep(1)}
           goNext={() => setStep(3)}
+          requireOne={!hasExistingSubscription}
         />
       )}
 

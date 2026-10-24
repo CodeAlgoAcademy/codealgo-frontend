@@ -140,7 +140,7 @@ const BillingPage = () => {
             {showStepper && (
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-base font-semibold text-gray-800">
-                  {stepperMode === "children" ? t("manageChildren") : t("changePlan")}
+                  {stepperMode === "children" ? t("manageChildren") : hasActiveSubscription ? t("changePlan") : t("chooseAPlan")}
                 </h2>
                 <button
                   onClick={() => setShowStepper(false)}
