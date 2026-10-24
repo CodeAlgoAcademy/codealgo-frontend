@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import { openSuccessModal } from "store/modalSlice";
 import {
    commitImport,
    CreatedLogin,
+   GOOGLE_CLASSROOM_CLIENT_ID,
    GOOGLE_CLASSROOM_SCOPES,
    GoogleCourse,
    googleCourses,
@@ -60,6 +61,38 @@ const emptyResult = (): ImportResult => ({
    failed: [],
    summary: { created: 0, linked: 0, skipped: 0, failed: 0 },
 });
+
+// Classroom runs on its own OAuth client (tristedw's CodeAlgo Cloud project,
+// where the Classroom API and scopes are set up), not the one the site uses
+// for Google sign in. So it gets its own provider, and the hook has to live
+// inside it.
+const ClassroomConnect = ({
+   disabled,
+   label,
+   onToken,
+   onError,
+}: {
+   disabled: boolean;
+   label: string;
+   onToken: (token: string) => void;
+   onError: () => void;
+}) => {
+   const connect = useGoogleLogin({
+      scope: GOOGLE_CLASSROOM_SCOPES,
+      onSuccess: ({ access_token }) => onToken(access_token),
+      onError,
+   });
+   return (
+      <button
+         type="button"
+         disabled={disabled}
+         onClick={() => connect()}
+         className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-semibold text-gray-800 hover:bg-gray-50 disabled:opacity-60"
+      >
+         <FcGoogle className="text-2xl" /> {label}
+      </button>
+   );
+};
 
 const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onImported?: () => void }) => {
    const { t } = useTranslation("teacher");
@@ -123,25 +156,21 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
       }
    };
 
-   const connectGoogle = useGoogleLogin({
-      scope: GOOGLE_CLASSROOM_SCOPES,
-      onSuccess: async ({ access_token }) => {
-         if (!classId) return;
-         setGoogleToken(access_token);
-         setError("");
-         setBusy(true);
-         try {
-            const list = await googleCourses(classId, access_token);
-            setCourses(list);
-            setStep("courses");
-         } catch (e: any) {
-            setError(importErrorMessage(e, t("importGoogleFailed")));
-         } finally {
-            setBusy(false);
-         }
-      },
-      onError: () => setError(t("importGoogleFailed")),
-   });
+   const onGoogleToken = async (access_token: string) => {
+      if (!classId) return;
+      setGoogleToken(access_token);
+      setError("");
+      setBusy(true);
+      try {
+         const list = await googleCourses(classId, access_token);
+         setCourses(list);
+         setStep("courses");
+      } catch (e: any) {
+         setError(importErrorMessage(e, t("importGoogleFailed")));
+      } finally {
+         setBusy(false);
+      }
+   };
 
    const pickCourse = async (course: GoogleCourse) => {
       if (!classId) return;
@@ -334,14 +363,14 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                         {t("importOr")}
                         <span className="h-px flex-1 bg-gray-200" />
                      </div>
-                     <button
-                        type="button"
-                        disabled={busy}
-                        onClick={() => connectGoogle()}
-                        className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-semibold text-gray-800 hover:bg-gray-50 disabled:opacity-60"
-                     >
-                        <FcGoogle className="text-2xl" /> {t("importFromGoogle")}
-                     </button>
+                     <GoogleOAuthProvider clientId={GOOGLE_CLASSROOM_CLIENT_ID}>
+                        <ClassroomConnect
+                           disabled={busy}
+                           label={t("importFromGoogle")}
+                           onToken={onGoogleToken}
+                           onError={() => setError(t("importGoogleFailed"))}
+                        />
+                     </GoogleOAuthProvider>
                      <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-gray-600">
                         <li>{t("importTipNames")}</li>
                         <li>{t("importTipCreds")}</li>

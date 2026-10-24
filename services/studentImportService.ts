@@ -103,6 +103,11 @@ export const importErrorMessage = (error: any, fallback: string): string => {
    return fallback;
 };
 
+// Separate OAuth client from site sign in, see ClassroomConnect.
+export const GOOGLE_CLASSROOM_CLIENT_ID =
+   process.env.NEXT_PUBLIC_GOOGLE_CLASSROOM_CLIENT_ID ||
+   "349800986036-stsrvh9gofi3kjsvhdgami1m22i8ofop.apps.googleusercontent.com";
+
 export const GOOGLE_CLASSROOM_SCOPES = [
    "https://www.googleapis.com/auth/classroom.courses.readonly",
    "https://www.googleapis.com/auth/classroom.rosters.readonly",
