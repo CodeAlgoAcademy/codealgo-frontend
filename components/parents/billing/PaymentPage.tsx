@@ -5,7 +5,6 @@ import { useAppDispatch } from "store/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { createSetupIntent, getActiveSubscription } from "services/pricingService";
-import { toast } from "sonner";
 import { useInitStripe } from "hooks/useStripe";
 import PaymentForm from "./PaymentForm";
 import { useTranslation } from "react-i18next";
@@ -53,16 +52,22 @@ const initPayment = async () => {
         }
 
         if (activeSub && activeSub.id === subscriptionId) {
-           if (activeSub.latest_client_secret) {
+           // latest_client_secret is the intent from when the plan was bought. It is
+           // only still payable while the plan is PENDING; once it went through
+           // (trial, active, or a renewal that later failed) using it again just
+           // shows a finished payment. Those take a new card through a setup intent.
+           if (activeSub.status === "PENDING" && activeSub.latest_client_secret) {
              setClientSecret(activeSub.latest_client_secret);
-           } else if (activeSub.status === "ACTIVE") {
-             toast.success(t("noPaymentRequired"));
+           } else if (activeSub.status === "PENDING") {
+             // Nothing to pay yet, the checkout never reached Stripe. Billing starts it again.
              push("/parents/billing");
              return;
            } else {
              const result = await dispatch(createSetupIntent(subscriptionId));
              if (createSetupIntent.fulfilled.match(result)) {
                setClientSecret(result.payload.client_secret);
+             } else {
+               setError(t("errorLoadingPaymentForm"));
              }
            }
         }

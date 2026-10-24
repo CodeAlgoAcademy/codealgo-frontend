@@ -7,6 +7,7 @@ import { initiatePayment, changePlan, getBillingHistory, getActiveSubscription }
 import { toast } from "sonner";
 import SubscriptionSuccessModal from "../TrialPaymentRequiredModal";
 import { useTranslation } from "react-i18next";
+import { canStartTrial } from "@/components/utils/subscriptionUtils";
 
 interface Step3ConfirmProps {
    priceId: number;
@@ -20,10 +21,11 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
    const dispatch = useAppDispatch();
    const router = useRouter();
    const { t } = useTranslation("parent");
-   const { plans, coupon_validation, current_subscription, handlers } = useSelector((state: RootState) => state.pricing);
+   const { plans, coupon_validation, current_subscription, handlers, billing_history } = useSelector((state: RootState) => state.pricing);
    const { children: allChildren } = useSelector((state: RootState) => state.parentChild);
 
    const hasExistingSubscription = !!existingSubscriptionId;
+   const trialEligible = canStartTrial(billing_history);
    const [isProcessing, setIsProcessing] = useState(false);
    const [showSuccessModal, setShowSuccessModal] = useState(false);
    const [newSubscriptionId, setNewSubscriptionId] = useState<number | null>(null);
@@ -82,23 +84,44 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
 
          const payload = result.payload as {
             status: string;
-            subscription: number;
+            subscription?: number;
+            subscription_id?: number;
             client_secret?: string;
+            message?: string;
          };
 
-         const newSubId = payload.subscription;
+         const newSubId = payload.subscription ?? payload.subscription_id;
          const status = payload.status;
 
          await dispatch(getActiveSubscription());
          await dispatch(getBillingHistory());
 
-         setNewSubscriptionId(newSubId);
+         if (status === "requires_payment_action" && newSubId) {
+            // No trial left on this account, so the first payment is due now. Hand
+            // the intent over directly instead of making the payment page look it up.
+            const secret = payload.client_secret ? `&client_secret=${encodeURIComponent(payload.client_secret)}` : "";
+            router.push(`/parents/billing/payment?subscription_id=${newSubId}${secret}`);
+            return;
+         }
 
-         if (status === "requires_payment_action") {
-            toast.success(t("subscriptionCreatedCompletePayment"));
+         if (status === "payment_failed" && newSubId) {
+            toast.error(payload.message || t("paymentRequired"));
             router.push(`/parents/billing/payment?subscription_id=${newSubId}`);
             return;
          }
+
+         if (status === "already_active") {
+            toast.success(t("planUpdatedSuccessfully"));
+            if (newSubId) onSuccess(newSubId);
+            return;
+         }
+
+         if (!newSubId) {
+            toast.error(payload.message || t("failedToCreateSubscription"));
+            return;
+         }
+
+         setNewSubscriptionId(newSubId);
 
          setIsTrialSubscription(status === "trialing");
          setShowSuccessModal(true);
@@ -140,7 +163,9 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
 
    const handleActivate = () => {
       if (isPendingSubscription) {
-         router.push(`/parents/billing/payment?subscription_id=${existingSubscriptionId}`);
+         // A checkout that never got paid. Run it again with what is picked now, the
+         // backend reuses the open invoice when nothing changed.
+         handleCreateSubscription();
       } else if (hasExistingSubscription) {
          handleChangePlan();
       } else {
@@ -225,7 +250,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
                            <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                            </svg>
-                           {isGift ? t("giftActivatedImmediately") : t("trialStartsToday")}
+                           {isGift ? t("giftActivatedImmediately") : trialEligible ? t("trialStartsToday") : t("paymentDueToday")}
                         </div>
                      )}
                   </div>
@@ -251,7 +276,17 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
     ${isGift ? "bg-green-600 hover:bg-green-700" : isPendingSubscription ? "bg-red-600 hover:bg-red-700" : "bg-mainColor"}
   `}
                   >
-                     {isLoading ? t("processing") : isGift ? t("redeemGiftCard") : t("startTrial")}
+                     {isLoading
+                        ? t("processing")
+                        : isGift
+                        ? t("redeemGiftCard")
+                        : isPendingSubscription
+                        ? t("continueToPayment")
+                        : hasExistingSubscription
+                        ? t("confirm")
+                        : trialEligible
+                        ? t("startTrial")
+                        : t("continueToPayment")}
                   </button>
                </div>
             </div>

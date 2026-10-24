@@ -326,5 +326,9 @@
   "errorOccurred": "Une erreur s'est produite.",
   "mathQuest": "Math Quest",
   "mathUpToGrade": "Jusqu'au niveau {{grade}}",
-  "mathRedoCount": "{{count}} à refaire"
+  "mathRedoCount": "{{count}} à refaire",
+  "paymentDueToday": "Plus d'essai gratuit sur ce compte, le premier paiement est donc dû aujourd'hui.",
+  "continueToPayment": "Continuer vers le paiement",
+  "kidsJoinPlanLater": "Vous pouvez quand même démarrer un abonnement. Les enfants ajoutés plus tard y seront ajoutés automatiquement.",
+  "pickAtLeastOneChild": "Choisissez au moins un enfant pour cet abonnement."
 }

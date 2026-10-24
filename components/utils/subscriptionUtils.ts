@@ -15,3 +15,8 @@ export const getActiveSubscriptionChildren = (billing_history: Subscription[] | 
   
   return activeSub.children.map(child => child.id);
 };
+
+// Mirrors get_subscription_eligibility on the backend: one free trial per account,
+// ever, so any past subscription that had a trial end date uses it up.
+export const canStartTrial = (billing_history?: Subscription[] | null): boolean =>
+  !(billing_history || []).some((sub) => !!sub.trial_ends_at);

@@ -5,7 +5,15 @@ import { useTranslation } from "react-i18next";
 import { Loader2, XCircle } from "lucide-react";
 import ActivateShell from "@/components/activate/ActivateShell";
 import ReturnToGame from "@/components/activate/ReturnToGame";
-import { activateApi, authed, errorText, readSession } from "@/components/activate/activateApi";
+import {
+   activateApi,
+   ActivateSession,
+   authed,
+   errorText,
+   hasPlanAccess,
+   openSiteAs,
+   readSession,
+} from "@/components/activate/activateApi";
 import { track } from "utils/siteTracker";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -19,6 +27,7 @@ const ActivateDone = () => {
    const router = useRouter();
    const { t } = useTranslation("auth");
    const ran = useRef(false);
+   const [session, setSession] = useState<ActivateSession | null>(null);
    const [state, setState] = useState<{ kind: "loading" | "ok" | "error"; message: string }>({
       kind: "loading",
       message: "",
@@ -30,6 +39,7 @@ const ActivateDone = () => {
 
       const finish = async () => {
          const session = readSession();
+         setSession(session);
          const stripe = await stripePromise;
          const q = router.query;
          if (!stripe || !session) {
@@ -65,10 +75,9 @@ const ActivateDone = () => {
             // The plan goes live from Stripe's webhook, a second or two after the
             // payment. Wait for it rather than telling them it worked too early.
             for (let i = 0; i < 15; i++) {
-               const res = await activateApi.get("/auth/student/access-check/", authed(session));
-               if (res.data?.has_access) {
-                  track("activate_succeeded", {});
-                  setState({ kind: "ok", message: t("activateUnlocked") });
+               if (await hasPlanAccess(session).catch(() => false)) {
+                  track("activate_succeeded", { role: session.user?.is_parent ? "parent" : "student" });
+                  setState({ kind: "ok", message: session.user?.is_parent ? t("activateParentUnlocked") : t("activateUnlocked") });
                   return;
                }
                await new Promise((r) => setTimeout(r, 2000));
@@ -91,7 +100,22 @@ const ActivateDone = () => {
                <p className="mt-4 text-gray-600">{t("activateConfirming")}</p>
             </div>
          )}
-         {state.kind === "ok" && <ReturnToGame message={state.message} />}
+         {state.kind === "ok" && (
+            <ReturnToGame
+               message={state.message}
+               extra={
+                  session?.user?.is_parent && (
+                     <button
+                        type="button"
+                        onClick={() => openSiteAs(session, "/parents/billing")}
+                        className="mt-4 block w-full rounded-xl border-2 border-mainColor py-3 text-center font-semibold text-mainColor"
+                     >
+                        {t("activateOpenBilling")}
+                     </button>
+                  )
+               }
+            />
+         )}
          {state.kind === "error" && (
             <div className="text-center">
                <XCircle className="mx-auto h-14 w-14 text-red-500" />

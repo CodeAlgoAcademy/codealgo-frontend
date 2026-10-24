@@ -34,7 +34,7 @@ const TrialExpiryCard: React.FC<TrialExpiryCardProps> = ({
               {t('subscriptionExpiresSoon')}
             </h3>
             <p className="text-xs text-gray-500 mt-2">
-              {t('trialExpireBy', { date: <span className="text-red-500 font-bold">{expiryDate}</span> })}
+              {t('trialExpireBy', { date: expiryDate })}
             </p>
           </div>
         </div>

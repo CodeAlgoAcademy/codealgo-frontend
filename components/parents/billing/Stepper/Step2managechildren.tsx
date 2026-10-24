@@ -9,6 +9,8 @@ interface Step2ManageChildrenProps {
   goNext: () => void;
   submitLabel?: string;
   isProcessing?: boolean;
+  // New plans need at least one kid picked when there are kids to pick.
+  requireOne?: boolean;
 }
 
 const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
@@ -17,7 +19,8 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
   goBack,
   goNext,
   submitLabel = "",
-  isProcessing = false
+  isProcessing = false,
+  requireOne = false,
 }) => {
   const { t } = useTranslation("parent");
   const { children } = useSelector((state: RootState) => state.parentChild);
@@ -34,6 +37,7 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
 
   const hasChildren = children.length > 0;
   const safeSelectedIds = selectedChildIds || [];
+  const needsPick = requireOne && hasChildren && safeSelectedIds.length === 0;
 
   return (
     <div className="flex-1 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
@@ -49,6 +53,7 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
         {!hasChildren ? (
            <div className="text-center py-8 text-gray-400">
              {t("noChildrenFound")}
+             {requireOne && <p className="mt-2 text-sm text-gray-500">{t("kidsJoinPlanLater")}</p>}
            </div>
         ) : (
           <ul className="max-h-80 space-y-3 overflow-y-auto pr-1">
@@ -88,6 +93,8 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
           </ul>
         )}
 
+        {needsPick && <p className="mt-4 text-sm text-red-600">{t("pickAtLeastOneChild")}</p>}
+
         <div className="mt-6 flex gap-3">
           <button 
             onClick={goBack} 
@@ -98,7 +105,7 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
           </button>
           <button
             onClick={goNext}
-            disabled={isProcessing}
+            disabled={isProcessing || needsPick}
             className="flex-1 rounded-xl bg-mainColor px-4 py-3 font-semibold text-white hover:opacity-90 disabled:opacity-50"
           >
             {isProcessing ? t("saving") : submitLabel || t("continue")}

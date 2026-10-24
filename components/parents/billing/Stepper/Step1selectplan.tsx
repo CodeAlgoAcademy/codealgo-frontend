@@ -6,6 +6,7 @@ import { getPricingPlans, validateCoupon } from "services/pricingService";
 import { clearCouponValidation } from "store/pricingSlice";
 import PlanCard from "../priceCard";
 import { useTranslation } from "react-i18next";
+import { canStartTrial } from "@/components/utils/subscriptionUtils";
 
 interface Step1Props {
    selectedPriceId: number | null;
@@ -18,9 +19,10 @@ interface Step1Props {
 const Step1SelectPlan: React.FC<Step1Props> = ({ selectedPriceId, setSelectedPriceId, couponCode, setCouponCode, goNext }) => {
    const dispatch = useAppDispatch();
    const { t } = useTranslation("parent");
-   const { plans, handlers, coupon_validation, current_subscription } = useSelector((state: RootState) => state.pricing);
+   const { plans, handlers, coupon_validation, current_subscription, billing_history } = useSelector((state: RootState) => state.pricing);
 
    const hasExistingSubscription = !!current_subscription?.id;
+   const showTrial = !hasExistingSubscription && canStartTrial(billing_history);
    const isPlansLoading = handlers.loading;
    const hasNoPlans = !isPlansLoading && plans.length === 0;
 
@@ -157,7 +159,7 @@ const Step1SelectPlan: React.FC<Step1Props> = ({ selectedPriceId, setSelectedPri
    }
    interval="mo"
    trialText={
-      !hasExistingSubscription
+      showTrial
          ? t("sevenDayFreeTrial")
          : undefined
    }
@@ -182,7 +184,7 @@ const Step1SelectPlan: React.FC<Step1Props> = ({ selectedPriceId, setSelectedPri
                                  title={`${plan.name} ${t("monthly")}`}
                                  price={monthlyPrice.amount_in_cent / 100}
                                  interval="mo"
-                                 trialText={!hasExistingSubscription ? t("sevenDayFreeTrial") : undefined}
+                                 trialText={showTrial ? t("sevenDayFreeTrial") : undefined}
                                  billingText={t("billedMonthly", { amount: monthlyPrice.amount_in_cent / 100 })}
                                  selected={selectedPriceId === monthlyPrice.id}
                                  disabled={isPlanChanging(monthlyPrice.id)}
