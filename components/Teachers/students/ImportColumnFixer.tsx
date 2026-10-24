@@ -232,7 +232,6 @@ const ImportColumnFixer = ({
                   >
                      <FaMagic /> {t("importAiRead")}
                   </button>
-                  <span className="text-xs text-gray-500">{t("importAiNote")}</span>
                </div>
             </div>
          )}
