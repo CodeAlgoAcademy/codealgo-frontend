@@ -20,6 +20,8 @@ export interface ImportRow {
    passwordGenerated: boolean;
    existingId: number | null;
    allowSameName: boolean;
+   sourceRow?: number | null;
+   sheet?: string;
 }
 
 export interface ImportSummary {
@@ -32,10 +34,40 @@ export interface ImportSummary {
    toImport: number;
 }
 
+export interface ImportColumn {
+   index: number;
+   header: string;
+   field: string;
+   how: "header" | "content" | "manual" | "";
+   samples: string[];
+}
+
+export interface ImportMeta {
+   source?: string;
+   strategy?: "table" | "keyValue" | "ai";
+   confidence?: "high" | "medium" | "low" | "none";
+   headerFound?: boolean;
+   headerRow?: number | null;
+   sheet?: string;
+   sheets?: { name: string; rows: number; used: boolean }[];
+   columns?: ImportColumn[];
+   preview?: { row: number; cells: string[] }[];
+   warnings?: string[];
+   needsMapping?: boolean;
+}
+
+// Teacher overrides from the column fixer. headerRow is the sheet's own row
+// number, null for "no header".
+export interface ImportOptions {
+   sheet?: string;
+   headerRow?: number | null;
+   mapping?: Record<string, string>;
+}
+
 export interface ImportPreview {
    rows: ImportRow[];
    summary: ImportSummary;
-   meta?: { source?: string; headerFound?: boolean; columns?: Record<string, string> };
+   meta?: ImportMeta;
 }
 
 export interface CreatedLogin {
@@ -72,9 +104,16 @@ export const IMPORT_CHUNK = 25;
 
 const auth = () => ({ Authorization: `Bearer ${getAccessToken()}` });
 
-export const previewImport = async (classId: string | number, file: File): Promise<ImportPreview> => {
+export const previewImport = async (
+   classId: string | number,
+   file: File,
+   options?: ImportOptions,
+   ai = false
+): Promise<ImportPreview> => {
    const form = new FormData();
    form.append("file", file, file.name);
+   if (options && Object.keys(options).length) form.append("options", JSON.stringify(options));
+   if (ai) form.append("ai", "true");
    const { data } = await http.post(`/academics/class/${classId}/student/import/preview`, form, {
       headers: { ...auth(), "Content-Type": "multipart/form-data" },
    });
