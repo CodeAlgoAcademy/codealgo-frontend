@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { FaTimes, FaFileUpload, FaDownload, FaPrint, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
@@ -8,6 +10,10 @@ import { openSuccessModal } from "store/modalSlice";
 import {
    commitImport,
    CreatedLogin,
+   GOOGLE_CLASSROOM_SCOPES,
+   GoogleCourse,
+   googleCourses,
+   googlePreview,
    IMPORT_CHUNK,
    ImportPreview,
    ImportResult,
@@ -17,7 +23,7 @@ import {
    recheckImport,
 } from "services/studentImportService";
 
-type Step = "upload" | "review" | "importing" | "done";
+type Step = "upload" | "courses" | "review" | "importing" | "done";
 type Filter = "all" | "issues";
 
 const ACCEPT = ".csv,.txt,.xlsx,.xls,.pdf";
@@ -74,6 +80,8 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
    const [result, setResult] = useState<ImportResult>(emptyResult());
    const inputRef = useRef<HTMLInputElement>(null);
    const [mounted, setMounted] = useState(false);
+   const [googleToken, setGoogleToken] = useState("");
+   const [courses, setCourses] = useState<GoogleCourse[]>([]);
 
    // Portal to body. Rendered inline it inherits the add student modal's
    // stacking context and the sidebar ends up on top of it.
@@ -93,20 +101,61 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
 
    const visibleRows = filter === "issues" ? rows.filter((r) => r.status !== "new" || r.messages.length) : rows;
 
+   const showPreview = (preview: ImportPreview) => {
+      setRows(preview.rows);
+      setMeta(preview.meta);
+      setStale(false);
+      setFilter(preview.rows.some((r) => r.status !== "new") ? "issues" : "all");
+      setStep("review");
+   };
+
    const handleFile = async (file?: File | null) => {
       if (!file || !classId) return;
       setError("");
       setFileName(file.name);
       setBusy(true);
       try {
-         const preview = await previewImport(classId, file);
-         setRows(preview.rows);
-         setMeta(preview.meta);
-         setStale(false);
-         setFilter(preview.rows.some((r) => r.status !== "new") ? "issues" : "all");
-         setStep("review");
+         showPreview(await previewImport(classId, file));
       } catch (e: any) {
          setError(importErrorMessage(e, t("importReadFailed")));
+      } finally {
+         setBusy(false);
+      }
+   };
+
+   const connectGoogle = useGoogleLogin({
+      scope: GOOGLE_CLASSROOM_SCOPES,
+      onSuccess: async ({ access_token }) => {
+         if (!classId) return;
+         setGoogleToken(access_token);
+         setError("");
+         setBusy(true);
+         try {
+            const list = await googleCourses(classId, access_token);
+            setCourses(list);
+            setStep("courses");
+         } catch (e: any) {
+            setError(importErrorMessage(e, t("importGoogleFailed")));
+         } finally {
+            setBusy(false);
+         }
+      },
+      onError: () => setError(t("importGoogleFailed")),
+   });
+
+   const pickCourse = async (course: GoogleCourse) => {
+      if (!classId) return;
+      setError("");
+      setBusy(true);
+      setFileName(course.section ? `${course.name} (${course.section})` : course.name);
+      try {
+         showPreview(await googlePreview(classId, googleToken, course.id));
+      } catch (e: any) {
+         if (e?.response?.status === 401) {
+            setGoogleToken("");
+            setStep("upload");
+         }
+         setError(importErrorMessage(e, t("importGoogleFailed")));
       } finally {
          setBusy(false);
       }
@@ -280,6 +329,19 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                            onChange={(e) => handleFile(e.target.files?.[0])}
                         />
                      </div>
+                     <div className="my-4 flex items-center gap-3 text-xs uppercase text-gray-400">
+                        <span className="h-px flex-1 bg-gray-200" />
+                        {t("importOr")}
+                        <span className="h-px flex-1 bg-gray-200" />
+                     </div>
+                     <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => connectGoogle()}
+                        className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-semibold text-gray-800 hover:bg-gray-50 disabled:opacity-60"
+                     >
+                        <FcGoogle className="text-2xl" /> {t("importFromGoogle")}
+                     </button>
                      <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-gray-600">
                         <li>{t("importTipNames")}</li>
                         <li>{t("importTipCreds")}</li>
@@ -287,6 +349,35 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                      </ul>
                      <button onClick={downloadTemplate} className="mt-4 flex items-center gap-2 text-sm text-mainColor hover:underline">
                         <FaDownload /> {t("importTemplate")}
+                     </button>
+                  </div>
+               )}
+
+               {step === "courses" && (
+                  <div>
+                     <p className="mb-3 text-sm text-gray-600">{t("importPickCourse")}</p>
+                     {courses.length === 0 ? (
+                        <p className="rounded-md bg-gray-50 p-4 text-sm text-gray-600">{t("importNoCourses")}</p>
+                     ) : (
+                        <div className="grid max-h-[55vh] gap-2 overflow-auto md:grid-cols-2">
+                           {courses.map((c) => (
+                              <button
+                                 key={c.id}
+                                 disabled={busy}
+                                 onClick={() => pickCourse(c)}
+                                 className="rounded-lg border border-gray-200 p-4 text-left hover:border-mainColor hover:bg-blue-50 disabled:opacity-60"
+                              >
+                                 <p className="font-semibold text-gray-800">{c.name}</p>
+                                 {(c.section || c.room) && (
+                                    <p className="text-xs text-gray-500">{[c.section, c.room].filter(Boolean).join(" · ")}</p>
+                                 )}
+                              </button>
+                           ))}
+                        </div>
+                     )}
+                     {busy && <p className="mt-3 text-sm text-gray-500">{t("importLoadingRoster")}</p>}
+                     <button className="mt-4 rounded-full px-4 py-2 text-sm hover:bg-gray-100" onClick={() => setStep("upload")} disabled={busy}>
+                        {t("importBack")}
                      </button>
                   </div>
                )}
@@ -306,7 +397,11 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                         )}
                         <span className="ml-auto text-xs text-gray-500">
                            {fileName}
-                           {meta?.source ? ` (${meta.source.toUpperCase()})` : ""}
+                           {meta?.source === "google"
+                              ? ` (${t("importGoogleSource")})`
+                              : meta?.source
+                              ? ` (${meta.source.toUpperCase()})`
+                              : ""}
                         </span>
                      </div>
                      <div className="mb-2 flex gap-2 text-sm">
@@ -381,13 +476,13 @@ const ImportStudentsModal = ({ onClose, onImported }: { onClose: () => void; onI
                         <button
                            className="rounded-full px-4 py-2 text-sm hover:bg-gray-100"
                            onClick={() => {
-                              setStep("upload");
+                              setStep(meta?.source === "google" && googleToken ? "courses" : "upload");
                               setRows([]);
                               setError("");
                            }}
                            disabled={busy}
                         >
-                           {t("importChooseAnother")}
+                           {meta?.source === "google" ? t("importChooseAnotherClass") : t("importChooseAnother")}
                         </button>
                         {stale ? (
                            <button

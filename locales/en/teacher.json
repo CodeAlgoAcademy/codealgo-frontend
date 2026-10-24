@@ -755,5 +755,14 @@
   "importFinish": "Done",
   "importDone": "Students imported",
   "importCloseWarning": "Have you saved the logins? The passwords will not be shown again.",
-  "importClassList": "Import class list (Excel, CSV, PDF)"
+  "importClassList": "Import class list (Excel, CSV, PDF)",
+  "importOr": "or",
+  "importFromGoogle": "Import from Google Classroom",
+  "importPickCourse": "Pick the Google Classroom class to bring in.",
+  "importNoCourses": "No active Google Classroom classes were found where you are a teacher.",
+  "importLoadingRoster": "Loading students from Google Classroom...",
+  "importBack": "Back",
+  "importGoogleFailed": "Could not connect to Google Classroom.",
+  "importGoogleSource": "Google Classroom",
+  "importChooseAnotherClass": "Choose a different class"
 }

@@ -102,3 +102,40 @@ export const importErrorMessage = (error: any, fallback: string): string => {
    if (typeof data?.detail === "string") return data.detail;
    return fallback;
 };
+
+export const GOOGLE_CLASSROOM_SCOPES = [
+   "https://www.googleapis.com/auth/classroom.courses.readonly",
+   "https://www.googleapis.com/auth/classroom.rosters.readonly",
+   "https://www.googleapis.com/auth/classroom.profile.emails",
+].join(" ");
+
+export interface GoogleCourse {
+   id: string;
+   name: string;
+   section: string;
+   room: string;
+}
+
+// The Google token only ever lives in component state and rides along on
+// these two calls. The API uses it once and drops it.
+export const googleCourses = async (classId: string | number, accessToken: string): Promise<GoogleCourse[]> => {
+   const { data } = await http.post(
+      `/academics/class/${classId}/student/import/google`,
+      { accessToken },
+      { headers: auth() }
+   );
+   return data.courses || [];
+};
+
+export const googlePreview = async (
+   classId: string | number,
+   accessToken: string,
+   courseId: string
+): Promise<ImportPreview> => {
+   const { data } = await http.post(
+      `/academics/class/${classId}/student/import/google`,
+      { accessToken, courseId },
+      { headers: auth() }
+   );
+   return data;
+};
