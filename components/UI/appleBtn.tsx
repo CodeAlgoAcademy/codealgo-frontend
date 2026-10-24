@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { FaApple } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { loginWithApple } from "services/authService";
+import UsernameModal from "./UsernameModal";
 import { openErrorModal } from "store/fetchSlice";
 import { clearSession } from "utils/clearSession";
 import {
@@ -64,6 +65,9 @@ const AppleBtn: FC = () => {
    const { t } = useTranslation("common");
    const { t: tAuth } = useTranslation("auth");
    const [ready, setReady] = useState(false);
+   // Set when a brand new Apple account needs a real username before going on.
+   const [pendingRole, setPendingRole] = useState<AccountRole | null>(null);
+   const [suggestion, setSuggestion] = useState("");
 
    const account: AccountRole = roleFromPath(router.pathname);
    const label = (role: AccountRole) => tAuth(roleLabelKey(role));
@@ -137,6 +141,12 @@ const AppleBtn: FC = () => {
 
       const resolution = resolveLogin(data?.payload, account);
       if (resolution.status === "ok") {
+         if (data?.payload?.needs_username) {
+            const base = (name.firstName || "").toLowerCase().replace(/[^a-z0-9_.]/g, "");
+            setSuggestion(base.length >= 3 ? base : "");
+            setPendingRole(resolution.role);
+            return;
+         }
          goTo(resolution.role);
          return;
       }
@@ -179,6 +189,16 @@ const AppleBtn: FC = () => {
             </i>
             <span>{router.pathname.includes("/login") ? t("login") : t("signUp")} with Apple</span>
          </button>
+         {pendingRole && (
+            <UsernameModal
+               suggestion={suggestion}
+               onDone={() => {
+                  const role = pendingRole;
+                  setPendingRole(null);
+                  goTo(role);
+               }}
+            />
+         )}
       </div>
    );
 };
