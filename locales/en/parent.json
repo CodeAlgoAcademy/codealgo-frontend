@@ -330,5 +330,8 @@
   "paymentDueToday": "No free trial left on this account, so the first payment is due today.",
   "continueToPayment": "Continue to payment",
   "kidsJoinPlanLater": "You can still start a plan. Kids you add later join it automatically.",
-  "pickAtLeastOneChild": "Pick at least one child for this plan."
+  "pickAtLeastOneChild": "Pick at least one child for this plan.",
+  "trialEndedTitle": "Your free trial has ended",
+  "trialEndedMessage": "Add a card to keep your kids playing. Everything unlocks again as soon as the payment goes through.",
+  "addCardAndPay": "Add card and continue"
 }

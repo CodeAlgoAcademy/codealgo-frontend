@@ -99,6 +99,25 @@ export async function hasPlanAccess(session: ActivateSession): Promise<boolean> 
 
 export const isLive = (sub: ActiveSub | null) => !!sub && LIVE.includes((sub.status || "").toUpperCase());
 
+export interface AmountDue {
+   client_secret: string | null;
+   amount_due?: number;
+   currency?: string;
+   trial_ended?: boolean;
+}
+
+/** The open invoice on a past due plan (usually the first charge after a trial). */
+export async function payDue(session: ActivateSession, subscriptionId: number): Promise<AmountDue> {
+   const res = await activateApi.post<AmountDue>("/payment/subscription/pay-due", { subscription_id: subscriptionId }, authed(session));
+   return res.data;
+}
+
+/** One free trial per account. Same rule as get_subscription_eligibility on the backend. */
+export async function trialAvailable(session: ActivateSession): Promise<boolean> {
+   const res = await activateApi.get<{ trial_ends_at?: string | null }[]>("/payment/subscription/history", authed(session));
+   return !(res.data || []).some((s) => !!s.trial_ends_at);
+}
+
 /**
  * Signs the main site in as this parent and opens a dashboard page. Only ever
  * from a button they pressed, since it replaces whoever was signed in here.

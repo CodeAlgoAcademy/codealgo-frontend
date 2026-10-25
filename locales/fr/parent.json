@@ -330,5 +330,8 @@
   "paymentDueToday": "Plus d'essai gratuit sur ce compte, le premier paiement est donc dû aujourd'hui.",
   "continueToPayment": "Continuer vers le paiement",
   "kidsJoinPlanLater": "Vous pouvez quand même démarrer un abonnement. Les enfants ajoutés plus tard y seront ajoutés automatiquement.",
-  "pickAtLeastOneChild": "Choisissez au moins un enfant pour cet abonnement."
+  "pickAtLeastOneChild": "Choisissez au moins un enfant pour cet abonnement.",
+  "trialEndedTitle": "Votre essai gratuit est terminé",
+  "trialEndedMessage": "Ajoutez une carte pour que vos enfants continuent à jouer. Tout se débloque dès que le paiement passe.",
+  "addCardAndPay": "Ajouter une carte et continuer"
 }
