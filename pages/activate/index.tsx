@@ -14,7 +14,9 @@ import {
    errorText,
    isLive,
    openSiteAs,
+   payDue,
    readSession,
+   trialAvailable,
    writeSession,
 } from "@/components/activate/activateApi";
 import { useInitStripe } from "hooks/useStripe";
@@ -47,14 +49,15 @@ interface Child {
 }
 
 // trial: plan is live, card is for after the trial. pay: card is charged now.
-// fix: a renewal failed and the card needs replacing.
-type PayMode = "trial" | "pay" | "fix";
+// due: trial ended or a renewal failed, the open invoice is paid now.
+// fix: same, but Stripe has no payable invoice, so the card is saved and retried.
+type PayMode = "trial" | "pay" | "due" | "fix";
 
 type Step =
    | { kind: "loading" }
    | { kind: "error"; message: string }
    | { kind: "plans" }
-   | { kind: "pay"; clientSecret: string; subscriptionId?: number; mode: PayMode }
+   | { kind: "pay"; clientSecret: string; subscriptionId?: number; mode: PayMode; trialEnded?: boolean }
    | { kind: "covered"; sub: ActiveSub }
    | { kind: "done"; message: string };
 
@@ -73,11 +76,20 @@ const Activate = () => {
    const [children, setChildren] = useState<Child[]>([]);
    const [picked, setPicked] = useState<number[]>([]);
    const [busyPrice, setBusyPrice] = useState<number | null>(null);
+   const [canTrial, setCanTrial] = useState(true);
 
    const isParent = !!session?.user?.is_parent;
 
+   // Past due, usually because the free trial ended with no card. Pay the open
+   // invoice straight away; only when Stripe has none to pay, save a card and retry.
    const startFix = useCallback(
       async (s: ActivateSession, subscriptionId: number) => {
+         const due = await payDue(s, subscriptionId).catch(() => null);
+         if (due?.client_secret) {
+            track("activate_due_opened", { trial_ended: !!due.trial_ended });
+            setStep({ kind: "pay", clientSecret: due.client_secret, subscriptionId, mode: "due", trialEnded: !!due.trial_ended });
+            return;
+         }
          const setup = await activateApi.post("/payment/setup-intent", { subscription_id: subscriptionId }, authed(s));
          setStep({ kind: "pay", clientSecret: setup.data.client_secret, subscriptionId, mode: "fix" });
       },
@@ -126,10 +138,12 @@ const Activate = () => {
          }
 
          try {
-            const [productsRes, kidsRes] = await Promise.all([
+            const [productsRes, kidsRes, trialLeft] = await Promise.all([
                activateApi.get<Product[]>("/payment/product/"),
                s.user?.is_parent ? activateApi.get<Child[]>("/parent/child/", authed(s)) : Promise.resolve({ data: [] as Child[] }),
+               trialAvailable(s).catch(() => true),
             ]);
+            setCanTrial(trialLeft);
             setProducts(productsRes.data || []);
             const kids = (kidsRes.data || []).map((c) => ({ ...c, id: Number(c.id) }));
             setChildren(kids);
@@ -357,7 +371,9 @@ const Activate = () => {
                         ))
                   )}
                </div>
-               <p className="mt-4 text-center text-sm text-gray-500">{t("activateTrialNote")}</p>
+               <p className="mt-4 text-center text-sm text-gray-500">
+                  {canTrial ? t("activateTrialNote") : t("activateNoTrialNote")}
+               </p>
                {isParent && children.length === 0 && dashboardButton}
             </>
          )}
@@ -368,6 +384,7 @@ const Activate = () => {
                clientSecret={step.clientSecret}
                subscriptionId={step.subscriptionId}
                mode={step.mode}
+               trialEnded={step.trialEnded}
                onSkip={() => setStep({ kind: "done", message: trialDoneMessage })}
             />
          )}
@@ -379,6 +396,7 @@ interface PayProps {
    clientSecret: string;
    subscriptionId?: number;
    mode: PayMode;
+   trialEnded?: boolean;
    onSkip: () => void;
 }
 
@@ -392,7 +410,7 @@ const PayStep: FC<PayProps> = (props) => {
    );
 };
 
-const PayForm: FC<PayProps> = ({ clientSecret, subscriptionId, mode, onSkip }) => {
+const PayForm: FC<PayProps> = ({ clientSecret, subscriptionId, mode, trialEnded, onSkip }) => {
    const stripe = useStripe();
    const elements = useElements();
    const { t } = useTranslation("auth");
@@ -424,7 +442,16 @@ const PayForm: FC<PayProps> = ({ clientSecret, subscriptionId, mode, onSkip }) =
       setBusy(false);
    };
 
-   const title = isPayment ? t("activatePayTitle") : mode === "fix" ? t("activateFixCardTitle") : t("activateCardTitle");
+   const title =
+      mode === "due"
+         ? trialEnded
+            ? t("activateTrialEndedTitle")
+            : t("activateDueTitle")
+         : isPayment
+         ? t("activatePayTitle")
+         : mode === "fix"
+         ? t("activateFixCardTitle")
+         : t("activateCardTitle");
    const total =
       amount &&
       new Intl.NumberFormat("en-US", { style: "currency", currency: amount.currency.toUpperCase() }).format(amount.value / 100);
@@ -434,6 +461,11 @@ const PayForm: FC<PayProps> = ({ clientSecret, subscriptionId, mode, onSkip }) =
          <h2 className="text-center text-xl font-bold">{title}</h2>
          {mode === "trial" && <p className="mt-2 text-center text-sm text-green-700">{t("activateTrialRunning")}</p>}
          {mode === "fix" && <p className="mt-2 text-center text-sm text-amber-700">{t("activateFixCardNote")}</p>}
+         {mode === "due" && (
+            <p className="mt-2 text-center text-sm text-amber-700">
+               {trialEnded ? t("activateTrialEndedNote") : t("activateDueNote")}
+            </p>
+         )}
          {total && (
             <div className="mt-4 flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3">
                <span className="text-sm text-gray-600">{t("activateDueToday")}</span>

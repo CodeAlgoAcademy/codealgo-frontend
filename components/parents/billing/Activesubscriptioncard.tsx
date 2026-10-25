@@ -24,6 +24,13 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
   const isPastDue = current_subscription.status === "PAST_DUE" || current_subscription.status === "INCOMPLETE";
   const isTrialing = current_subscription.status === "TRIALING";
   const isCancelling = current_subscription.cancel_at_period_end;
+  // Past due with no payment ever made after a trial means the trial ran out
+  // without a card, not that a renewal failed.
+  const trialEnded =
+    isPastDue &&
+    !!current_subscription.trial_ends_at &&
+    new Date(current_subscription.trial_ends_at).getTime() <= Date.now() &&
+    !current_subscription.payment_date;
 
   const subscribedChildren = current_subscription.children ?? [];
   const unsubscribedChildren = allChildren.filter(
@@ -78,15 +85,15 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
         
         {isPastDue && (
           <div className="rounded-xl border border-red-100 bg-red-50 p-4">
-            <h4 className="text-sm font-bold text-red-900">{t("outstandingBalance")}</h4>
+            <h4 className="text-sm font-bold text-red-900">{trialEnded ? t("trialEndedTitle") : t("outstandingBalance")}</h4>
             <p className="mt-1 text-xs text-red-700 leading-relaxed">
-              {t("pastDueMessage")}
+              {trialEnded ? t("trialEndedMessage") : t("pastDueMessage")}
             </p>
             <button
               onClick={handlePayNow}
               className="mt-3 w-full rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 transition"
             >
-              {t("payNowActivate")}
+              {trialEnded ? t("addCardAndPay") : t("payNowActivate")}
             </button>
           </div>
         )}

@@ -293,3 +293,16 @@ export const updateSubscriptionChildren = createAsyncThunk(
     }
   }
 );
+
+export interface AmountDue {
+  client_secret: string | null;
+  amount_due?: number;
+  currency?: string;
+  trial_ended?: boolean;
+}
+
+// The open invoice on a past due plan, usually the first charge after a free trial.
+export const fetchAmountDue = async (subscription_id: number): Promise<AmountDue> => {
+  const res = await http.post<AmountDue>("/payment/subscription/pay-due", { subscription_id }, authHeader());
+  return res.data;
+};

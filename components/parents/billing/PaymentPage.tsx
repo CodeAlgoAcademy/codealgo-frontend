@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "store/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
-import { createSetupIntent, getActiveSubscription } from "services/pricingService";
+import { createSetupIntent, fetchAmountDue, getActiveSubscription } from "services/pricingService";
 import { useInitStripe } from "hooks/useStripe";
 import PaymentForm from "./PaymentForm";
 import { useTranslation } from "react-i18next";
@@ -19,6 +19,7 @@ const PaymentPage = () => {
   const [clientSecret, setClientSecret] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>("");
+  const [trialEnded, setTrialEnded] = useState(false);
 
   const subscriptionId = Number(query.subscription_id);
   const urlClientSecret = query.client_secret as string;
@@ -63,6 +64,14 @@ const initPayment = async () => {
              push("/parents/billing");
              return;
            } else {
+             // Trial ended or a renewal failed: pay the open invoice now. Only
+             // when Stripe has nothing payable, save a card and let it retry.
+             const due = activeSub.status === "PAST_DUE" ? await fetchAmountDue(subscriptionId).catch(() => null) : null;
+             if (due?.client_secret) {
+               setClientSecret(due.client_secret);
+               setTrialEnded(!!due.trial_ended);
+               return;
+             }
              const result = await dispatch(createSetupIntent(subscriptionId));
              if (createSetupIntent.fulfilled.match(result)) {
                setClientSecret(result.payload.client_secret);
@@ -109,8 +118,9 @@ const initPayment = async () => {
      </button>
     <div className="mt-8 bg-white px-8 pt-6 pb-10">
       <h4 className="border-b pb-2 text-lg font-semibold">
-        {clientSecret.startsWith("pi_") ? t("completePayment") : t("addPaymentMethodTitle")}
+        {trialEnded ? t("trialEndedTitle") : clientSecret.startsWith("pi_") ? t("completePayment") : t("addPaymentMethodTitle")}
       </h4>
+      {trialEnded && <p className="mt-3 text-sm text-gray-600">{t("trialEndedMessage")}</p>}
       <Elements stripe={stripePromise} options={options}>
         <PaymentForm subscriptionId={subscriptionId} clientSecret={clientSecret} />
       </Elements>
