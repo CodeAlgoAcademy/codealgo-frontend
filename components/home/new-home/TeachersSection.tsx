@@ -55,7 +55,7 @@ const TeachersSection = () => {
             </div>
 
             <div className="flex justify-center">
-               <button className="rounded-xl bg-mainRed px-12 py-4 font-workSans text-lg font-semibold text-white shadow-md transition-colors hover:bg-mainPurple">
+               <button className="rounded-xl bg-mainOrange px-12 py-4 font-workSans text-lg font-semibold text-[#0F3D5C] shadow-md transition-colors hover:bg-mainOrange">
                   {t("signUpAsTeacher")}
                </button>
             </div>

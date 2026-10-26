@@ -45,7 +45,7 @@ const Hero = () => {
                   <div className="flex w-full max-w-sm flex-col gap-5">
                      <button
                         onClick={toSignUp}
-                        className="w-full rounded-xl bg-mainRed px-8 py-4 text-base font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+                        className="w-full rounded-xl bg-mainOrange px-8 py-4 text-base font-bold text-[#0F3D5C] shadow-sm transition-opacity hover:opacity-90"
                      >
                         {t("teachersSignUpFree")}
                      </button>

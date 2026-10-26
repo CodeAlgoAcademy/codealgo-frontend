@@ -54,7 +54,7 @@ const ParentsSection = () => {
 
                         <button
                            type="submit"
-                           className="whitespace-nowrap rounded-xl bg-mainRed px-5 py-3 font-workSans text-sm font-semibold text-white transition hover:opacity-90"
+                           className="whitespace-nowrap rounded-xl bg-mainOrange px-5 py-3 font-workSans text-sm font-semibold text-[#0F3D5C] transition hover:opacity-90"
                         >
                            Get Parent Resources
                         </button>
