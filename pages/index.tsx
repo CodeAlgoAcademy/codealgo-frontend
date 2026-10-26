@@ -85,7 +85,7 @@ const Home: NextPage = () => {
    />
 </Head>
          <Navbar />
-         <WinterBanner />
+         {/* <WinterBanner /> */}
          <Hero />
          <CharterSchoolsSection />
          <GetStarted />

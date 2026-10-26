@@ -51,11 +51,11 @@ const HowItWorks = () => {
             </div>
 
             <div className="mx-auto flex w-full max-w-md flex-col gap-4">
-               <button className="w-full rounded-xl bg-mainRed py-4 font-workSans text-lg font-semibold text-white shadow-md transition-colors hover:bg-mainRed">
+               <button className="w-full rounded-xl bg-mainOrange text-[#0F3D5C] py-4 font-workSans text-lg font-semibold shadow-md transition-colors hover:bg-mainRed">
                   {t("signUpAsTeacher")}
                </button>
 
-               <button className="w-full rounded-xl border border-mainRed bg-white py-4 font-workSans text-lg font-semibold text-mainRed shadow-sm transition-colors hover:bg-mainColor/5">
+               <button className="w-full rounded-xl border border-mainOrange bg-white py-4 font-workSans text-lg font-semibold text-mainRed shadow-sm transition-colors hover:bg-mainColor/5">
                   {t("signUpAsParent")}
                </button>
             </div>
