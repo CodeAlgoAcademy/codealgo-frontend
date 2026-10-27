@@ -28,7 +28,7 @@ const ValuePropositions = () => {
    ];
 
    return (
-      <section className=" mx-auto bg-black px-4 pb-6 pt-10 text-center text-white ">
+      <section className=" mx-auto bg-black px-4 py-20  text-center text-white ">
          <div className="container mx-auto px-6">
             <div className="mb-16 flex flex-col gap-4 border-b border-mainBlack/10 pb-10 md:flex-row md:items-end md:justify-between">
                <h2 className="max-w-lg font-tiltWarp text-3xl leading-tight text-white md:text-4xl">{t("perfectBalance")}</h2>

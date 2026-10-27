@@ -43,7 +43,7 @@ const GetStarted = () => {
       <section className="bg-white py-28">
          <button
             onClick={toSignUp}
-            className="mx-auto mb-10 block rounded-3xl bg-mainRed px-6 py-2 font-tiltWarp text-[1.5rem] text-white md:text-[1.8rem]"
+            className="mx-auto mb-10 block rounded-3xl bg-mainOrange px-6 py-2 font-tiltWarp text-[1.5rem] text-[#0F3D5C] md:text-[1.8rem]"
          >
             {t("signUpToday")}
          </button>

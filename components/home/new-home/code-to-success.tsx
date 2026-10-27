@@ -25,7 +25,7 @@ const CodeToSuccess = () => {
    return (
       <section className="bg-[#040404] mt-40  py-10 px-6 text-white md:pb-48">
          <div className="mx-auto max-w-[1200px]">
-            <h2 className="mx-auto mt-6 max-w-fit rounded-md bg-mainRed py-3 px-5 text-center font-tiltWarp text-[1.9rem] font-bold shadow-md max-md:text-[1.3rem]">
+            <h2 className="mx-auto mt-6 max-w-fit rounded-md bg-mainOrange text-[#0F3D5C] py-3 px-5 text-center font-tiltWarp text-[1.9rem] font-bold shadow-md max-md:text-[1.3rem]">
                {t("codeYourWayToSuccess")}
             </h2>
 
