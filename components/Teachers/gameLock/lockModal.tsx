@@ -35,6 +35,7 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
    const { t } = useTranslation("teacher");
    const dispatch = useAppDispatch();
    const [lineLocked, setLineLocked] = useState(student?.codingAccess?.line_coding_locked || false);
+   const [consoleOnly, setConsoleOnly] = useState<boolean>(student?.codingAccess?.line_coding_console_only || false);
    const [blockLevel, setBlockLevel] = useState(student?.codingAccess?.block_coding_max_level || "");
    const [lockedLevels, setLockedLevels] = useState<string[]>(student?.codingAccess?.locked_levels || []);
    const [playedLevels, setPlayedLevels] = useState<IPlayedLevel[]>([]);
@@ -54,6 +55,7 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
          .unwrap()
          .then((access: ICodingAccess) => {
             setLineLocked(access.line_coding_locked);
+            setConsoleOnly(access.line_coding_console_only || false);
             setBlockLevel(access.block_coding_max_level || "");
             setLockedLevels(access.locked_levels || []);
             setPlayedLevels(access.played_levels || []);
@@ -104,6 +106,7 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
         studentId: id, 
         data: {
            line_coding_locked: lineLocked,
+           line_coding_console_only: consoleOnly,
            block_coding_max_level: blockLevel,
            locked_levels: lockedLevels,
            math_locked: mathLocked,
@@ -138,6 +141,23 @@ export default function LockModal({ student, onClose }: { student: any; onClose:
                   >
                      <div
                         className={`absolute top-1.5 h-6 w-6 rounded-full bg-white shadow-sm transition-all ${!lineLocked ? "left-8" : "left-1.5"}`}
+                     />
+                  </button>
+               </div>
+               <div
+                  className={`flex items-center justify-between rounded-3xl border border-slate-100 bg-slate-50 p-6 ${lineLocked ? "opacity-50" : ""}`}
+               >
+                  <div className="pr-4">
+                     <h3 className="text-lg font-bold text-slate-800">{t("consoleOnlyMode")}</h3>
+                     <p className="text-sm text-slate-400">{t("consoleOnlyModeDesc")}</p>
+                  </div>
+                  <button
+                     disabled={lineLocked}
+                     onClick={() => setConsoleOnly(!consoleOnly)}
+                     className={`relative h-9 w-16 shrink-0 rounded-full transition-all ${consoleOnly ? "bg-green-500" : "bg-slate-300"}`}
+                  >
+                     <div
+                        className={`absolute top-1.5 h-6 w-6 rounded-full bg-white shadow-sm transition-all ${consoleOnly ? "left-8" : "left-1.5"}`}
                      />
                   </button>
                </div>

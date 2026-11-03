@@ -95,7 +95,7 @@ const getCodingAccess = async (student_id: string | number) => {
 
 const updateCodingAccess = async (
    student_id: string | number, 
-   data: { line_coding_locked?: boolean; block_coding_max_level?: string; locked_levels?: string[] }
+   data: { line_coding_locked?: boolean; line_coding_console_only?: boolean; block_coding_max_level?: string; locked_levels?: string[] }
 ) => {
    const response = await http.patch(`/academics/block_game/coding-access/${student_id}/`, data, {
       headers: { Authorization: `Bearer ${getAccessToken()}` },
