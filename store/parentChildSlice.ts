@@ -81,6 +81,7 @@ const initialState: IParentChildren = {
    levelThresholds: [],
     codingAccess: {
          line_coding_locked: false,
+         line_coding_console_only: false,
          block_coding_max_level: ""
       }
 };
