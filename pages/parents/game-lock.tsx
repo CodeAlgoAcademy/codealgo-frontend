@@ -62,6 +62,9 @@ export default function GameLocksParentPage() {
                               <p className={`text-sm font-bold ${access?.line_coding_locked ? 'text-red-400' : 'text-green-500'}`}>
                                  {access?.line_coding_locked ? t("disabled") : t("enabled")}
                               </p>
+                              {!access?.line_coding_locked && access?.line_coding_console_only && (
+                                 <p className="text-[11px] font-bold text-blue-500">{t("consoleOnlyBadge")}</p>
+                              )}
                            </div>
                            <div className="text-right border-l pl-10">
                               <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">{t("maxLevel")}</p>
