@@ -7,7 +7,7 @@ import LockModal from "./lockModal";
 import SkipPinCard from "./SkipPinCard";
 import { useAppDispatch } from "store/hooks";
 import { BaseStudent } from "types/interfaces/teacherstudent.interface";
-import { fetchAllClassAccess } from "store/teacherStudentSlice";
+import { fetchAllClassAccess, updateCodingAccess } from "store/teacherStudentSlice";
 import { mathGradeLabel } from "constants/mathQuest";
 
 export default function GameLocksPage() {
@@ -18,6 +18,25 @@ export default function GameLocksPage() {
    
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedStudent, setSelectedStudent] = useState<any>(null);
+   const [savingClassConsole, setSavingClassConsole] = useState(false);
+
+   const classConsoleOnly = students.length > 0 && students.every((s) => s.codingAccess?.line_coding_console_only);
+
+   // One switch for the whole class. Same PATCH the modal sends, once per student.
+   const setClassConsoleOnly = async (value: boolean) => {
+      setSavingClassConsole(true);
+      try {
+         await Promise.all(
+            students.map((s) =>
+               dispatch(updateCodingAccess({ studentId: s.student_id, data: { line_coding_console_only: value } })).unwrap()
+            )
+         );
+      } catch {
+         // Rows that failed keep their old value, so the list still tells the truth.
+      } finally {
+         setSavingClassConsole(false);
+      }
+   };
 
 useEffect(() => {
    if (classId) {
@@ -44,6 +63,25 @@ useEffect(() => {
             <p className="text-slate-500">{t("gameAccessDescription")}</p>
          </header>
          <SkipPinCard />
+         {students.length > 0 && (
+            <div className="mb-6 flex items-center justify-between rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+               <div className="pr-4">
+                  <h3 className="text-lg font-bold text-slate-800">{t("consoleOnlyClass")}</h3>
+                  <p className="text-sm text-slate-400">{t("consoleOnlyModeDesc")}</p>
+               </div>
+               <button
+                  disabled={savingClassConsole}
+                  onClick={() => setClassConsoleOnly(!classConsoleOnly)}
+                  className={`relative h-9 w-16 shrink-0 rounded-full transition-all ${classConsoleOnly ? "bg-green-500" : "bg-slate-300"} ${
+                     savingClassConsole ? "opacity-50" : ""
+                  }`}
+               >
+                  <div
+                     className={`absolute top-1.5 h-6 w-6 rounded-full bg-white shadow-sm transition-all ${classConsoleOnly ? "left-8" : "left-1.5"}`}
+                  />
+               </button>
+            </div>
+         )}
          {students.length === 0 ? (
             <div className="rounded-3xl bg-white p-12 text-center shadow-sm">
                <p className="text-slate-400">{t("noStudentsInThisClass")}</p>
@@ -89,6 +127,9 @@ useEffect(() => {
                               <p className={`text-sm font-bold ${access?.line_coding_locked ? "text-red-400" : "text-green-500"}`}>
                                  {access?.line_coding_locked ? t("locked") : t("active")}
                               </p>
+                              {!access?.line_coding_locked && access?.line_coding_console_only && (
+                                 <p className="text-[11px] font-bold text-blue-500">{t("consoleOnlyBadge")}</p>
+                              )}
                            </div>
                            <div className="border-l border-slate-100 pl-12 text-right">
                               <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-slate-300">{t("blockGameAccess")}</p>

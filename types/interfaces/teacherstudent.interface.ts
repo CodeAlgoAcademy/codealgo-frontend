@@ -42,6 +42,8 @@ export interface IPlayedMathStandard {
 
 export interface ICodingAccess {
    line_coding_locked: boolean;
+   // Python quests only, back to back in the console. No overworld.
+   line_coding_console_only?: boolean;
    block_coding_max_level: string;
    locked_levels?: string[];
    // Math Quest: whole game on/off, highest grade it opens ("" = no cap),
