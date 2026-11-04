@@ -99,6 +99,56 @@ export interface IMathQuestReport {
    totals: IMathQuestGradeTotal[];
    recent_rounds: IMathQuestRound[];
 }
+
+export type IMathTestKind = "pre" | "mid" | "post" | "knowledge";
+
+export interface IMathTestResult {
+   code: string;
+   correct: boolean;
+   description: string;
+}
+
+export interface IMathTestDomain {
+   domain: string;
+   domain_name: string;
+   answered: number;
+   correct: number;
+   score: number;
+}
+
+export interface IMathTest {
+   id: number;
+   kind: IMathTestKind;
+   kind_label: string;
+   grade: string;
+   status: "pending" | "completed" | "cancelled";
+   source: "auto" | "teacher" | "parent";
+   assigned_by: string;
+   question_count: number;
+   answered: number;
+   correct: number;
+   score: number;
+   duration_seconds: number;
+   created_at: string;
+   completed_at: string | null;
+   results?: IMathTestResult[];
+   domains?: IMathTestDomain[];
+}
+
+export interface IMathTestGradeSummary {
+   grade: string;
+   pre: number | null;
+   mid: number | null;
+   post: number | null;
+   growth: number | null;
+}
+
+export interface IMathTestReport {
+   tests: IMathTest[];
+   summary: IMathTestGradeSummary[];
+   grades: string[];
+   kinds: { value: IMathTestKind; label: string }[];
+}
 export interface ITeacherStudentsState{
   students: BaseStudent[];
   currentStudent: BaseStudent;
