@@ -11,6 +11,7 @@ import Screentime from "@/components/parents/screentime/Screentime";
 import RecentInteraction from "@/components/parents/multiplayer/RecentInteraction";
 import CompletedStandard from "./standard";
 import LevelsThresholdChart from "@/components/parents/threshold/LevelThreshold";
+import MathTests from "@/components/Teachers/students/studentsprogress/mathTests";
 
 const Dashboard = () => {
    const dispatch = useDispatch();
@@ -83,6 +84,7 @@ const Dashboard = () => {
                      />
                <CompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
                <Skills size="base" />
+               <MathTests studentId={parent?.currentChild?.id} />
                <Screentime size="base" />
                <LevelsThresholdChart size="base" />
                <RecentInteraction />
