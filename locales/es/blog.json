@@ -1,0 +1,204 @@
+{
+  "howCodingHelpsKids": {
+    "title": "Cómo la programación ayuda a los niños con las matemáticas y la resolución de problemas",
+    "date": "Marzo de 2026",
+    "imageDetail": "La programación como camino hacia mejores habilidades matemáticas y pensamiento lógico",
+    "dropCaps": "Muchos padres ven la programación como una habilidad técnica, pero en realidad es una de las formas más eficaces de agudizar la mente de un niño para las matemáticas y la lógica. Al sacar las matemáticas del pizarrón y llevarlas a un mundo digital, la programación hace que los conceptos \"difíciles\" se sientan como herramientas naturales para crear.",
+    "sections": {
+      "decompositionTitle": "Dividir los problemas grandes (descomposición)",
+      "decompositionText": "En programación, una meta grande, como crear un videojuego, es demasiado compleja para enfrentarla de una sola vez. Los niños aprenden el arte de la descomposición, que significa dividir un problema grande en pasos pequeños y manejables. Así es exactamente como se resuelven los problemas avanzados de matemáticas y ciencias: al aprender a concentrarse en un \"subproblema\" a la vez, los niños desarrollan una forma estructurada de pensar que elimina la \"ansiedad matemática\" que muchas veces sienten en el salón.",
+      "variablesTitle": "Hacer tangibles las variables y el álgebra",
+      "variablesText": "El álgebra puede parecer abstracta y confusa cuando solo son letras en una página, pero en Python las variables son herramientas esenciales para llevar la cuenta de la puntuación o la vida de un jugador. Cuando un niño escribe score = score + 10, no solo está haciendo un ejercicio de matemáticas: está viendo el álgebra en acción. Esta experiencia práctica convierte la \"X\" de un misterio aterrador en un recipiente útil, y hace mucho más fácil el paso a las matemáticas de secundaria y preparatoria.",
+      "geometryTitle": "Visualizar la geometría y las coordenadas",
+      "geometryText": "La programación es un patio de juegos para el razonamiento espacial. Con herramientas como Turtle Graphics, los niños usan ángulos, grados y coordenadas X/Y para dibujar figuras y patrones en la pantalla. En vez de solo memorizar que un cuadrado tiene esquinas de 90 grados, tienen que indicarle a la computadora que gire exactamente 90 grados para terminar su dibujo. Esta retroalimentación visual afianza su comprensión de la geometría mucho mejor que cualquier libro de texto.",
+      "logicTitle": "La lógica del ensayo y error (depuración)",
+      "logicText": "Quizás el mayor regalo que la programación le da a un niño es una relación sana con el error. En matemáticas, una \"X\" en un examen se siente como una derrota; en programación, un \"bug\" es solo un acertijo esperando a ser resuelto. El proceso de depuración enseña a los niños a mirar su lógica con ojo crítico, volver sobre sus pasos e intentarlo de nuevo. Esto construye una resiliencia increíble y una \"mentalidad de crecimiento\", y los convierte en solucionadores de problemas perseverantes que no le temen a un desafío."
+    },
+    "cta": "¿Te interesa que tu hijo empiece? Explora la plataforma de programación con juegos de CodeAlgo Academy, diseñada para estudiantes de kínder a 8.º grado, en"
+  },
+  "pythonVsScratch": {
+    "title": "Python o Scratch: ¿qué debería aprender primero mi hijo?",
+    "date": "Marzo de 2026",
+    "imageDetail": "Cómo elegir el primer lenguaje de programación adecuado para tu hijo",
+    "dropCaps": "Elegir el primer lenguaje de programación de tu hijo es una decisión importante. Aunque Scratch y Python enseñan los fundamentos de la lógica, ofrecen experiencias muy diferentes. Aquí te contamos por qué Python podría ser la opción perfecta de \"siguiente nivel\" para tu pequeño programador.",
+    "sections": {
+      "blocksTitle": "Bloques visuales o sintaxis del mundo real",
+      "blocksText": "Scratch usa una interfaz de bloques donde los niños arrastran y sueltan piezas de colores para crear animaciones. Es una introducción fantástica a la lógica sin la frustración de los errores de escritura. Sin embargo, Python introduce a los niños en el mundo de la programación profesional con una sintaxis de texto que es sorprendentemente fácil de leer. Como Python se parece al inglés común, los niños aprenden rápido a escribir código \"de verdad\", lo que les da un gran impulso de confianza al ver cómo cobran vida las instrucciones que escribieron.",
+      "toolsTitle": "De jugar videojuegos a crear herramientas",
+      "toolsText": "Scratch está pensado principalmente para contar historias y crear juegos sencillos, lo cual es genial para los niños más pequeños. Python, en cambio, es una herramienta potentísima y versátil que usan la NASA, Google y Netflix. Al empezar con Python, tu hijo no solo está \"jugando\" con código: está aprendiendo una herramienta que se usa en ciencia de datos, inteligencia artificial y desarrollo web. Este paso de un ecosistema cerrado a un lenguaje profesional abierto hace que el aprendizaje se sienta más significativo y emocionante.",
+      "syntaxTitle": "Superar pronto el miedo a la \"sintaxis\"",
+      "syntaxText": "A muchos les preocupa que escribir código sea demasiado difícil para los niños, pero la estructura limpia y minimalista de Python está diseñada justamente para ser clara. Aprender Python primero (o poco después de Scratch) ayuda a los niños a desarrollar atención al detalle y soltura con el teclado. Dominar desde temprano las \"reglas\" de un lenguaje de texto evita el \"miedo al teclado\" que algunos estudiantes enfrentan más adelante en la escuela, y los hace más adaptables a otros lenguajes como Java o C++.",
+      "creativityTitle": "Un puente hacia una creatividad infinita",
+      "creativityText": "Mientras Scratch tiene sus límites, Python es prácticamente infinito. Cuando un niño entiende lo básico de Python, puede explorar miles de bibliotecas externas para hacer de todo, desde controlar un robot hasta analizar estadísticas deportivas o crear arte digital. Python crece con tu hijo y le da una habilidad para toda la vida que evoluciona de simples scripts de \"Hola, mundo\" a proyectos complejos de nivel profesional."
+    },
+    "cta": "¿Listo para darle ventaja a tu hijo? CodeAlgo Academy enseña Python y más con una experiencia divertida basada en juegos, creada para estudiantes de kínder a 8.º grado. Visítanos en"
+  },
+  "startupsToWatch": {
+    "title": "Startups a seguir en 2024: CodeAlgo Academy convierte la programación en juego para llevar equidad a la nueva ola de ingenieros de software",
+    "date": "15 de noviembre de 2023",
+    "imageDetail": "Sedric Hibler y Triumfia Houmbie Fulks, CodeAlgo Academy",
+    "editorNote": "Nota del editor: los editores de Startland News seleccionaron 10 empresas en crecimiento de Kansas City para destacarlas en su lista anual Startups to Watch. Ahora en su noveno año, esta sección reconoce a fundadores y startups que, según los editores, darán algunas de las noticias más grandes e interesantes de los próximos 12 meses. La siguiente es una de las empresas de 2024.",
+    "dropCaps": "Cuando Triumfia Houmbie Fulks notó la falta de ingenieras de software y de ingenieros afroamericanos, la cofundadora de CodeAlgo Academy se detuvo a pensar, contó.",
+    "content": {
+      "introQuote": "\"Empiezas a preguntarte por qué no hay muchos de nosotros en este campo tan lucrativo; literalmente puedes empezar a ganar seis cifras al salir de la preparatoria. ¿Será que la gente simplemente no lo busca?\", preguntó Fulks.",
+      "gamification": "CodeAlgo Academy usa la gamificación para enseñar habilidades de programación a estudiantes de kínder a 8.º grado, para que desarrollen su alfabetización tecnológica y lleguen al mundo laboral mejor preparados para carreras STEM.",
+      "betaLaunch": "Con la plataforma beta lanzada este año, Fulks y el cofundador Sedric Hibler buscan derribar los mitos sobre la programación, como la creencia de que el campo es demasiado difícil y tedioso, y de que las personas no tienen acceso a plataformas de programación fáciles de usar.",
+      "mission": "\"Decidimos crear CodeAlgo para cerrar esa brecha y permitir que más personas subrepresentadas entren al campo, dándoles la oportunidad de conseguir una pasantía o un empleo al salir de la preparatoria\", dijo Fulks.",
+      "founders": "Ambos fundadores se sienten afortunados por su propio crecimiento profesional a largo plazo en la ingeniería de software y quieren extender ese éxito en carreras STEM a otras personas, dijeron.",
+      "immigrantStory": "\"Ser inmigrante en EE. UU. y buscar trabajo después de graduarse con un título que no es de STEM puede ser bastante difícil\", dijo Fulks. \"Las posibilidades de conseguir algo así son muy pocas.\"",
+      "pivot": "Tras cambiar de rumbo a último momento para estudiar una carrera STEM sin un mentor ni un guía, Fulks aprendió a programar por su cuenta para conseguir un empleo en ingeniería de software. Consciente de los desafíos que enfrentó, Fulks aspira a facilitar el camino al éxito.",
+      "youthFocus": "\"Queremos asegurarnos de ofrecer oportunidades a los jóvenes para que lo vean como un camino viable. Sabemos que no todos pueden ser ingenieros de software, pero ampliemos la perspectiva\", dijo Hibler.",
+      "challengingCoding": "Fulks cuestiona la idea de que programar sea difícil por naturaleza, dijo, y subraya que, como con cualquier habilidad nueva, la paciencia es clave en el aprendizaje.",
+      "hardQuote": "\"Lo que no conoces siempre va a ser difícil, porque no sabes nada de ello\", dijo.",
+      "gamificationApproach": "Como la startup se enfoca en los jóvenes, sobre todo en los de secundaria, Fulks cree que es importante evitar el carácter intimidante de la programación tradicional, donde una combinación de letras e instrucciones aparentemente al azar puede desanimar a los jóvenes estudiantes.",
+      "funQuote": "\"Puedo imaginar a un niño aburriéndose bastante rápido. Entonces, ¿cómo lo hacemos divertido y atractivo? Así es como llegó la gamificación\", dijo Fulks.",
+      "accessibleApproach": "Con CodeAlgo Academy, el dúo creó un enfoque más accesible para la educación en programación, para hacerla más inclusiva y también divertida de jugar para estudiantes de kínder a 8.º grado."
+    },
+    "sidebar": {
+      "elevatorPitch": "CodeAlgo nació de una idea sencilla: la exposición temprana a la programación es clave para formar a los programadores de la próxima generación. Nuestra misión es ofrecer una plataforma de juegos de programación en clase y en línea donde padres y maestros puedan ayudar a sus estudiantes de kínder a 12.º grado a convertirse en grandes solucionadores de problemas.",
+      "founder": "Triumfia Houmbie Fulks, Sedric Hibler",
+      "foundingYear": "2022",
+      "employeeCount": "2",
+      "funding": "Más de $100,000",
+      "investors": "Polsinelli Law Firm, CommunityAmerica Credit Union",
+      "programs": "LaunchKC, Pipeline Pathfinders, AltCapYourBiz, Goodie Nation, Pure Pitch Rally"
+    },
+    "conclusion": {
+      "betaAchievement": "Para los fundadores, lograr que la gente se inscribiera en la plataforma beta de CodeAlgo Academy fue uno de los mayores logros de 2023. Poco a poco fueron sumando al sitio a las personas de su lista de espera para que lo probaran y les dieran sus comentarios.",
+      "liveGoal": "Ahora CodeAlgo Academy está llegando a un punto en el que tiene que ser fácil para cualquiera registrarse y jugar de inmediato, dijo el dúo, y señaló que lanzar la plataforma por completo es su meta principal para 2024.",
+      "usersQuote": "\"Logramos muchos más usuarios de los que esperábamos al principio\", dijo Fulks. \"Así que crucemos los dedos para lanzar el programa real a un público más amplio el próximo año.\"",
+      "expansion": "El equipo también quiere crecer, buscando contratar a otro desarrollador, además de impulsar el marketing para aumentar el número de usuarios de la plataforma y concretar patentes pendientes.",
+      "fullList": "Haz clic aquí para ver la lista completa de Startups to Watch, presentada con el apoyo de la Ewing Marion Kauffman Foundation y producida de forma independiente por Startland News."
+    }
+  },
+  "codeAndPlay": {
+    "title": "Programa y juega",
+    "subtitle": "El poder de la gamificación en CodeAlgo Academy",
+    "date": "Diciembre de 2023",
+    "intro": "Programar es una aventura, ¿y qué mejor manera de emprender este viaje que a través del emocionante mundo de la gamificación? En CodeAlgo Academy creemos que aprender a programar debería ser tan emocionante como jugar tu juego favorito. En este blog exploraremos la importancia de la gamificación en la programación para niños y por qué la plataforma de juegos de CodeAlgo Academy es el lugar perfecto para fomentar el amor por la programación.",
+    "sections": {
+      "funTitle": "Hacer divertido el aprendizaje",
+      "funText": "Aprender se vuelve realmente atractivo cuando se siente como un juego. La gamificación le pone diversión al proceso de programar y convierte lo que podría parecer una tarea abrumadora en una experiencia agradable. En CodeAlgo Academy transformamos la programación en una aventura donde cada desafío es un nuevo nivel esperando a ser conquistado.",
+      "motivationTitle": "Más motivación y participación",
+      "motivationText": "Los juegos tienen una forma de mantener enganchados a los jugadores, y el mismo principio se aplica al aprendizaje. Al integrar la gamificación en las lecciones de programación, aumentamos la motivación y mantenemos interesados a los jóvenes estudiantes. La plataforma de juegos de CodeAlgo Academy está diseñada para despertar la curiosidad y mantener un gran entusiasmo durante todo el camino.",
+      "growthTitle": "Fomentar una mentalidad de crecimiento",
+      "growthText": "En el mundo de los videojuegos, subir de nivel es sinónimo de progreso. El enfoque gamificado de CodeAlgo Academy fomenta una mentalidad de crecimiento al recalcar que los desafíos son oportunidades para aprender y mejorar. A medida que los niños superan obstáculos de programación, ganan la confianza para enfrentar tareas más complejas y desarrollan una actitud positiva hacia el aprendizaje.",
+      "pathsTitle": "Rutas de aprendizaje personalizadas",
+      "pathsText": "Cada jugador tiene un estilo único, y lo mismo pasa con los estudiantes. La plataforma de juegos de CodeAlgo Academy ofrece rutas de aprendizaje personalizadas que permiten a los niños elegir aventuras de programación acordes a sus intereses y a su ritmo. Esta personalización asegura que cada niño pueda vivir un camino de programación hecho a su medida.",
+      "feedbackTitle": "Retroalimentación y recompensas en tiempo real",
+      "feedbackText": "Igual que los jugadores reciben retroalimentación inmediata en los juegos, CodeAlgo Academy da retroalimentación en tiempo real en los ejercicios de programación. Esta gratificación instantánea, junto con las recompensas virtuales, mantiene motivados a los niños y refuerza la sensación de logro con cada código completado con éxito.",
+      "applicationTitle": "Aplicación práctica de las habilidades de programación",
+      "applicationText": "En el mundo de los videojuegos, el éxito suele depender de la resolución de problemas y el pensamiento estratégico. Los desafíos gamificados de CodeAlgo Academy convierten estas habilidades en aplicaciones prácticas de programación. Los niños no solo aprenden la sintaxis, también desarrollan habilidades de resolución de problemas que van más allá del mundo digital."
+    },
+    "conclusion": "La plataforma de juegos de CodeAlgo Academy no es solo un lugar para aprender a programar; es un patio de juegos virtual donde la programación se convierte en una aventura llena de emoción y descubrimientos. Al adoptar la gamificación, transformamos la programación de una tarea por cumplir en un viaje para disfrutar. Únete a nosotros en CodeAlgo Academy, donde aprender a programar es tan emocionante como subir de nivel en tu juego favorito, ¡porque cada programador de CodeAlgo es un genio en su propia misión épica!"
+  },
+  "diversityInCoding": {
+    "title": "La urgente necesidad de diversidad e inclusión en la programación",
+    "date": "Diciembre de 2023",
+    "intro": "En el amplio panorama de la tecnología, el llamado a la diversidad y la inclusión nunca ha sido tan importante. El mundo de la programación y la ingeniería de software, aunque revolucionario en sus innovaciones, lleva mucho tiempo marcado por la falta de representación de comunidades desatendidas. Mientras buscamos un futuro más equitativo e inclusivo, es imprescindible abordar esta desigualdad y abrir las puertas de la oportunidad para todos. En este blog profundizamos en la importancia de la representación en el mundo de la programación y en por qué incluir a más comunidades desatendidas no es solo una necesidad, sino un imperativo moral.",
+    "sections": {
+      "realWorldTitle": "Reflejar el mundo real",
+      "realWorldText": "Las soluciones de software y tecnología que creamos afectan a personas de todos los ámbitos. Sin un grupo diverso de mentes contribuyendo al proceso de creación, existe el riesgo de pasar por alto sin querer las necesidades y perspectivas de ciertas comunidades. La representación asegura que los productos que creamos reflejen la diversidad real a la que buscan servir.",
+      "innovationTitle": "Innovación gracias a perspectivas diversas",
+      "innovationText": "La diversidad en el mundo de la programación significa diversidad de perspectivas, experiencias e ideas. Cuando personas de distintos orígenes se unen para resolver problemas, el resultado suele ser soluciones más innovadoras y sólidas. Los equipos diversos aportan una riqueza de pensamiento que fomenta la creatividad y ayuda a enfrentar una gama más amplia de desafíos.",
+      "opportunityTitle": "Cerrar la brecha de oportunidades",
+      "opportunityText": "Las comunidades desatendidas, incluidos los afroamericanos, históricamente han enfrentado barreras sistémicas que limitan su acceso a oportunidades educativas y profesionales. Al trabajar activamente para que más personas de estas comunidades entren al campo de la programación, contribuimos a cerrar la brecha de oportunidades y a crear una sociedad más justa y equitativa.",
+      "realityTitle": "La cruda realidad",
+      "realityText": "Según estadísticas recientes, solo el 5% de los ingenieros de software en Estados Unidos se identifica como afroamericano. Esta cruda realidad subraya la urgencia de la situación. No se trata de diversidad por la diversidad misma, sino de corregir un problema sistémico que ha persistido demasiado tiempo.",
+      "economicTitle": "Impulsar el empoderamiento económico",
+      "economicText": "Incluir a las comunidades desatendidas en la programación no es solo una responsabilidad social, es un imperativo económico. La industria tecnológica ofrece carreras bien pagadas y gratificantes, y al diversificar el talento contribuimos al empoderamiento económico de personas que históricamente han sido marginadas.",
+      "inclusiveTitle": "Construir comunidades tecnológicas inclusivas",
+      "inclusiveText": "La falta de diversidad en la industria tecnológica no es solo un problema para quienes buscan una carrera; es un desafío para toda la industria. Construir comunidades tecnológicas inclusivas significa crear entornos donde todos se sientan bienvenidos, valorados y escuchados. Esta inclusión da lugar a equipos más fuertes, mejores productos y una industria más vibrante y dinámica."
+    },
+    "conclusion": "En conclusión, la necesidad de diversidad e inclusión en el mundo de la programación no se trata de cumplir cuotas ni de marcar casillas; se trata de crear un futuro más equitativo e innovador. Al trabajar activamente para incluir a más comunidades desatendidas en la programación, no solo enfrentamos injusticias históricas, sino que también abrimos el camino a un panorama tecnológico más brillante e inclusivo que nos beneficia a todos. Es hora de derribar barreras, desafiar prejuicios y defender una comunidad de programación que refleje de verdad la diversidad del mundo en que vivimos."
+  },
+  "vaccinationForKids": {
+    "title": "Programar con fuerza",
+    "subtitle": "El poder de la vacunación para las superestrellas de CodeAlgo y sus familias",
+    "date": "Diciembre de 2023",
+    "intro": "Mientras nos sumergimos en el fascinante mundo de la programación y los algoritmos en CodeAlgo Academy, hay otro aspecto vital de nuestra vida que merece atención: la lucha continua contra la pandemia de COVID-19. En esta publicación, dejemos por un momento las líneas de código para hablar de la importancia de vacunarse. El mundo de la programación y la salud pública pueden parecer lejanos, pero comparten algo en común: el poder de la acción colectiva para un futuro más sano y resiliente.",
+    "sections": {
+      "guardiansTitle": "1. Guardianes del código, guardianes de la salud",
+      "guardiansText": "Así como nuestro código nos protege de bugs y errores, vacunarnos es nuestra armadura contra los efectos graves de la COVID-19. Con este paso sencillo pero poderoso, nos convertimos en guardianes no solo de nuestro bienestar sino también del de quienes nos rodean, y creamos un refugio más seguro para explorar la programación en CodeAlgo Academy.",
+      "havenTitle": "2. El refugio seguro de CodeAlgo",
+      "havenText": "En CodeAlgo Academy, tu seguridad es nuestra prioridad. Vacunarse es una parte clave para crear un entorno de aprendizaje seguro. Es la clave para reducir el riesgo de transmisión del virus y asegurar que nos sigamos enfocando en la alegría de programar sin la preocupación de interrupciones por motivos de salud.",
+      "publicHealthTitle": "3. Programar por la salud pública",
+      "publicHealthText": "Como jóvenes programadores, no solo aprenden algoritmos: son posibles innovadores en todos los aspectos de la vida. Entender la importancia de la vacunación es como programar por la salud pública: una forma pequeña pero significativa de contribuir al bienestar colectivo, igual que escribir código para un proyecto de software más grande.",
+      "standardTitle": "4. Marcar el estándar para los futuros innovadores",
+      "standardText": "Ustedes, los jóvenes programadores de hoy, son los futuros innovadores y líderes de la tecnología. Al vacunarse, marcan el estándar para sus compañeros y para las futuras generaciones. Muestran la importancia de la responsabilidad, el cuidado y el papel que juega la tecnología en la creación de un mundo más sano.",
+      "learningTitle": "5. Asegurar un aprendizaje sin interrupciones",
+      "learningText": "Una comunidad sana es la base de una comunidad próspera. Al vacunarnos, ayudamos a que CodeAlgo Academy y otros espacios educativos sigan siendo seguros y propicios para aprender. Esto garantiza oportunidades ininterrumpidas para explorar y destacar en el mundo de la programación.",
+      "scienceTitle": "6. Confianza en la ciencia y la tecnología",
+      "scienceText": "Así como la programación se basa en la lógica y la evidencia, el desarrollo de las vacunas se basa en la investigación científica y los avances tecnológicos. Vacunarse es una muestra de nuestra confianza en el poder de la ciencia y la tecnología para mejorar y proteger nuestras vidas.",
+      "ethicalTitle": "7. Adoptar prácticas de programación éticas",
+      "ethicalText": "Programar no se trata solo de sintaxis y algoritmos; también se trata de ética. Vacunarse se convierte en una decisión ética que refleja nuestro compromiso con el bienestar de nuestra comunidad. Es una expresión concreta de la empatía y la responsabilidad que ponemos tanto en nuestros proyectos de programación como en nuestra vida diaria."
+    },
+    "conclusion": "Mientras recorremos el emocionante mundo de la programación en CodeAlgo Academy, emprendamos también un camino de responsabilidad y cuidado de la comunidad. Vacunarse contra la COVID-19 es un paso pequeño pero significativo hacia un futuro más sano y seguro para nosotros y para quienes nos rodean. Programemos no solo por eficiencia, sino por un mundo donde nuestras comunidades sean resilientes, prósperas y unidas en la salud. Juntos, generemos un impacto positivo: una línea de código y una vacuna a la vez. ¡Feliz programación, y brindemos por un camino de programación seguro y saludable!"
+  },
+  "guidanceInCoding": {
+    "title": "Cultivar a los más jóvenes",
+    "subtitle": "Guía para padres sobre cómo cultivar las habilidades de programación en los niños",
+    "date": "Diciembre de 2023",
+    "intro": "En un mundo impulsado por la tecnología, darles a nuestros hijos habilidades de programación se ha convertido en una valiosa inversión en su futuro. Como padres, fomentar un interés temprano por la programación no solo mejora sus capacidades académicas, sino que también cultiva habilidades esenciales para la vida. Este blog busca orientar a los padres sobre la importancia de la educación en programación para sus hijos y ofrece consejos prácticos para cultivar esta habilidad desde pequeños.",
+    "sections": {
+      "digitalAgeTitle": "Prepararse para la era digital",
+      "digitalAgeText": "La era digital ya llegó y dominar la tecnología ya no es opcional. La programación es el lenguaje de las computadoras, e introducir a tu hijo en ella desde temprano asegura que esté bien preparado para moverse y destacar en un mundo cada vez más digital.",
+      "problemSolvingTitle": "Mejorar las habilidades de resolución de problemas",
+      "problemSolvingText": "Programar no se trata solo de escribir líneas de código; se trata de dividir problemas complejos en pasos lógicos y encontrar soluciones. Al participar en actividades de programación, los niños desarrollan pensamiento crítico y habilidades de resolución de problemas que van más allá de la pantalla y llegan a muchos aspectos de su vida.",
+      "creativityTitle": "Fomentar la creatividad",
+      "creativityText": "Programar es una actividad creativa que permite a los niños convertir sus ideas en proyectos concretos. Ya sea diseñar un juego, crear una historia o construir un sitio web, la programación ofrece una plataforma para expresarse y libera su potencial creativo.",
+      "screenTimeTitle": "Tiempo de pantalla de calidad",
+      "screenTimeText": "En lugar de un tiempo de pantalla pasivo, la programación ofrece la oportunidad de usar la tecnología de forma productiva. En vez de solo consumir contenido, los niños se vuelven creadores y usan la tecnología como herramienta para dar vida a sus ideas.",
+      "confidenceTitle": "Desarrollar la confianza",
+      "confidenceText": "Escribir con éxito un programa y ver un proyecto cobrar vida puede ser enormemente gratificante. La programación permite a los niños superar desafíos, aumenta su confianza y les da una sensación de logro que va más allá de la programación.",
+      "parentalTitle": "La participación de los padres",
+      "parentalText": "Los padres juegan un papel fundamental para cultivar el interés de sus hijos por la programación. Al mostrar un interés genuino, explorar juntos actividades de programación y darles ánimo, los padres crean un entorno positivo y de apoyo para que su hijo prospere en el mundo de la programación.",
+      "balanceTitle": "Equilibrar la programación con otras actividades",
+      "balanceText": "Aunque programar es una habilidad valiosa, es esencial encontrar un equilibrio con otras actividades. Fomenta una variedad de intereses para asegurar un desarrollo integral que incluya actividad física, artes e interacción social.",
+      "interactiveTitle": "Explorar plataformas de aprendizaje interactivas",
+      "interactiveText": "Hay muchas plataformas de aprendizaje interactivas y juegos de programación diseñados especialmente para niños. Estas plataformas hacen que aprender a programar sea divertido y atractivo, y permiten a los niños avanzar a su propio ritmo mientras adquieren habilidades valiosas.",
+      "realWorldTitle": "Relacionar la programación con aplicaciones del mundo real",
+      "realWorldText": "Ayuda a tu hijo a entender las aplicaciones reales de la programación. Desde las apps de su tableta hasta los sitios web que visita, la programación es la base de muchas tecnologías que usa a diario. Hacer estas conexiones le ayuda a valorar el impacto de la programación en el mundo que lo rodea.",
+      "collaborationTitle": "Fomentar la colaboración",
+      "collaborationText": "Programar no es una actividad solitaria. Anima a tu hijo a colaborar con amigos o a participar en clubes y talleres de programación. La colaboración mejora el trabajo en equipo y la comunicación, y le da un aspecto social a su camino en la programación."
+    },
+    "conclusion": "Como padres, guiar a nuestros hijos al mundo de la programación es un regalo que sigue dando frutos. No se trata solo de prepararlos para futuras carreras, sino de inculcarles habilidades de resolución de problemas, fomentar su creatividad y desarrollar su confianza. Al apostar por la educación en programación, los padres permiten que sus hijos prosperen en la era digital y, sobre todo, que se conviertan en creadores activos que aportan al mundo siempre cambiante de la tecnología."
+  },
+  "postSummaries": {
+    "howCodingHelpsKids": {
+      "title": "Cómo la programación ayuda a los niños con las matemáticas y la resolución de problemas",
+      "body": "Muchos padres ven la programación como una habilidad técnica, pero en realidad es una de las formas más eficaces de agudizar la mente de un niño para las matemáticas y la lógica.",
+      "date": "Marzo de 2026"
+    },
+    "pythonVsScratch": {
+      "title": "Python o Scratch: ¿qué debería aprender primero mi hijo?",
+      "body": "Elegir el primer lenguaje de programación de tu hijo es una decisión importante. Aunque Scratch y Python enseñan los fundamentos de la lógica, ofrecen experiencias muy diferentes.",
+      "date": "Marzo de 2026"
+    },
+    "startupsToWatch": {
+      "title": "Startups a seguir en 2024",
+      "body": "CodeAlgo Academy convierte la programación en juego para llevar equidad a la nueva ola de ingenieros de software",
+      "date": "Enero de 2024"
+    },
+    "codeAndPlay": {
+      "title": "Programa y juega",
+      "body": "El poder de la gamificación en CodeAlgo Academy",
+      "date": "Diciembre de 2023"
+    },
+    "diversityInCoding": {
+      "title": "Diversidad en la programación",
+      "body": "La urgente necesidad de diversidad e inclusión en la programación",
+      "date": "Diciembre de 2023"
+    },
+    "vaccinationForKids": {
+      "title": "Programar con fuerza",
+      "body": "El poder de la vacunación para las superestrellas de CodeAlgo y sus familias",
+      "date": "Diciembre de 2023"
+    },
+    "guidanceInCoding": {
+      "title": "Cultivar a los más jóvenes",
+      "body": "Guía para padres sobre cómo cultivar las habilidades de programación en los niños",
+      "date": "Diciembre de 2023"
+    }
+  }
+}
