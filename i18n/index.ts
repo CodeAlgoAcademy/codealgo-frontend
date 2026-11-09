@@ -27,6 +27,18 @@ import pressFr from "../locales/fr/press.json";
 import blogFr from "../locales/fr/blog.json";
 import aboutFr from "../locales/fr/about.json";
 
+import commonEs from "../locales/es/common.json";
+import homeEs from "../locales/es/home.json";
+import authEs from "../locales/es/auth.json";
+import teacherEs from "../locales/es/teacher.json";
+import parentEs from "../locales/es/parent.json";
+import organizerEs from "../locales/es/organizer.json";
+import pagesEs from "../locales/es/pages.json";
+import modalsEs from "../locales/es/modals.json";
+import pressEs from "../locales/es/press.json";
+import blogEs from "../locales/es/blog.json";
+import aboutEs from "../locales/es/about.json";
+
 const staticResources = {
    en: {
       common: commonEn,
@@ -53,6 +65,19 @@ const staticResources = {
       press: pressFr,
       blog: blogFr,
       about: aboutFr,
+   },
+   es: {
+      common: commonEs,
+      home: homeEs,
+      auth: authEs,
+      teacher: teacherEs,
+      parent: parentEs,
+      organizer: organizerEs,
+      pages: pagesEs,
+      modals: modalsEs,
+      press: pressEs,
+      blog: blogEs,
+      about: aboutEs,
    },
 };
 
@@ -114,13 +139,18 @@ export function syncLanguageToBackend(lang: string): void {
    ).catch(() => {});
 }
 
+export const SUPPORTED_LANGUAGES = ["en", "fr", "es"] as const;
+
+function supported(lang: string | null | undefined): string | null {
+   const code = (lang || "").substring(0, 2).toLowerCase();
+   return (SUPPORTED_LANGUAGES as readonly string[]).includes(code) ? code : null;
+}
+
 export function detectLanguage(): string {
    if (typeof window === "undefined") return "en";
-   const stored = window.localStorage.getItem("i18nextLng");
-   if (stored) return stored.substring(0, 2);
-   const nav = window.navigator?.language;
-   if (nav) return nav.substring(0, 2);
-   return "en";
+   const stored = supported(window.localStorage.getItem("i18nextLng"));
+   if (stored) return stored;
+   return supported(window.navigator?.language) || "en";
 }
 
 export default i18n;
