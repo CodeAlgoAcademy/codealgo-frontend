@@ -108,8 +108,17 @@ export default {
 
     // Custom domains accept plain HTTP too, and nothing upstream upgrades it.
     // Only the public hosts are redirected, so `wrangler dev` on localhost works.
-    if (url.protocol === "http:" && PUBLIC_HOSTS.has(url.hostname)) {
+    //
+    // www is folded into the apex in the same hop, so http://www.* goes straight
+    // to https://codealgoacademy.com/ rather than chaining two redirects. The
+    // canonical tags and the sitemap already name the apex; without this the
+    // same page was served from both hosts and Google indexed each.
+    const toApex = url.hostname === "www.codealgoacademy.com";
+    if ((url.protocol === "http:" || toApex) && PUBLIC_HOSTS.has(url.hostname)) {
       url.protocol = "https:";
+      if (toApex) {
+        url.hostname = "codealgoacademy.com";
+      }
       return Response.redirect(url.toString(), 301);
     }
 
