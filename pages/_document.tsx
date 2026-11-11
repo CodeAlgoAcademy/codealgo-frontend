@@ -23,7 +23,7 @@ class MyDocument extends Document {
                <link rel="preconnect" href="https://www.googletagmanager.com" />
 
                {/* <!-- Facebook Meta Tags --> */}
-               <meta property="og:url" content="https://www.codealgoacademy.com" />
+               <meta property="og:url" content="https://codealgoacademy.com" />
                <meta property="og:type" content="website" />
                <meta property="og:title" content="CodeAlgo Academy" />
                <meta
@@ -36,7 +36,7 @@ class MyDocument extends Document {
                {/* <!-- Twitter Meta Tags --> */}
                <meta name="twitter:card" content="summary_large_image" />
                <meta property="twitter:domain" content="codealgoacademy.com" />
-               <meta property="twitter:url" content="https://www.codealgoacademy.com" />
+               <meta property="twitter:url" content="https://codealgoacademy.com" />
                <meta name="twitter:title" content="CodeAlgo Academy" />
                <meta
                   name="twitter:description"
