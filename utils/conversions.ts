@@ -29,8 +29,8 @@ function send(name: string, params: Params) {
 export type SignupAccountType = "teacher" | "parent" | "student" | "organizer";
 
 /** Call once, after the account was created successfully. */
-export function trackSignUp(accountType: SignupAccountType) {
-   send("sign_up", { method: "email", account_type: accountType });
+export function trackSignUp(accountType: SignupAccountType, method: "email" | "google" = "email") {
+   send("sign_up", { method, account_type: accountType });
 }
 
 /** Call once, after the contact message was accepted by the API. */
