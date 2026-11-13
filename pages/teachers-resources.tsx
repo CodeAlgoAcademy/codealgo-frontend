@@ -33,7 +33,7 @@ const TeachersResources = () => {
    return (
       <>
        <Head>
-   <title>Teacher Resources | CodeAlgo Academy</title>
+   <title>Teaching Resources for K-8 Coding, Math & AI | CodeAlgo</title>
    <meta
       name="description"
       content="Coding resources for teachers: classroom setup guides, curriculum and lesson plans, assessment tools, and progress reports for teaching computer science."

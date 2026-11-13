@@ -64,6 +64,13 @@ const nextConfig = {
             source: "/(.*)",
             headers: securityHeaders,
          },
+         // Keep beta and preview deployments out of Google so they do not
+         // compete with the canonical pages on codealgoacademy.com.
+         {
+            source: "/(.*)",
+            has: [{ type: "host", value: "(beta\\..*|.*\\.vercel\\.app)" }],
+            headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+         },
       ];
    },
 };
