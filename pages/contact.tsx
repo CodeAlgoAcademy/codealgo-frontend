@@ -5,6 +5,7 @@ import ContactModal from "@/components/modals/contactUsModal";
 import Navbar from "@/components/navbar/home/Navbar";
 import { CustomButton } from "@/components/UI/Button";
 import http from "axios.config";
+import { trackLead } from "utils/conversions";
 import Image from "next/image";
 import Link from "next/link";
 import TawkToWidget from "public/TawkToWidget";
@@ -44,6 +45,7 @@ const Contact = () => {
             message,
             name: `${firstName} ${lastName}`,
          });
+         trackLead("contact");
          setModalOpened(true);
          dispatch(closePreloader());
       } catch (error: any) {

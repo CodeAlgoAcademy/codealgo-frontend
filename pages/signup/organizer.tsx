@@ -7,6 +7,7 @@ import Form2 from "@/components/stepForm/general/Form2";
 import Form3 from "@/components/stepForm/general/Form3";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import useMultiForm from "utils/useMultiForm";
+import { trackSignUp } from "utils/conversions";
 import { signUpUser } from "services/authService";
 import { useRouter } from "next/router";
 import { RootState } from "store/store";
@@ -39,6 +40,7 @@ const Organizer = () => {
          const data = await dispatch(signUpUser());
 
          if (!data?.error) {
+            trackSignUp("organizer");
             router.push("/verify-email");
          }
       } else {
