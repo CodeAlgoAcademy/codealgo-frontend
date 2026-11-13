@@ -2,7 +2,7 @@ import Banner from "@/components/home/new-home/banner";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Image from "next/image";
-import React, { FC, MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { FC, useState } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { cn } from "utils";
 import { useTranslation } from "react-i18next";
@@ -140,7 +140,7 @@ const FAQ = () => {
    return (
       <>
    <Head>
-   <title>FAQ | CodeAlgo Academy: Kids Coding, Math & AI Classes</title>
+   <title>FAQ | CodeAlgo Academy: Kids Coding, Math &amp; AI Classes</title>
    <meta
       name="description"
       content="Answers to common questions about CodeAlgo Academy: creating accounts, supported devices, saving progress, subscriptions, the free trial, and child safety."
@@ -188,14 +188,6 @@ interface AccordionProps {
 
 const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
    const [isOpen, setIsOpen] = useState(false);
-   const [height, setHeight] = useState(0);
-   const ref = useRef<HTMLParagraphElement>();
-
-   useEffect(() => {
-      if (ref) {
-         setHeight(ref?.current?.getBoundingClientRect().height ?? 0);
-      }
-   }, [ref]);
 
    return (
       <article>
@@ -204,24 +196,28 @@ const SingleAccordion: FC<AccordionProps> = ({ question, answer }) => {
                {question}
             </h3>
 
-            <span
+            <button
+               type="button"
                onClick={() => setIsOpen(!isOpen)}
+               aria-expanded={isOpen}
+               aria-label={question}
                className="flex h-[30px] w-[30px] max-w-[30px] flex-1 cursor-pointer items-center justify-center rounded-full bg-mainRed text-black"
             >
                {isOpen ? <BiMinus size={25} /> : <BiPlus size={25} />}
-            </span>
+            </button>
          </header>
 
+         {/* Animates between 0fr and 1fr grid rows, so the open height comes
+             from the content itself and no inline style or measuring is needed. */}
          <div
-            className={cn("overflow-hidden transition-all duration-300")}
-            style={{ height: isOpen ? height : 0 }}
+            className={cn(
+               "grid transition-[grid-template-rows] duration-300",
+               isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            )}
          >
-            <p
-               ref={ref as MutableRefObject<HTMLParagraphElement>}
-               className="px-3 py-1 text-[.9rem]"
-            >
-               {answer}
-            </p>
+            <div className="overflow-hidden">
+               <p className="px-3 py-1 text-[.9rem]">{answer}</p>
+            </div>
          </div>
       </article>
    );

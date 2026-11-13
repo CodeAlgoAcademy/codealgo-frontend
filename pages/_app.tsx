@@ -22,6 +22,10 @@ import i18n, { detectLanguage, loadTranslations, syncLanguageToBackend } from ".
 import { captureReferral } from "utils/referral";
 import { trackSiteVisit } from "utils/siteVisit";
 import { initAnalytics, onRouteChange } from "utils/siteTracker";
+import { socials } from "@/components/home/new-home/footer";
+import { organizationSchema, SITE_URL } from "constants/seo";
+
+const organizationJsonLd = JSON.stringify(organizationSchema(socials.map((social) => social.link)));
 
 const GA_ID = "G-80CZZG1HG5";
 
@@ -90,13 +94,26 @@ function MyApp({ Component, pageProps }: AppProps) {
       };
    }, [router.events]);
 
+   // Every language is served from the same URL (the language is picked in the
+   // browser), so the page is its own "en" and "x-default" alternate. Skipped
+   // while a dynamic route still has its [placeholder] in the path.
+   const path = router.asPath.split(/[?#]/)[0];
+   const pageUrl = path.includes("[") ? null : `${SITE_URL}${path === "/" ? "" : path}`;
+
    return (
       <Provider store={store}>
          <Layout>
-           <Head>
-  <title>CodeAlgo Academy | Online Coding Classes for Kids</title>
-  <meta name="description" content="CodeAlgo Academy teaches kids ages 6-18 to code through fun, game-based lessons. Learn Python, algorithms & more." />
-</Head>
+            <Head>
+               <title>CodeAlgo Academy | Online Coding Classes for Kids</title>
+               <meta name="description" content="CodeAlgo Academy teaches kids ages 6-18 to code through fun, game-based lessons. Learn Python, algorithms & more." />
+               {pageUrl && <link key="hreflang-en" rel="alternate" hrefLang="en" href={pageUrl} />}
+               {pageUrl && <link key="hreflang-default" rel="alternate" hrefLang="x-default" href={pageUrl} />}
+               <script
+                  key="organization-schema"
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{ __html: organizationJsonLd }}
+               />
+            </Head>
             <Component {...pageProps} />
          </Layout>
       </Provider>

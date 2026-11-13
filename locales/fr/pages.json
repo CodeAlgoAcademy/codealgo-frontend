@@ -285,6 +285,41 @@
       }
     }
   },
+  "pricingIntro": "CodeAlgo Academy enseigne la programmation, les mathématiques et la culture de l'IA grâce à des jeux en 3D auxquels les enfants ont envie de rejouer. Les familles peuvent commencer par un essai gratuit de 7 jours, puis payer au mois ou à l'année. Les écoles et les districts bénéficient d'un tarif sur mesure selon le nombre d'élèves et d'écoles.",
+  "pricingIncludes": {
+    "heading": "Ce que comprend chaque plan famille",
+    "intro": "Les plans mensuel et annuel offrent la même expérience d'apprentissage à votre enfant. Le plan annuel revient simplement moins cher sur l'année.",
+    "items": [
+      {
+        "title": "Des leçons sous forme de jeu",
+        "description": "Les enfants apprennent de vrais concepts de programmation en jouant à des niveaux en 3D, avec un retour intégré à chaque activité pour corriger leurs erreurs et continuer."
+      },
+      {
+        "title": "Un apprentissage à leur rythme",
+        "description": "La progression est enregistrée automatiquement. Votre enfant peut se déconnecter et reprendre là où il s'est arrêté, et les défis deviennent plus difficiles à mesure qu'il progresse."
+      },
+      {
+        "title": "Un tableau de bord parent",
+        "description": "Consultez les leçons terminées, les badges obtenus, le temps passé à apprendre et les compétences que votre enfant développe, le tout au même endroit."
+      },
+      {
+        "title": "Contrôle parental",
+        "description": "Fixez des limites de temps d'écran, approuvez les demandes d'amis et gérez le compte de chaque enfant depuis votre compte parent."
+      },
+      {
+        "title": "Un seul compte pour toute la famille",
+        "description": "Ajoutez plusieurs enfants sous un même compte parent. Chaque enfant a son propre profil et sa propre progression."
+      },
+      {
+        "title": "Fonctionne sur vos appareils",
+        "description": "CodeAlgo Academy fonctionne dans un navigateur web moderne sur ordinateurs de bureau, ordinateurs portables, Chromebooks et tablettes."
+      }
+    ]
+  },
+  "pricingSchools": {
+    "heading": "Plans pour les écoles et les districts",
+    "body": "Les plans école comprennent des licences de classe et en volume, l'accès complet au programme et des outils pour les enseignants. Les enseignants peuvent créer des classes, ajouter des élèves avec Clever, Google Classroom ou par saisie manuelle, attribuer des leçons et consulter les rapports de progression de chaque élève. Passez à l'onglet École ci-dessus pour demander un devis, ou utilisez le formulaire d'achat en gros pour district ci-dessous si vous achetez pour plusieurs écoles."
+  },
   "pricingFaq": {
     "heading": "Questions sur les tarifs",
     "items": [

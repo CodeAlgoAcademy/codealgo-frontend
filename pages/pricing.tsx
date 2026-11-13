@@ -29,6 +29,7 @@ const Pricing = () => {
    const [plansRequested, setPlansRequested] = useState(false);
    const showShimmer = pricingHandlers.loading || (!plansRequested && plans.length === 0);
    const pricingFaq = t("pricingFaq.items", { returnObjects: true }) as unknown as { question: string; answer: string }[];
+   const pricingIncludes = t("pricingIncludes.items", { returnObjects: true }) as unknown as { title: string; description: string }[];
 
    useEffect(() => {
       dispatch(getPricingPlans());
@@ -83,6 +84,7 @@ const Pricing = () => {
                <h1 className="text-center text-[1.8rem] font-bold text-[#0B2C4A]">
                   {t("choosePlan")}
                </h1>
+               <p className="mx-auto mt-4 max-w-[750px] text-center text-gray-700">{t("pricingIntro")}</p>
 
                <PricingTabs
                   activeCategory={activeCategory}
@@ -123,6 +125,24 @@ const Pricing = () => {
                   </div>
                )}
             </div>
+         </section>
+
+         <section className="mx-auto mb-16 max-w-[1000px] px-6">
+            <h2 className="text-center text-[1.5rem] font-bold text-[#0B2C4A]">{t("pricingIncludes.heading")}</h2>
+            <p className="mx-auto mt-2 max-w-[750px] text-center text-gray-700">{t("pricingIncludes.intro")}</p>
+            <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+               {pricingIncludes.map((item) => (
+                  <li key={item.title} className="rounded-lg border border-gray-200 bg-white p-5">
+                     <h3 className="text-[1.1rem] font-bold text-[#0B2C4A]">{item.title}</h3>
+                     <p className="mt-1 text-gray-700">{item.description}</p>
+                  </li>
+               ))}
+            </ul>
+         </section>
+
+         <section className="mx-auto mb-16 max-w-[850px] px-6 text-center">
+            <h2 className="text-[1.5rem] font-bold text-[#0B2C4A]">{t("pricingSchools.heading")}</h2>
+            <p className="mt-2 text-gray-700">{t("pricingSchools.body")}</p>
          </section>
 
          <section className="mx-auto mb-16 max-w-[850px] px-6">

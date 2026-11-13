@@ -203,8 +203,12 @@ const ParentsResources = () => {
             </p>
           </div>
           <div className="mx-auto max-w-3xl space-y-4">
-            {howToGuidesParent.map((guide, index) => (
-              <SimpleAccordion key={index} guide={guide} index={index} />
+            {howToGuidesParent.map((n, index) => (
+              <SimpleAccordion
+                key={index}
+                guide={{ question: t(`parentFaqQ${n}`), answer: t(`parentFaqA${n}`) }}
+                index={index}
+              />
             ))}
           </div>
         </div>

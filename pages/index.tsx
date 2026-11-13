@@ -7,7 +7,8 @@ import VoiceOfOurCommunity from "@/components/home/new-home/voice-of-our-communi
 import GetStarted from "@/components/home/new-home/get-started";
 import CodeToSuccess from "@/components/home/new-home/code-to-success";
 import AsSeenIs from "@/components/home/new-home/as-seen-in";
-import Footer, { socials } from "@/components/home/new-home/footer";
+import Footer from "@/components/home/new-home/footer";
+import { ORGANIZATION_ID } from "constants/seo";
 import { WinterBanner } from "@/components/home/new-home/winter-banner";
 import ValuePropositions from "@/components/home/new-home/ValuePropositions";
 import Navbar from "@/components/navbar/home/Navbar";
@@ -29,26 +30,7 @@ const Home: NextPage = () => {
          url: "https://codealgoacademy.com",
          description:
             "CodeAlgo Academy teaches kids ages 5-14 coding through fun, game-based lessons, real projects, and interactive learning.",
-         publisher: { "@id": "https://codealgoacademy.com/#organization" },
-      },
-      {
-         // Plain "Organization": audit tools look for that exact type and
-         // don't treat subtypes such as EducationalOrganization as a match.
-         "@type": "Organization",
-         "@id": "https://codealgoacademy.com/#organization",
-         name: "CodeAlgo Academy",
-         url: "https://codealgoacademy.com",
-         logo: "https://codealgoacademy.com/assets/CodeAlgo_Logo.png",
-         email: "info@codealgoacademy.com",
-         address: {
-            "@type": "PostalAddress",
-            streetAddress: "800 E 18th St",
-            addressLocality: "Kansas City",
-            addressRegion: "MO",
-            postalCode: "64108",
-            addressCountry: "US",
-         },
-         sameAs: socials.map((social) => social.link),
+         publisher: { "@id": ORGANIZATION_ID },
       },
    ],
 };
