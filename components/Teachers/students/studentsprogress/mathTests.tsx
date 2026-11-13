@@ -25,7 +25,7 @@ const MathTests = ({ studentId }: IMathTestsProps) => {
   const { t } = useTranslation("teacher");
   const [report, setReport] = useState<IMathTestReport>(emptyMathTestReport);
   const [loading, setLoading] = useState(false);
-  const [kind, setKind] = useState<IMathTestKind>("pre");
+  const [kind, setKind] = useState<IMathTestKind>("mid");
   const [grade, setGrade] = useState<string>("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ text: string; error: boolean } | null>(null);
