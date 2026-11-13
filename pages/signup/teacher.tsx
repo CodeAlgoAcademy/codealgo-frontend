@@ -2,6 +2,7 @@ import Form1 from "@/components/stepForm/general/Form1";
 import Form2 from "@/components/stepForm/general/Form2";
 import TeacherInfo from "@/components/stepForm/teachers/TeacherInfo";
 import useMultiForm from "utils/useMultiForm";
+import { trackSignUp } from "utils/conversions";
 import { ChangeEvent, useEffect } from "react";
 import { signUpUser } from "services/authService";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,6 +47,7 @@ export default function Teacher() {
          localStorage.removeItem("parent-signup");
          if (!data?.error?.message) {
             dispatch(clearFields());
+            trackSignUp("teacher");
             router.push("/verify-email");
          }
       }

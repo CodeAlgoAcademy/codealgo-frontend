@@ -5,6 +5,7 @@ import Form2 from "@/components/stepForm/general/Form2";
 import Form3 from "@/components/stepForm/general/Form3";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import useMultiForm from "utils/useMultiForm";
+import { trackSignUp } from "utils/conversions";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,6 +44,7 @@ export default function Parent() {
          // Set this to the local storage to know whether to auto-close page after verification
          localStorage.setItem(ILocalStorageItems.parent_signup, JSON.stringify(true));
          if (!data?.error?.message) {
+            trackSignUp("parent");
             setModalOpen(true);
          }
          // next();

@@ -8,6 +8,7 @@ import { openErrorModal } from "store/fetchSlice";
 import RoleConfirmationModal from "../modals/RoleConfirmationModal";
 import { useTranslation } from "react-i18next";
 import { clearSession } from "utils/clearSession";
+import { trackSignUp } from "utils/conversions";
 import {
    AccountRole,
    canAddRoleWithGoogle,
@@ -156,6 +157,7 @@ const GoogleBtn: FC = () => {
       const updateData = await dispatch(updateAccountType(roleApiName(account)) as any);
       if (updateAccountType.rejected.match(updateData)) return;
 
+      trackSignUp(account, "google");
       goTo(account);
    };
 

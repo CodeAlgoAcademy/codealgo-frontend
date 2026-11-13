@@ -5,6 +5,7 @@ import Form2 from "@/components/stepForm/general/Form2";
 import Form3 from "@/components/stepForm/general/Form3";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import useMultiForm from "utils/useMultiForm";
+import { trackSignUp } from "utils/conversions";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -46,6 +47,7 @@ export default function Student() {
          const data = await dispatch(signUpUser());
          if (!data?.error?.message) {
             dispatch(clearFields());
+            trackSignUp("student");
             router.push("/verify-email");
          }
       }
