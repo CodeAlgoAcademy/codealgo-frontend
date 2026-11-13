@@ -176,7 +176,16 @@ const TeachersResources = () => {
                      {t("faqEducatorsDesc")}
                   </p>
                </div>
+               <div className="mx-auto max-w-3xl space-y-4">
+                  {howToGuides.map((n, index) => (
+                     <SimpleAccordion
+                        key={index}
+                        guide={{ question: t(`teacherFaqQ${n}`), answer: t(`teacherFaqA${n}`) }}
+                        index={index}
+                     />
+                  ))}
                </div>
+            </div>
          </section>
          <Footer />
       </div>

@@ -237,11 +237,11 @@
 "teacherFaqQ1": "How do I set up a classroom for my students?",
 "teacherFaqA1": "Teachers can create a classroom by going to the Teacher Dashboard and clicking 'Create Classroom'. Enter your class name, grade level and click on submit.",
 "teacherFaqQ2": "How do I add Students to my classroom?",
-"teacherFaqA2": "Teachers can create a classroom by going to the Teacher Dashboard and clicking 'Student'. Then select 'Add Students' and enter student details.",
+"teacherFaqA2": "Go to the Teacher Dashboard and click 'Student'. Then select 'Add Students' and enter student details.",
 "teacherFaqQ3": "How to Track Student Progress?",
-"teacherFaqA3": "Navigate to the Use the Live class tab to view performance, completed levels, and engagement levels.",
+"teacherFaqA3": "Use the Live class tab to view performance, completed levels, and engagement levels.",
 "teacherFaqQ4": "How will my student access the game?",
-"teacherFaqA4": "With the Credentials you have Provided. Now, your student can login to their account and choose to customizer their character.",
+"teacherFaqA4": "With the credentials you have provided. Your student can then log in to their account and choose to customize their character.",
 "teacherFaqQ5": "How do I access curriculum resources?",
 "teacherFaqA5": "Navigate to the Resources tab in your teacher dashboard. You'll find lesson plans, worksheets, presentation slides, and assessment rubrics organized by grade level and topic. All materials are aligned with CS education standards.",
 "teacherFaqQ6": "How do I generate progress reports for parents?",
@@ -284,6 +284,41 @@
         "link": "Press and media"
       }
     }
+  },
+  "pricingIntro": "CodeAlgo Academy teaches coding, math, and AI literacy through 3D games that kids want to keep playing. Families can start with a 7-day free trial and then pay monthly or yearly. Schools and districts get custom pricing based on the number of students and schools.",
+  "pricingIncludes": {
+    "heading": "What every family plan includes",
+    "intro": "Monthly and annual plans give your child the same learning experience. The annual plan simply costs less over the year.",
+    "items": [
+      {
+        "title": "Game-based lessons",
+        "description": "Kids learn real coding concepts by playing through 3D levels, with feedback built into every activity so they can fix mistakes and keep going."
+      },
+      {
+        "title": "Learning at their own pace",
+        "description": "Progress is saved automatically. Your child can log out and pick up where they left off, and the challenges get harder as their skills grow."
+      },
+      {
+        "title": "A parent dashboard",
+        "description": "See completed lessons, earned badges, time spent learning, and the skills your child is building, all in one place."
+      },
+      {
+        "title": "Parental controls",
+        "description": "Set screen time limits, approve friend requests, and manage each child's account from your own parent account."
+      },
+      {
+        "title": "One account for the whole family",
+        "description": "Add more than one child under a single parent account. Each child gets their own profile and their own progress."
+      },
+      {
+        "title": "Works on the devices you have",
+        "description": "CodeAlgo Academy runs in a modern web browser on desktops, laptops, Chromebooks, and tablets."
+      }
+    ]
+  },
+  "pricingSchools": {
+    "heading": "Plans for schools and districts",
+    "body": "School plans include classroom and bulk licenses, full curriculum access, and educator tools. Teachers can set up classes, add students with Clever, Google Classroom, or manual entry, assign lessons, and read progress reports for every student. Switch to the School tab above to request a quote, or use the district bulk purchase form below if you are buying for several schools."
   },
   "pricingFaq": {
     "heading": "Pricing questions",
