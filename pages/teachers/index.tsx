@@ -12,6 +12,7 @@ import TeacherStudentProgress from "@/components/Teachers/students/studentsprogr
 import { useAppDispatch } from "store/hooks";
 import teachersClassBaseServices from "services/teachersClassServices";
 import TeacherStudentMathQuest from "@/components/Teachers/students/studentsprogress/mathQuest";
+import TeacherStudentEncounters from "@/components/Teachers/students/studentsprogress/encounters";
 import MathTests from "@/components/Teachers/students/studentsprogress/mathTests";
 import { IMathQuestReport } from "types/interfaces/teacherstudent.interface";
 import ClassOverview from "@/components/Teachers/dashboard/ClassOverview";
@@ -241,6 +242,7 @@ const completedItems = allProgressItems.filter((item) => (item.progress || 0) >=
                <TeacherStudentCompletedStandard completedItems={filteredCompletedItems} isLoading={isLoading} />
                <TeacherStudentSkills size="base" allProgressItems={allProgressItems} />
                <TeacherStudentMathQuest report={mathReport} isLoading={isLoading} />
+               <TeacherStudentEncounters studentId={currentStudent?.student_id || currentStudent?.id} classId={classId} />
                <MathTests studentId={currentStudent?.student_id || currentStudent?.id} />
                {/* Screen time + level threshold settings. RecentInteraction was
                    hardcoded sample avatars, not this class. */}
