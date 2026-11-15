@@ -1,7 +1,7 @@
 import http from "axios.config";
 import { IChildTopics } from "types/interfaces";
 import { getAccessToken } from "utils/getTokens";
-import { IMathQuestReport } from "types/interfaces/teacherstudent.interface";
+import { IEncounterReport, IMathQuestReport } from "types/interfaces/teacherstudent.interface";
 import { DashboardRange, IClassDashboard } from "types/interfaces/classDashboard.interface";
 
 const bulkUpdateClassLevelThreshold = async (
@@ -119,6 +119,46 @@ const getStudentMathQuestProgressByTeacher = async (studentId: string, classId: 
   }
 };
 
+// Overworld encounters: ambush battles, coins and pets, plus how the student
+// did on the review levels those battles replay.
+export const emptyEncounterReport: IEncounterReport = {
+  played: false,
+  battles_won: 0,
+  battles_fled: 0,
+  rescues: 0,
+  boss_wins: 0,
+  coins_collected: 0,
+  code_coins_solved: 0,
+  answers_right: 0,
+  answers_wrong: 0,
+  accuracy: null,
+  pets: [],
+  active_pet: null,
+  total_pets: 0,
+  foes: [],
+  review: [],
+  last_activity: null,
+};
+
+const getStudentEncounterProgressByTeacher = async (studentId: string, classId: string): Promise<IEncounterReport> => {
+  try {
+    const response = await http.get(`/academics/class/${classId}/student/${studentId}/encounter-progress/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    const data = response?.data || {};
+    return {
+      ...emptyEncounterReport,
+      ...data,
+      pets: Array.isArray(data.pets) ? data.pets : [],
+      foes: Array.isArray(data.foes) ? data.foes : [],
+      review: Array.isArray(data.review) ? data.review : [],
+    };
+  } catch (error) {
+    console.error(error);
+    return emptyEncounterReport;
+  }
+};
+
 const getClassDashboard = async (classId: string | number, range: DashboardRange, tz?: string): Promise<IClassDashboard> => {
   const response = await http.get<IClassDashboard>(`/academics/class/${classId}/dashboard/`, {
     params: { range, tz },
@@ -136,6 +176,7 @@ const teachersClassBaseServices = {
   getStudentLineProgressNewByTeacher,
   getStudentQuestProgressByTeacher,
   getStudentMathQuestProgressByTeacher,
+  getStudentEncounterProgressByTeacher,
   getClassDashboard,
 };
 

@@ -100,6 +100,48 @@ export interface IMathQuestReport {
    recent_rounds: IMathQuestRound[];
 }
 
+export interface IEncounterPet {
+   id: string;
+   name: string;
+   fact: string;
+}
+
+export interface IEncounterFoe {
+   id: string;
+   name: string;
+   wins: number;
+}
+
+export interface IEncounterReviewRow {
+   level_id: string;
+   title: string;
+   quest_line: string;
+   topic: string;
+   right: number;
+   wrong: number;
+   accuracy: number;
+}
+
+// Overworld ambushes, coins and pets for one student (academics/encounters).
+export interface IEncounterReport {
+   played: boolean;
+   battles_won: number;
+   battles_fled: number;
+   rescues: number;
+   boss_wins: number;
+   coins_collected: number;
+   code_coins_solved: number;
+   answers_right: number;
+   answers_wrong: number;
+   accuracy: number | null;
+   pets: IEncounterPet[];
+   active_pet: string | null;
+   total_pets: number;
+   foes: IEncounterFoe[];
+   review: IEncounterReviewRow[];
+   last_activity: string | null;
+}
+
 export type IMathTestKind = "pre" | "mid" | "post" | "knowledge";
 
 export interface IMathTestResult {
