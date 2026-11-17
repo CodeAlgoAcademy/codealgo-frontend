@@ -7,6 +7,7 @@ import Step1SelectPlan from "./Step1selectplan";
 import Step2ManageChildren from "./Step2managechildren";
 import Step3Confirm from "./Step3ConfirmPay";
 import { useTranslation } from "react-i18next";
+import { getPendingCoupon } from "utils/coupon";
 
 interface BillingStepperProps {
   onDone?: () => void;
@@ -31,7 +32,8 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
   const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null);
   const [selectedChildIds, setSelectedChildIds] = useState<number[]>([]); 
   const [initialLoadDone, setInitialLoadDone] = useState(false);
-  const [couponCode, setCouponCode] = useState("");
+  // Prefilled from the signup form, see utils/coupon.ts
+  const [couponCode, setCouponCode] = useState(() => (typeof window === "undefined" ? "" : getPendingCoupon()));
 
   useEffect(() => {
     const load = async () => {
