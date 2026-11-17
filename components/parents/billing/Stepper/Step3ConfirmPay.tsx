@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import SubscriptionSuccessModal from "../TrialPaymentRequiredModal";
 import { useTranslation } from "react-i18next";
 import { canStartTrial } from "@/components/utils/subscriptionUtils";
+import { clearPendingCoupon } from "utils/coupon";
 
 interface Step3ConfirmProps {
    priceId: number;
@@ -81,6 +82,8 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
             toast.error(t("failedToCreateSubscription"));
             return;
          }
+
+         clearPendingCoupon();
 
          const payload = result.payload as {
             status: string;

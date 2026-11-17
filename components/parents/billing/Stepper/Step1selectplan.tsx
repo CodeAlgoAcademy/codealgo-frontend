@@ -7,6 +7,7 @@ import { clearCouponValidation } from "store/pricingSlice";
 import PlanCard from "../priceCard";
 import { useTranslation } from "react-i18next";
 import { canStartTrial } from "@/components/utils/subscriptionUtils";
+import { getPendingCoupon } from "utils/coupon";
 
 interface Step1Props {
    selectedPriceId: number | null;
@@ -44,6 +45,12 @@ const Step1SelectPlan: React.FC<Step1Props> = ({ selectedPriceId, setSelectedPri
 
    useEffect(() => {
       dispatch(clearCouponValidation());
+      // Code from signup goes on by itself once there's a plan to put it on.
+      const pending = getPendingCoupon();
+      if (selectedPriceId && !hasExistingSubscription && pending && couponCode.trim().toUpperCase() === pending) {
+         dispatch(validateCoupon({ code: pending, price_id: selectedPriceId }));
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [selectedPriceId, dispatch]);
 
    useEffect(() => {
