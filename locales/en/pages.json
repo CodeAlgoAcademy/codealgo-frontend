@@ -21,6 +21,7 @@
   "save20Percent": "Save 50%",
   "save50Percent": "Save 50%",
   "tryForFree": "Try For Free",
+  "getStartedPlan": "Get Started",
   "monthly": "Monthly",
   "annual": "Annual",
   "name": "Name",
@@ -285,6 +286,7 @@
       }
     }
   },
+  "pricingIntroNoTrial": "CodeAlgo Academy teaches coding, math, and AI literacy through 3D games that kids want to keep playing. Families pay monthly or yearly and get the full game right away. Schools and districts get custom pricing based on the number of students and schools.",
   "pricingIntro": "CodeAlgo Academy teaches coding, math, and AI literacy through 3D games that kids want to keep playing. Families can start with a 7-day free trial and then pay monthly or yearly. Schools and districts get custom pricing based on the number of students and schools.",
   "pricingIncludes": {
     "heading": "What every family plan includes",
@@ -324,6 +326,7 @@
     "heading": "Pricing questions",
     "items": [
       {
+        "trial": true,
         "question": "Is there a free trial?",
         "answer": "Yes. You can start with a free trial and explore CodeAlgo Academy before you choose a plan. No credit card is required to start."
       },

@@ -21,6 +21,7 @@
   "save20Percent": "Économisez 50%",
   "save50Percent": "Économisez 50%",
   "tryForFree": "Essayer gratuitement",
+  "getStartedPlan": "Commencer",
   "monthly": "Mensuel",
   "annual": "Annuel",
   "name": "Nom",
@@ -285,6 +286,7 @@
       }
     }
   },
+  "pricingIntroNoTrial": "CodeAlgo Academy enseigne la programmation, les mathématiques et la culture de l'IA grâce à des jeux en 3D auxquels les enfants ont envie de rejouer. Les familles paient au mois ou à l'année et ont accès à tout le jeu tout de suite. Les écoles et les districts bénéficient d'un tarif sur mesure selon le nombre d'élèves et d'écoles.",
   "pricingIntro": "CodeAlgo Academy enseigne la programmation, les mathématiques et la culture de l'IA grâce à des jeux en 3D auxquels les enfants ont envie de rejouer. Les familles peuvent commencer par un essai gratuit de 7 jours, puis payer au mois ou à l'année. Les écoles et les districts bénéficient d'un tarif sur mesure selon le nombre d'élèves et d'écoles.",
   "pricingIncludes": {
     "heading": "Ce que comprend chaque plan famille",
@@ -324,6 +326,7 @@
     "heading": "Questions sur les tarifs",
     "items": [
       {
+        "trial": true,
         "question": "Y a-t-il un essai gratuit ?",
         "answer": "Oui. Vous pouvez commencer par un essai gratuit et découvrir CodeAlgo Academy avant de choisir une offre. Aucune carte bancaire n'est nécessaire pour commencer."
       },

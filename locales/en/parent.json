@@ -328,6 +328,7 @@
   "mathQuest": "Math Quest",
   "mathUpToGrade": "Up to grade {{grade}}",
   "mathRedoCount": "{{count}} to redo",
+  "paymentDueTodayNoTrial": "Your plan starts today, so the first payment is due now.",
   "paymentDueToday": "No free trial left on this account, so the first payment is due today.",
   "continueToPayment": "Continue to payment",
   "kidsJoinPlanLater": "You can still start a plan. Kids you add later join it automatically.",

@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import PlanCard from "@/components/parents/billing/priceCard";
 import { IPlan } from "types/interfaces";
 import { TFunction } from "i18next";
+import { FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 
 interface ParentPlansProps {
    plans: IPlan[];
@@ -40,13 +41,13 @@ const ParentPlans: FC<ParentPlansProps> = ({ plans, t, onSelectPlan }) => {
                         price={Number(yearlyMonthlyEquivalent.toFixed(2))}
                         originalPrice={toDollars(monthlyPrice.amount_in_cent)}
                         interval="mo"
-                        trialText={t("sevenDayFreeTrial")}
+                        trialText={FREE_TRIAL_ENABLED ? t("sevenDayFreeTrial") : undefined}
                         billingText={t("billedYearly", {
                            amount: `$${toDollars(yearlyPrice.amount_in_cent)}`,
                         })}
                         badge={t("save20Percent", { percent: yearlySavings })}
                         showButton
-                        buttonText={t("tryForFree")}
+                        buttonText={FREE_TRIAL_ENABLED ? t("tryForFree") : t("getStartedPlan")}
                         onSelect={() => onSelectPlan(yearlyPrice.id)}
                      />
                   )}
@@ -57,12 +58,12 @@ const ParentPlans: FC<ParentPlansProps> = ({ plans, t, onSelectPlan }) => {
                         title={t("monthlyPlanTitle", { planName: plan.name })}
                         price={toDollars(monthlyPrice.amount_in_cent)}
                         interval="mo"
-                        trialText={t("sevenDayFreeTrial")}
+                        trialText={FREE_TRIAL_ENABLED ? t("sevenDayFreeTrial") : undefined}
                         billingText={t("billedMonthly", {
                            amount: `$${toDollars(monthlyPrice.amount_in_cent)}`,
                         })}
                         showButton
-                        buttonText={t("tryForFree")}
+                        buttonText={FREE_TRIAL_ENABLED ? t("tryForFree") : t("getStartedPlan")}
                         onSelect={() => onSelectPlan(monthlyPrice.id)}
                      />
                   )}

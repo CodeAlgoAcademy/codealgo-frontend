@@ -7,6 +7,7 @@ import { BiMinus, BiPlus } from "react-icons/bi";
 import { cn } from "utils";
 import { useTranslation } from "react-i18next";
 import Head from "next/head";
+import { FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 
 // Rendered as the accordions below and as FAQPage JSON-LD, so the structured
 // data always matches what visitors see.
@@ -80,10 +81,14 @@ const faqSections: { title: string; items: { question: string; answer: string }[
             question: "What are the different subscription plans available?",
             answer: "CodeAlgo Academy offers a range of subscription plans, including monthly and annual options. These plans are tailored to suit various preferences and provide flexibility. For detailed information, please explore the subscription section on their website.",
          },
-         {
-            question: "Is there a free trial?",
-            answer: "Yes, a free trial is available, allowing you to explore the platform and evaluate its suitability for your or your child's needs. This trial offers an excellent opportunity to experience CodeAlgo Academy before committing to a subscription.",
-         },
+         ...(FREE_TRIAL_ENABLED
+            ? [
+                 {
+                    question: "Is there a free trial?",
+                    answer: "Yes, a free trial is available, allowing you to explore the platform and evaluate its suitability for your or your child's needs. This trial offers an excellent opportunity to experience CodeAlgo Academy before committing to a subscription.",
+                 },
+              ]
+            : []),
          {
             question: "Can I cancel my subscription at any time?",
             answer: "Yes, subscriptions can be canceled at any time. You retain full control over your subscription, ensuring a flexible and user-friendly experience.",

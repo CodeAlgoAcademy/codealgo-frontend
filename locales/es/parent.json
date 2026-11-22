@@ -327,6 +327,7 @@
   "mathQuest": "Math Quest",
   "mathUpToGrade": "Hasta {{grade}}.º grado",
   "mathRedoCount": "{{count}} para repetir",
+  "paymentDueTodayNoTrial": "Tu plan empieza hoy, así que el primer pago se cobra ahora.",
   "paymentDueToday": "Esta cuenta ya no tiene prueba gratis, así que el primer pago se cobra hoy.",
   "continueToPayment": "Continuar al pago",
   "kidsJoinPlanLater": "Igual puedes iniciar un plan. Los hijos que agregues después se suman automáticamente.",
