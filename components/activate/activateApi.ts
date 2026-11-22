@@ -1,5 +1,6 @@
 import axios from "axios";
 import { addUserToLocalStorage } from "utils/getTokens";
+import { FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 
 /**
  * API client for the /activate pages only.
@@ -114,6 +115,7 @@ export async function payDue(session: ActivateSession, subscriptionId: number): 
 
 /** One free trial per account. Same rule as get_subscription_eligibility on the backend. */
 export async function trialAvailable(session: ActivateSession): Promise<boolean> {
+   if (!FREE_TRIAL_ENABLED) return false;
    const res = await activateApi.get<{ trial_ends_at?: string | null }[]>("/payment/subscription/history", authed(session));
    return !(res.data || []).some((s) => !!s.trial_ends_at);
 }

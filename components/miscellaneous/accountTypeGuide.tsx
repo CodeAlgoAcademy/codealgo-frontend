@@ -1,12 +1,14 @@
 import Link from "next/link";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 
 interface GuideItem {
    title: string;
    body: string;
    link?: string;
    href?: string;
+   trial?: boolean;
 }
 
 // Help text shown under the account picker on /login and /signup. Both pages
@@ -21,7 +23,7 @@ export default function AccountTypeGuide({ variant }: { variant: keyof typeof va
    const { t } = useTranslation("auth");
    const { ns, email, ctaHref } = variants[variant];
    const items = t(`${ns}.items`, { returnObjects: true }) as unknown as GuideItem[];
-   const tips = t(`${ns}.tips`, { returnObjects: true }) as unknown as GuideItem[];
+   const tips = (t(`${ns}.tips`, { returnObjects: true }) as unknown as GuideItem[]).filter((tip) => FREE_TRIAL_ENABLED || !tip.trial);
    const steps = variant === "signup" ? ((t(`${ns}.steps`, { returnObjects: true }) as unknown) as string[]) : [];
 
    return (

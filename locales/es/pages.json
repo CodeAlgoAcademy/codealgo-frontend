@@ -21,6 +21,7 @@
   "save20Percent": "Ahorra 50%",
   "save50Percent": "Ahorra 50%",
   "tryForFree": "Pruébalo gratis",
+  "getStartedPlan": "Comenzar",
   "monthly": "Mensual",
   "annual": "Anual",
   "name": "Nombre",
@@ -289,6 +290,7 @@
     "heading": "Preguntas sobre precios",
     "items": [
       {
+        "trial": true,
         "question": "¿Hay una prueba gratis?",
         "answer": "Sí. Puedes empezar con una prueba gratis y explorar CodeAlgo Academy antes de elegir un plan. No necesitas tarjeta de crédito para empezar."
       },

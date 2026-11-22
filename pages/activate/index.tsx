@@ -20,6 +20,7 @@ import {
    writeSession,
 } from "@/components/activate/activateApi";
 import { useInitStripe } from "hooks/useStripe";
+import { FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 import { track } from "utils/siteTracker";
 
 /**
@@ -76,7 +77,7 @@ const Activate = () => {
    const [children, setChildren] = useState<Child[]>([]);
    const [picked, setPicked] = useState<number[]>([]);
    const [busyPrice, setBusyPrice] = useState<number | null>(null);
-   const [canTrial, setCanTrial] = useState(true);
+   const [canTrial, setCanTrial] = useState(FREE_TRIAL_ENABLED);
 
    const isParent = !!session?.user?.is_parent;
 
@@ -141,7 +142,7 @@ const Activate = () => {
             const [productsRes, kidsRes, trialLeft] = await Promise.all([
                activateApi.get<Product[]>("/payment/product/"),
                s.user?.is_parent ? activateApi.get<Child[]>("/parent/child/", authed(s)) : Promise.resolve({ data: [] as Child[] }),
-               trialAvailable(s).catch(() => true),
+               trialAvailable(s).catch(() => FREE_TRIAL_ENABLED),
             ]);
             setCanTrial(trialLeft);
             setProducts(productsRes.data || []);
@@ -372,7 +373,7 @@ const Activate = () => {
                   )}
                </div>
                <p className="mt-4 text-center text-sm text-gray-500">
-                  {canTrial ? t("activateTrialNote") : t("activateNoTrialNote")}
+                  {canTrial ? t("activateTrialNote") : FREE_TRIAL_ENABLED ? t("activateNoTrialNote") : t("activateTrialPausedNote")}
                </p>
                {isParent && children.length === 0 && dashboardButton}
             </>

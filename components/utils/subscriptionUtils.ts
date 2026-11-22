@@ -16,7 +16,11 @@ export const getActiveSubscriptionChildren = (billing_history: Subscription[] | 
   return activeSub.children.map(child => child.id);
 };
 
+// Free trial is paused for the holiday ads. Set NEXT_PUBLIC_FREE_TRIAL_ENABLED=true
+// (and FREE_TRIAL_ENABLED=True on the backend) to bring it back.
+export const FREE_TRIAL_ENABLED = process.env.NEXT_PUBLIC_FREE_TRIAL_ENABLED === "true";
+
 // Mirrors get_subscription_eligibility on the backend: one free trial per account,
 // ever, so any past subscription that had a trial end date uses it up.
 export const canStartTrial = (billing_history?: Subscription[] | null): boolean =>
-  !(billing_history || []).some((sub) => !!sub.trial_ends_at);
+  FREE_TRIAL_ENABLED && !(billing_history || []).some((sub) => !!sub.trial_ends_at);

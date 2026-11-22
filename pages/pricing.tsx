@@ -14,6 +14,7 @@ import ParentPlans from "@/components/pricing/ParentPlans";
 import PricingShimmer from "@/components/pricing/PricingShimmer";
 import PricingTabs from "@/components/pricing/PricingTabs";
 import SchoolCard from "@/components/pricing/SchoolCard";
+import { FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 
 const Pricing = () => {
    const { handlers: pricingHandlers, plans } = useSelector((state: RootState) => state.pricing);
@@ -28,7 +29,9 @@ const Pricing = () => {
    // (what crawlers read) and the first client frame both said "No Plan".
    const [plansRequested, setPlansRequested] = useState(false);
    const showShimmer = pricingHandlers.loading || (!plansRequested && plans.length === 0);
-   const pricingFaq = t("pricingFaq.items", { returnObjects: true }) as unknown as { question: string; answer: string }[];
+   const pricingFaq = (t("pricingFaq.items", { returnObjects: true }) as unknown as { question: string; answer: string; trial?: boolean }[]).filter(
+      (item) => FREE_TRIAL_ENABLED || !item.trial
+   );
    const pricingIncludes = t("pricingIncludes.items", { returnObjects: true }) as unknown as { title: string; description: string }[];
 
    useEffect(() => {
@@ -84,7 +87,7 @@ const Pricing = () => {
                <h1 className="text-center text-[1.8rem] font-bold text-[#0B2C4A]">
                   {t("choosePlan")}
                </h1>
-               <p className="mx-auto mt-4 max-w-[750px] text-center text-gray-700">{t("pricingIntro")}</p>
+               <p className="mx-auto mt-4 max-w-[750px] text-center text-gray-700">{FREE_TRIAL_ENABLED ? t("pricingIntro") : t("pricingIntroNoTrial")}</p>
 
                <PricingTabs
                   activeCategory={activeCategory}

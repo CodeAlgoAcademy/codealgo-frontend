@@ -328,6 +328,7 @@
   "mathQuest": "Math Quest",
   "mathUpToGrade": "Jusqu'au niveau {{grade}}",
   "mathRedoCount": "{{count}} à refaire",
+  "paymentDueTodayNoTrial": "Votre abonnement commence aujourd'hui, le premier paiement est donc dû maintenant.",
   "paymentDueToday": "Plus d'essai gratuit sur ce compte, le premier paiement est donc dû aujourd'hui.",
   "continueToPayment": "Continuer vers le paiement",
   "kidsJoinPlanLater": "Vous pouvez quand même démarrer un abonnement. Les enfants ajoutés plus tard y seront ajoutés automatiquement.",

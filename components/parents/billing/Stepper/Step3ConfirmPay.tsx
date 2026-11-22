@@ -7,7 +7,7 @@ import { initiatePayment, changePlan, getBillingHistory, getActiveSubscription }
 import { toast } from "sonner";
 import SubscriptionSuccessModal from "../TrialPaymentRequiredModal";
 import { useTranslation } from "react-i18next";
-import { canStartTrial } from "@/components/utils/subscriptionUtils";
+import { canStartTrial, FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 import { clearPendingCoupon } from "utils/coupon";
 
 interface Step3ConfirmProps {
@@ -253,7 +253,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
                            <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                            </svg>
-                           {isGift ? t("giftActivatedImmediately") : trialEligible ? t("trialStartsToday") : t("paymentDueToday")}
+                           {isGift ? t("giftActivatedImmediately") : trialEligible ? t("trialStartsToday") : FREE_TRIAL_ENABLED ? t("paymentDueToday") : t("paymentDueTodayNoTrial")}
                         </div>
                      )}
                   </div>
