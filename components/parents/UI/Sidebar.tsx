@@ -6,6 +6,7 @@ import Image from "next/image";
 import { DEFAULT_SUPPORT } from "constants/support.const";
 import { GiLevelThreeAdvanced } from "react-icons/gi";
 import { SlGameController } from "react-icons/sl";
+import { TbMathSymbols } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -37,6 +38,9 @@ export default function ParentSidebar({ onClose, isOpen }: Props) {
          </div>
          <div className="relative">
             {/* <NavButton title="Messages" image="message.svg" url="/parents/messages" notification={unread > 0 ? unread : ""} /> */}
+         </div>
+         <div>
+            <NavButton title={t("mathFacts")} image={<TbMathSymbols size={iconSize} />} url="/parents/math-facts" />
          </div>
          <div className="my-2">
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">{tCommon("account")}</h2>

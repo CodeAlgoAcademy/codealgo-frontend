@@ -121,3 +121,37 @@ export interface ErrorPair {
   total: number;
   errors: number;
 }
+
+// Parent dashboard. One child's practice sets, whoever assigned them.
+export interface ChildMathFactAssignment extends MathFactActiveAssignment {
+  record_id: number;
+  mastered_at: string | null;
+  sessions_completed: number;
+  best_accuracy: number;
+  best_avg_time: number;
+  last_played_at: string | null;
+  // "class" rows come from a teacher and are read only for the parent.
+  source: "home" | "class";
+  class_name: string | null;
+}
+
+export interface ChildMathFactOverview {
+  id: number;
+  username: string;
+  full_name: string;
+  active_assignments: ChildMathFactAssignment[];
+}
+
+export interface ChildMathFactPayload {
+  // Empty turns home practice off.
+  fact_set_ids: number[];
+  question_count: number;
+  target_accuracy: number;
+  target_avg_time: number;
+}
+
+export interface ChildMathFactAnalytics {
+  student_id: number;
+  student_name: string;
+  data: MathFactAnalyticsPair[];
+}

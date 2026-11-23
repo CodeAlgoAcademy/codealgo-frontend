@@ -1,5 +1,5 @@
 import http from "axios.config";
-import { CreateAssignmentBulkPayload, CreateAssignmentPayload, MathFactAnalyticsPair, MathFactAssignmentDetail, MathFactAssignmentList, MathFactSet, StudentMathOverview } from "types/interfaces/mathfact";
+import { ChildMathFactAnalytics, ChildMathFactOverview, ChildMathFactPayload, CreateAssignmentBulkPayload, CreateAssignmentPayload, MathFactAnalyticsPair, MathFactAssignmentDetail, MathFactAssignmentList, MathFactSet, StudentMathOverview } from "types/interfaces/mathfact";
 import { FactSetFilters, FactSetPayload } from "types/interfaces/mathStandards";
 import { getAccessToken } from "utils/getTokens";
 
@@ -138,6 +138,39 @@ getAssignments: async (classId: string | number): Promise<StudentMathOverview[]>
   );
   return res.data;
 },
+
+  // Parent dashboard. childId is the student id from /parent/child/.
+  getChildFactSets: async (childId: string | number): Promise<MathFactSet[]> => {
+    const res = await http.get(`/parent/child/${childId}/math-facts/fact-sets/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return res.data;
+  },
+
+  getChildMathFacts: async (childId: string | number): Promise<ChildMathFactOverview> => {
+    const res = await http.get(`/parent/child/${childId}/math-facts/assignments/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return res.data;
+  },
+
+  // Replaces the child's home practice with exactly these sets.
+  setChildMathFacts: async (
+    childId: string | number,
+    payload: ChildMathFactPayload
+  ): Promise<ChildMathFactOverview> => {
+    const res = await http.post(`/parent/child/${childId}/math-facts/assignments/`, payload, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return res.data;
+  },
+
+  getChildMathAnalytics: async (childId: string | number): Promise<ChildMathFactAnalytics[]> => {
+    const res = await http.get(`/parent/child/${childId}/math-facts/analytics/`, {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
+    });
+    return res.data;
+  },
 
 };
  
