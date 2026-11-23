@@ -37,7 +37,10 @@ const Login = ({ route }: { route?: any }) => {
 
    const goTo = useCallback(
       (role: AccountRole) => {
-         const destination = destinationFor(role, role === "parent" && Boolean(route));
+         // Students normally go to the game. The one site page they have
+         // (billing) sends them here with ?redirect= so they come back to it.
+         const studentReturn = role === "student" && typeof route === "string" && route.startsWith("/") && !route.startsWith("//");
+         const destination = studentReturn ? route : destinationFor(role, role === "parent" && Boolean(route));
          if (isExternalDestination(destination)) {
             window.location.href = destination;
          } else {

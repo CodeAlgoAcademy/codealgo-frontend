@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 import Step2ManageChildren from "./Stepper/Step2managechildren";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 
 interface ManageExistingChildrenProps {
   onCancel: () => void;
@@ -17,6 +18,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { t } = useTranslation("parent");
+  const { basePath, role } = useBilling();
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
   
   const [selectedChildIds, setSelectedChildIds] = useState<number[]>([]);
@@ -32,7 +34,7 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
 
   const handlePayNow = () => {
     if (current_subscription?.id) {
-       router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}`);
+       router.push(`${basePath}/payment?subscription_id=${current_subscription.id}`);
     }
   };
 
@@ -66,12 +68,12 @@ const ManageExistingChildren: React.FC<ManageExistingChildrenProps> = ({ onCance
         if (updateSubscriptionChild.fulfilled.match(result)) {
            const payload = result.payload as any;
            if ((payload.status === 'requires_payment' || payload.status === 'requires_payment_action') && payload.client_secret) {
-             toast.message(t("paymentRequired"), { description: t("completePaymentToActivateChild") });
-             router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}&client_secret=${payload.client_secret}`);
+             toast.message(t("paymentRequired"), { description: t("completePaymentToActivateChild", { context: role }) });
+             router.push(`${basePath}/payment?subscription_id=${current_subscription.id}&client_secret=${payload.client_secret}`);
              return; 
            }
         } else {
-           toast.error(t("couldNotAddChild"));
+           toast.error(t("couldNotAddChild", { context: role }));
            return;
         }
       }

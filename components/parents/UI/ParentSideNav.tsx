@@ -27,7 +27,7 @@ const SideNav = ({ unread }: { unread: number }) => {
          </div>
          <div>
             <h2 className="ml-7 mb-3 text-xl font-medium text-[#A8ABB0]">{tCommon("account")}</h2>
-            {/* <NavButton title="Billing" image="Billing.svg" url="/parents/billing" /> */}
+            <NavButton title="Billing" image="Billing.svg" url="/parents/billing" />
             <NavButton title={t("studentAccounts")} image="people.svg" url="/parents/student" />
             <NavButton title={t("organization")} image={<SlOrganization />} url="/parents/organization" />
          </div>

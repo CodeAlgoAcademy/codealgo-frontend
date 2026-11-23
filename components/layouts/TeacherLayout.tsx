@@ -78,6 +78,12 @@ const TeacherLayout = ({ children, className }: Props) => {
          url: "/teachers/organization",
       },
       {
+         key: "billing",
+         name: tTeacher("billing"),
+         icon: "💳",
+         url: "/teachers/billing",
+      },
+      {
          key: "help",
          name: tTeacher("help"),
          icon: "❓",

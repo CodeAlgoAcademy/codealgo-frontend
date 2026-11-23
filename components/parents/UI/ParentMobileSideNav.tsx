@@ -12,7 +12,7 @@ const linkDetails = [
    [{ title: "mainDashboard", image: "Dashboard.svg", url: "/parents" }],
    // [{ title: "Messages", image: "message.svg", url: "/parents/messages" }],
    [
-      // { title: "Billing", image: "Billing.svg", url: "/parents/billing" },
+      { title: "billing", image: "Billing.svg", url: "/parents/billing" },
       { title: "studentAccounts", image: "people.svg", url: "/parents/student" },
       { title: "organization", image: <SlOrganization />, url: "/parents/organization" },
    ],

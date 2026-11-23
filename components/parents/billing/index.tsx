@@ -10,14 +10,16 @@ import BillingStepper, { BillingStepperHandle } from "./Stepper/BillingStepper.t
 import ActiveSubscriptionCard from "./Activesubscriptioncard";
 import ManageExistingChildren from "./ManageExistingChildren";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 
-const BillingPage = () => {
+export const BillingContent = () => {
   const { current_subscription, billing_history } = useSelector(
     (state: RootState) => state.pricing
   );
   const dispatch = useDispatch();
   const router = useRouter();
   const { t } = useTranslation("parent");
+  const { role, coverage, basePath } = useBilling();
   const stepperRef = useRef<BillingStepperHandle>(null);
   
   const [showStepper, setShowStepper] = useState(false);
@@ -25,6 +27,10 @@ const BillingPage = () => {
   const [showChildrenManager, setShowChildrenManager] = useState(false);
 
   const hasActiveSubscription = !!current_subscription?.id;
+  // A school or org already pays for teachers and students in it. Say so up
+  // front instead of selling them a plan they do not need.
+  const orgCovered = role !== "parent" && !!coverage?.covered_by_organization;
+  const orgNames = (coverage?.organizations || []).map((o) => o.name).join(", ");
 
   useEffect(() => {
     dispatch(getActiveSubscription());
@@ -79,8 +85,27 @@ const BillingPage = () => {
   const pendingSubscription = current_subscription?.status === "PENDING" ? current_subscription : null;
 
   return (
-    <ParentLayout title={t("billing")}>
       <div className="scrollbar-hide overflow-y-scroll px-4 py-6">
+        {orgCovered && (
+          <div className="mb-6 overflow-hidden rounded-2xl border border-green-200 bg-white shadow-sm">
+            <div className="flex items-center gap-2 border-b border-green-100 bg-green-50 px-5 py-4">
+              <div className="rounded-full bg-green-100 p-2 text-green-700">✓</div>
+              <h3 className="font-semibold text-green-900">{t("coveredByOrgTitle")}</h3>
+            </div>
+            <div className="px-5 py-5 text-gray-600">
+              <p>{t("coveredByOrgMessage", { context: role, orgs: orgNames })}</p>
+              {!hasActiveSubscription && !showStepper && (
+                <button
+                  onClick={() => setShowStepper(true)}
+                  className="mt-4 text-sm font-medium text-mainColor underline hover:no-underline"
+                >
+                  {t("coveredByOrgBuyAnyway")}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
         
         {expiringTrial && !showStepper && !showChildrenManager && (
           <TrialExpiryCard
@@ -91,7 +116,7 @@ const BillingPage = () => {
               year: "numeric",
             })}
             onUpdatePayment={() =>
-              router.push(`/parents/billing/payment?subscription_id=${expiringTrial.id}`)
+              router.push(`${basePath}/payment?subscription_id=${expiringTrial.id}`)
             }
             onChangePlan={handleChangePlan}
           />
@@ -126,7 +151,7 @@ const BillingPage = () => {
                 {t("subscriptionPendingPayment", { plan: pendingSubscription.plan_name })}
               </p>
               <button
-                onClick={() => router.push(`/parents/billing/payment?subscription_id=${pendingSubscription.id}`)}
+                onClick={() => router.push(`${basePath}/payment?subscription_id=${pendingSubscription.id}`)}
                 className="w-full rounded-xl bg-red-600 px-4 py-3 font-semibold text-white shadow-sm hover:bg-red-700 transition"
               >
                 {t("completePaymentNow")}
@@ -135,12 +160,12 @@ const BillingPage = () => {
           </div>
         )}
 
-        {(!hasActiveSubscription || showStepper) && (
+        {((!hasActiveSubscription && !orgCovered) || showStepper) && (
           <div id="stepper-section" className="mt-6">
             {showStepper && (
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-base font-semibold text-gray-800">
-                  {stepperMode === "children" ? t("manageChildren") : hasActiveSubscription ? t("changePlan") : t("chooseAPlan")}
+                  {stepperMode === "children" ? t("manageChildren", { context: role }) : hasActiveSubscription ? t("changePlan") : t("chooseAPlan")}
                 </h2>
                 <button
                   onClick={() => setShowStepper(false)}
@@ -160,6 +185,14 @@ const BillingPage = () => {
 
         <BillingHistory />
       </div>
+  );
+};
+
+const BillingPage = () => {
+  const { t } = useTranslation("parent");
+  return (
+    <ParentLayout title={t("billing")}>
+      <BillingContent />
     </ParentLayout>
   );
 };

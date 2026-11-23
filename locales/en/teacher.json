@@ -844,5 +844,6 @@
   "encLevel": "Level",
   "encRight": "Right",
   "encWrong": "Wrong",
-  "encEnemies": "Enemies beaten"
+  "encEnemies": "Enemies beaten",
+  "billing": "Billing"
 }

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "store/store";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 
 interface ActiveSubscriptionCardProps {
   onChangePlan: () => void;
@@ -14,10 +15,10 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
 }) => {
   const router = useRouter();
   const { t } = useTranslation("parent");
+  const { basePath, seats: allChildren, picksSeats, role } = useBilling();
   const { current_subscription, handlers } = useSelector(
     (state: RootState) => state.pricing
   );
-  const { children: allChildren } = useSelector((state: RootState) => state.parentChild);
 
   if (!current_subscription) return null;
 
@@ -52,7 +53,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
   }
 
   const handlePayNow = () => {
-    router.push(`/parents/billing/payment?subscription_id=${current_subscription.id}`);
+    router.push(`${basePath}/payment?subscription_id=${current_subscription.id}`);
   };
 
   return (
@@ -87,7 +88,7 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
           <div className="rounded-xl border border-red-100 bg-red-50 p-4">
             <h4 className="text-sm font-bold text-red-900">{trialEnded ? t("trialEndedTitle") : t("outstandingBalance")}</h4>
             <p className="mt-1 text-xs text-red-700 leading-relaxed">
-              {trialEnded ? t("trialEndedMessage") : t("pastDueMessage")}
+              {trialEnded ? t("trialEndedMessage", { context: role }) : t("pastDueMessage", { context: role })}
             </p>
             <button
               onClick={handlePayNow}
@@ -135,10 +136,11 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
           </div>
         )}
 
+        {picksSeats && (
         <div className="border-t border-gray-50 pt-4">
           <div className="flex items-center justify-between mb-3">
             <p className="text-sm font-medium text-gray-700">
-              {t("children")}{" "}
+              {t("children", { context: role })}{" "}
               <span className="ml-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500">
                 {t("activeCount", { count: subscribedChildren.length })}
               </span>
@@ -176,25 +178,26 @@ const ActiveSubscriptionCard: React.FC<ActiveSubscriptionCardProps> = ({
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              {t("addChildrenToPlan")}
+              {t("addChildrenToPlan", { context: role })}
             </button>
           )}
 
           {isPastDue && (
              <p className="mt-3 text-xs text-red-600 italic">
-               {t("noteRecentChildren")}
+               {t("noteRecentChildren", { context: role })}
              </p>
           )}
 
           {!isPastDue && unsubscribedChildren.length > 0 && (
             <p className="mt-2 text-xs text-amber-600">
-              {t("childrenNotOnPlan", { count: unsubscribedChildren.length })}{" "}
+              {t("childrenNotOnPlan", { count: unsubscribedChildren.length, context: role })}{" "}
               <button onClick={onManageChildren} className="underline hover:no-underline">
                 {t("addThem")}
               </button>
             </p>
           )}
         </div>
+        )}
       </div>
     </div>
   );

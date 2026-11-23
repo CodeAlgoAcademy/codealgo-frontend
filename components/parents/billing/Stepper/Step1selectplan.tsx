@@ -6,6 +6,7 @@ import { getPricingPlans, validateCoupon } from "services/pricingService";
 import { clearCouponValidation } from "store/pricingSlice";
 import PlanCard from "../priceCard";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 import { canStartTrial } from "@/components/utils/subscriptionUtils";
 import { getPendingCoupon } from "utils/coupon";
 
@@ -20,6 +21,7 @@ interface Step1Props {
 const Step1SelectPlan: React.FC<Step1Props> = ({ selectedPriceId, setSelectedPriceId, couponCode, setCouponCode, goNext }) => {
    const dispatch = useAppDispatch();
    const { t } = useTranslation("parent");
+   const { role } = useBilling();
    const { plans, handlers, coupon_validation, current_subscription, billing_history } = useSelector((state: RootState) => state.pricing);
 
    const hasExistingSubscription = !!current_subscription?.id;
@@ -251,7 +253,7 @@ const Step1SelectPlan: React.FC<Step1Props> = ({ selectedPriceId, setSelectedPri
                   onClick={goNext}
                   className="w-full rounded-xl bg-mainColor px-4 py-3 font-semibold text-white shadow-sm transition hover:opacity-90 disabled:opacity-40"
                >
-                  {hasExistingSubscription ? t("continueToManageChildren") : t("continue")}
+                  {hasExistingSubscription ? t("continueToManageChildren", { context: role }) : t("continue")}
                </button>
                {hasExistingSubscription && selectedPriceId === activePriceId && (
                   <p className="mt-2 text-center text-xs text-gray-400">{t("alreadyOnThisPlan")}</p>

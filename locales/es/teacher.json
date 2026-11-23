@@ -844,5 +844,6 @@
   "encLevel": "Nivel",
   "encRight": "Bien",
   "encWrong": "Mal",
-  "encEnemies": "Enemigos vencidos"
+  "encEnemies": "Enemigos vencidos",
+  "billing": "Facturación"
 }

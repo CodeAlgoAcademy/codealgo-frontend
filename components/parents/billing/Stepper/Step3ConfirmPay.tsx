@@ -9,6 +9,7 @@ import SubscriptionSuccessModal from "../TrialPaymentRequiredModal";
 import { useTranslation } from "react-i18next";
 import { canStartTrial, FREE_TRIAL_ENABLED } from "@/components/utils/subscriptionUtils";
 import { clearPendingCoupon } from "utils/coupon";
+import { useBilling } from "@/components/billing/BillingContext";
 
 interface Step3ConfirmProps {
    priceId: number;
@@ -22,8 +23,8 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
    const dispatch = useAppDispatch();
    const router = useRouter();
    const { t } = useTranslation("parent");
+   const { basePath, seats: allChildren, picksSeats, role } = useBilling();
    const { plans, coupon_validation, current_subscription, handlers, billing_history } = useSelector((state: RootState) => state.pricing);
-   const { children: allChildren } = useSelector((state: RootState) => state.parentChild);
 
    const hasExistingSubscription = !!existingSubscriptionId;
    const trialEligible = canStartTrial(billing_history);
@@ -37,9 +38,9 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
 
       return allChildren
          .filter((child) => selectedChildIds.includes(Number(child.id)))
-         .map((child) => child.fullName || child.username || t("child"))
+         .map((child) => child.fullName || child.username || t("child", { context: role }))
          .join(", ");
-   }, [allChildren, selectedChildIds, t]);
+   }, [allChildren, selectedChildIds, t, role]);
 
    const isPendingSubscription = useMemo(() => {
       return hasExistingSubscription && current_subscription?.status === "PENDING";
@@ -103,13 +104,13 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
             // No trial left on this account, so the first payment is due now. Hand
             // the intent over directly instead of making the payment page look it up.
             const secret = payload.client_secret ? `&client_secret=${encodeURIComponent(payload.client_secret)}` : "";
-            router.push(`/parents/billing/payment?subscription_id=${newSubId}${secret}`);
+            router.push(`${basePath}/payment?subscription_id=${newSubId}${secret}`);
             return;
          }
 
          if (status === "payment_failed" && newSubId) {
             toast.error(payload.message || t("paymentRequired"));
-            router.push(`/parents/billing/payment?subscription_id=${newSubId}`);
+            router.push(`${basePath}/payment?subscription_id=${newSubId}`);
             return;
          }
 
@@ -147,7 +148,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
 
             if (payload.client_secret) {
                toast.success(t("actionRequiredToComplete"));
-               router.push(`/parents/billing/payment?subscription_id=${existingSubscriptionId}&client_secret=${payload.client_secret}`);
+               router.push(`${basePath}/payment?subscription_id=${existingSubscriptionId}&client_secret=${payload.client_secret}`);
             } else {
                toast.success(t("planUpdatedSuccessfully"));
                await dispatch(getActiveSubscription());
@@ -184,7 +185,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
    const handleAddPayment = () => {
       if (!newSubscriptionId) return;
       setShowSuccessModal(false);
-      router.push(`/parents/billing/payment?subscription_id=${newSubscriptionId}`);
+      router.push(`${basePath}/payment?subscription_id=${newSubscriptionId}`);
    };
 
    const isLoading = handlers.initiate_payment_loading || handlers.change_plan_loading || isProcessing;
@@ -214,7 +215,7 @@ const Step3Confirm: React.FC<Step3ConfirmProps> = ({ priceId, goBack, onSuccess,
                      <SummaryRow label={t("plan")} value={`${selectedPrice.plan.name} – ${selectedPrice.price.interval.toLowerCase()}`} />
                      <SummaryRow label={t("price")} value={`$${priceDetails.baseAmount.toFixed(2)} / ${selectedPrice.price.interval.toLowerCase()}`} />
 
-                     <SummaryRow label={t("childrenIncluded")} value={selectedChildrenNames} className="max-w-[50%] text-right" />
+                     {picksSeats && <SummaryRow label={t("childrenIncluded", { context: role })} value={selectedChildrenNames} className="max-w-[50%] text-right" />}
 
                      {coupon_validation?.code && priceDetails.discount > 0 && (
                         <SummaryRow label={t("discount", { code: coupon_validation.code })} value={`-$${priceDetails.discount.toFixed(2)}`} accent="green" />

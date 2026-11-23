@@ -8,6 +8,7 @@ import Step2ManageChildren from "./Step2managechildren";
 import Step3Confirm from "./Step3ConfirmPay";
 import { useTranslation } from "react-i18next";
 import { getPendingCoupon } from "utils/coupon";
+import { useBilling } from "@/components/billing/BillingContext";
 
 interface BillingStepperProps {
   onDone?: () => void;
@@ -23,8 +24,8 @@ type StepId = 1 | 2 | 3;
 const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ onDone, onLockStepper }, ref) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation("parent");
+  const { seats: allChildren, picksSeats, role } = useBilling();
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
-  const { children: allChildren } = useSelector((state: RootState) => state.parentChild);
 
   const hasExistingSubscription = !!current_subscription?.id;
 
@@ -67,9 +68,10 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
 
   useImperativeHandle(ref, () => ({ resetToStepOne: reset }));
 
+  // Students skip picking seats, the plan is for their own account.
   const steps = [
     { id: 1, label: hasExistingSubscription ? t("changePlan") : t("selectPlan") },
-    { id: 2, label: t("selectChildren") }, 
+    ...(picksSeats ? [{ id: 2, label: t("selectChildren", { context: role }) }] : []),
     { id: 3, label: hasExistingSubscription ? t("confirm") : t("subscribe") },
   ];
 
@@ -84,7 +86,7 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
            <React.Fragment key={s.id}>
              <div className="flex flex-col items-center">
                <div className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition-colors ${step === s.id ? "bg-mainColor text-white" : step > s.id ? "bg-mainColor/20 text-mainColor" : "bg-gray-100 text-gray-400"}`}>
-                 {step > s.id ? "✓" : s.id}
+                 {step > s.id ? "✓" : i + 1}
                </div>
                <p className="mt-1.5 text-xs font-medium text-gray-700">{s.label}</p>
              </div>
@@ -102,7 +104,7 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
     setCouponCode={setCouponCode}
     goNext={() => {
       if (onLockStepper) onLockStepper();
-      setStep(2);
+      setStep(picksSeats ? 2 : 3);
     }}
   />
 )}
@@ -123,7 +125,7 @@ const BillingStepper = forwardRef<BillingStepperHandle, BillingStepperProps>(({ 
         <Step3Confirm
           priceId={selectedPriceId}
           selectedChildIds={selectedChildIds}
-          goBack={() => setStep(2)}
+          goBack={() => setStep(picksSeats ? 2 : 1)}
           existingSubscriptionId={current_subscription?.id || null} 
           onSuccess={(subscriptionId) => {
             console.log("Subscription processed:", subscriptionId);
