@@ -145,7 +145,7 @@ const FAQ = () => {
    return (
       <>
    <Head>
-   <title>FAQ | CodeAlgo Academy: Kids Coding, Math &amp; AI Classes</title>
+   <title>FAQ | CodeAlgo Academy</title>
    <meta
       name="description"
       content="Answers to common questions about CodeAlgo Academy: creating accounts, supported devices, saving progress, subscriptions, the free trial, and child safety."
