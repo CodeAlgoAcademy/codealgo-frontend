@@ -1,7 +1,7 @@
 import http from "axios.config";
 import { IChildTopics } from "types/interfaces";
 import { getAccessToken } from "utils/getTokens";
-import { IEncounterReport, IMathQuestReport } from "types/interfaces/teacherstudent.interface";
+import { IEncounterReport, IMathClassSummaryRow, IMathQuestReport } from "types/interfaces/teacherstudent.interface";
 import { DashboardRange, IClassDashboard } from "types/interfaces/classDashboard.interface";
 
 const bulkUpdateClassLevelThreshold = async (
@@ -167,6 +167,14 @@ const getClassDashboard = async (classId: string | number, range: DashboardRange
   return response.data;
 };
 
+// Math for every student in the class, for the Math tab of the class report.
+const getClassMathSummary = async (classId: string | number): Promise<IMathClassSummaryRow[]> => {
+  const response = await http.get(`/academics/class/${classId}/math-summary/`, {
+    headers: { Authorization: `Bearer ${getAccessToken()}` },
+  });
+  return Array.isArray(response?.data?.students) ? response.data.students : [];
+};
+
 const teachersClassBaseServices = {
   bulkUpdateClassLevelThreshold,
   bulkUpdateClassScreenTime,
@@ -178,6 +186,7 @@ const teachersClassBaseServices = {
   getStudentMathQuestProgressByTeacher,
   getStudentEncounterProgressByTeacher,
   getClassDashboard,
+  getClassMathSummary,
 };
 
 export default teachersClassBaseServices;

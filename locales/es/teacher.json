@@ -845,5 +845,21 @@
   "encRight": "Bien",
   "encWrong": "Mal",
   "encEnemies": "Enemigos vencidos",
-  "billing": "Facturación"
+  "billing": "Facturación",
+  "reportTabMath": "Matemáticas",
+  "mathReportColQuest": "Math Quest",
+  "mathReportColFacts": "Operaciones matemáticas",
+  "mathReportColTest": "Última prueba",
+  "mathReportColLastActive": "Última actividad",
+  "mathReportQuestValue": "{{mastered}} dominados · {{practicing}} en progreso",
+  "mathReportFactsValue": "{{mastered}} de {{assigned}} conjuntos dominados",
+  "mathReportAccuracy": "{{accuracy}}% correcto",
+  "mathReportNoActivity": "Sin actividad aún",
+  "mathReportNoneAssigned": "Nada asignado",
+  "mathReportNoTest": "Sin pruebas aún",
+  "mathReportTestValue": "{{kind}} · {{grade}}",
+  "mathReportEmpty": "Aún no hay estudiantes en esta clase.",
+  "mathReportLoadFailed": "No pudimos cargar el informe de matemáticas.",
+  "mathReportTryAgain": "Intentar de nuevo",
+  "mathReportDetailTitle": "Informe de matemáticas: {{name}}"
 }

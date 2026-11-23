@@ -25,13 +25,6 @@ const ParentPlans: FC<ParentPlansProps> = ({ plans, t, onSelectPlan }) => {
                ? toDollars(yearlyPrice.amount_in_cent) / 12
                : 0;
 
-            const yearlySavings =
-               monthlyPrice && yearlyPrice
-                  ? Math.round(
-                       (1 - yearlyPrice.amount_in_cent / (monthlyPrice.amount_in_cent * 12)) * 100
-                    )
-                  : 0;
-
             return (
                <React.Fragment key={plan.id}>
                   {yearlyPrice && monthlyPrice && (
@@ -43,9 +36,8 @@ const ParentPlans: FC<ParentPlansProps> = ({ plans, t, onSelectPlan }) => {
                         interval="mo"
                         trialText={FREE_TRIAL_ENABLED ? t("sevenDayFreeTrial") : undefined}
                         billingText={t("billedYearly", {
-                           amount: `$${toDollars(yearlyPrice.amount_in_cent)}`,
+                           amount: toDollars(yearlyPrice.amount_in_cent),
                         })}
-                        badge={t("save20Percent", { percent: yearlySavings })}
                         showButton
                         buttonText={FREE_TRIAL_ENABLED ? t("tryForFree") : t("getStartedPlan")}
                         onSelect={() => onSelectPlan(yearlyPrice.id)}
@@ -60,7 +52,7 @@ const ParentPlans: FC<ParentPlansProps> = ({ plans, t, onSelectPlan }) => {
                         interval="mo"
                         trialText={FREE_TRIAL_ENABLED ? t("sevenDayFreeTrial") : undefined}
                         billingText={t("billedMonthly", {
-                           amount: `$${toDollars(monthlyPrice.amount_in_cent)}`,
+                           amount: toDollars(monthlyPrice.amount_in_cent),
                         })}
                         showButton
                         buttonText={FREE_TRIAL_ENABLED ? t("tryForFree") : t("getStartedPlan")}
