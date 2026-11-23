@@ -845,5 +845,21 @@
   "encRight": "Right",
   "encWrong": "Wrong",
   "encEnemies": "Enemies beaten",
-  "billing": "Billing"
+  "billing": "Billing",
+  "reportTabMath": "Math",
+  "mathReportColQuest": "Math Quest",
+  "mathReportColFacts": "Math facts",
+  "mathReportColTest": "Latest test",
+  "mathReportColLastActive": "Last active",
+  "mathReportQuestValue": "{{mastered}} mastered · {{practicing}} in progress",
+  "mathReportFactsValue": "{{mastered}} of {{assigned}} sets mastered",
+  "mathReportAccuracy": "{{accuracy}}% correct",
+  "mathReportNoActivity": "No activity yet",
+  "mathReportNoneAssigned": "None assigned",
+  "mathReportNoTest": "No test yet",
+  "mathReportTestValue": "{{kind}} · {{grade}}",
+  "mathReportEmpty": "No students in this class yet.",
+  "mathReportLoadFailed": "We couldn't load the math report.",
+  "mathReportTryAgain": "Try again",
+  "mathReportDetailTitle": "Math report: {{name}}"
 }

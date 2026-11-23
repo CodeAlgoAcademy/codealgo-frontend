@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
@@ -7,6 +7,10 @@ import { useTranslation } from "react-i18next";
 import { fetchDiagnosticSummary, fetchLineDiagnosticSummary } from "store/teacherStudentSlice";
 import DiagnosticDetailModal from "@/components/Teachers/report/modal";
 import LineDiagnosticModal from "@/components/Teachers/report/LineDiagnosticModal";
+import MathReportTable from "@/components/Teachers/report/MathReportTable";
+import MathDetailModal from "@/components/Teachers/report/MathDetailModal";
+import teachersClassServices from "services/teachersClassServices";
+import { IMathClassSummaryRow } from "types/interfaces/teacherstudent.interface";
 
 const MASTERY_CONFIG: Record<
   string,
@@ -222,7 +226,7 @@ function StatCard({
   );
 }
 
-type TabType = "block" | "python";
+type TabType = "block" | "python" | "math";
 
 export default function DiagnosticReportPage() {
   const { t } = useTranslation("teacher");
@@ -254,18 +258,44 @@ export default function DiagnosticReportPage() {
     }
   }, [classId, dispatch]);
 
+  // Math has its own endpoint and its own columns, so it is kept out of the
+  // diagnostics slice the other two tabs share.
+  const [mathRows, setMathRows] = useState<IMathClassSummaryRow[]>([]);
+  const [mathLoading, setMathLoading] = useState(false);
+  const [mathFailed, setMathFailed] = useState(false);
+  const [mathStudent, setMathStudent] = useState<IMathClassSummaryRow | null>(null);
+
+  const loadMath = useCallback(() => {
+    if (!classId) return;
+    setMathLoading(true);
+    setMathFailed(false);
+    teachersClassServices
+      .getClassMathSummary(classId)
+      .then(setMathRows)
+      .catch(() => setMathFailed(true))
+      .finally(() => setMathLoading(false));
+  }, [classId]);
+
+  useEffect(() => {
+    loadMath();
+  }, [loadMath]);
+
+  const isMath = activeTab === "math";
+
   const activeData =
     activeTab === "block"
       ? diagnosticSummary
       : lineDiagnosticSummary;
 
-  const total = activeData.length;
+  const total = isMath ? mathRows.length : activeData.length;
 
-  const assessed = activeData.filter(
-    (student) =>
-      student.mastery_band ||
-      student.last_completed_unit_level
-  ).length;
+  const assessed = isMath
+    ? mathRows.filter((student) => student.has_activity).length
+    : activeData.filter(
+        (student) =>
+          student.mastery_band ||
+          student.last_completed_unit_level
+      ).length;
 
   const pct =
     total === 0
@@ -280,6 +310,10 @@ export default function DiagnosticReportPage() {
     {
       key: "python" as const,
       label: "Python (Line)",
+    },
+    {
+      key: "math" as const,
+      label: t("reportTabMath"),
     },
   ];
 
@@ -332,12 +366,15 @@ export default function DiagnosticReportPage() {
                 onClick={() => {
                   setActiveTab(tab.key);
                   setSelectedStudentId(null);
+                  setMathStudent(null);
                 }}
                 className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors ${
                   activeTab === tab.key
                     ? tab.key === "block"
                       ? "bg-indigo-600 text-white"
-                      : "bg-purple-600 text-white"
+                      : tab.key === "python"
+                      ? "bg-purple-600 text-white"
+                      : "bg-emerald-600 text-white"
                     : "text-slate-400 hover:bg-slate-50 hover:text-slate-600"
                 }`}
               >
@@ -346,6 +383,7 @@ export default function DiagnosticReportPage() {
             ))}
           </div>
 
+          {!isMath && (
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 shadow-sm">
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
               {t("masteryScale")}
@@ -370,11 +408,22 @@ export default function DiagnosticReportPage() {
               );
             })}
           </div>
+          )}
         </div>
 
         {/* Table */}
         <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-          <div className="overflow-x-auto">
+          {isMath && (
+            <MathReportTable
+              rows={mathRows}
+              isLoading={mathLoading}
+              failed={mathFailed}
+              onRetry={loadMath}
+              onSelect={setMathStudent}
+            />
+          )}
+
+          <div className={isMath ? "hidden" : "overflow-x-auto"}>
             <table className="w-full min-w-[740px] border-collapse text-left">
               <thead>
                 <tr className="border-b-2 border-slate-100 bg-slate-50">
@@ -592,7 +641,9 @@ export default function DiagnosticReportPage() {
                     className={`h-full rounded-full transition-all duration-700 ${
                       activeTab === "block"
                         ? "bg-indigo-500"
-                        : "bg-purple-500"
+                        : activeTab === "python"
+                        ? "bg-purple-500"
+                        : "bg-emerald-500"
                     }`}
                   />
                 </div>
@@ -601,7 +652,9 @@ export default function DiagnosticReportPage() {
                   className={`text-[11px] font-bold ${
                     activeTab === "block"
                       ? "text-indigo-600"
-                      : "text-purple-600"
+                      : activeTab === "python"
+                      ? "text-purple-600"
+                      : "text-emerald-600"
                   }`}
                 >
                   {pct}%
@@ -621,6 +674,15 @@ export default function DiagnosticReportPage() {
               }
             />
           )}
+
+        {mathStudent && isMath && classId && (
+          <MathDetailModal
+            classId={classId}
+            studentId={mathStudent.student_id}
+            studentName={mathStudent.student_name}
+            onClose={() => setMathStudent(null)}
+          />
+        )}
 
         {selectedStudentId &&
           activeTab === "python" && (

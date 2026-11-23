@@ -100,6 +100,23 @@ export interface IMathQuestReport {
    recent_rounds: IMathQuestRound[];
 }
 
+// One student's row on the Math tab of the class report.
+export interface IMathClassSummaryRow {
+   student_id: number;
+   student_name: string;
+   quest: { mastered: number; practicing: number; answered: number; accuracy: number | null };
+   facts: { assigned: number; mastered: number; answered: number; accuracy: number | null };
+   latest_test: {
+      kind: IMathTestKind;
+      kind_label: string;
+      grade: string;
+      score: number;
+      completed_at: string | null;
+   } | null;
+   last_activity: string | null;
+   has_activity: boolean;
+}
+
 export interface IEncounterPet {
    id: string;
    name: string;

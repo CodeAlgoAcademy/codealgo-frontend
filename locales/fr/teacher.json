@@ -845,5 +845,21 @@
   "encRight": "Juste",
   "encWrong": "Faux",
   "encEnemies": "Ennemis battus",
-  "billing": "Facturation"
+  "billing": "Facturation",
+  "reportTabMath": "Maths",
+  "mathReportColQuest": "Math Quest",
+  "mathReportColFacts": "Faits mathématiques",
+  "mathReportColTest": "Dernier test",
+  "mathReportColLastActive": "Dernière activité",
+  "mathReportQuestValue": "{{mastered}} maîtrisés · {{practicing}} en cours",
+  "mathReportFactsValue": "{{mastered}} séries maîtrisées sur {{assigned}}",
+  "mathReportAccuracy": "{{accuracy}} % de bonnes réponses",
+  "mathReportNoActivity": "Aucune activité",
+  "mathReportNoneAssigned": "Rien d'attribué",
+  "mathReportNoTest": "Aucun test",
+  "mathReportTestValue": "{{kind}} · {{grade}}",
+  "mathReportEmpty": "Aucun élève dans cette classe pour l'instant.",
+  "mathReportLoadFailed": "Impossible de charger le rapport de maths.",
+  "mathReportTryAgain": "Réessayer",
+  "mathReportDetailTitle": "Rapport de maths : {{name}}"
 }
