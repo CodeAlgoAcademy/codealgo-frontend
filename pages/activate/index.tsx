@@ -245,10 +245,11 @@ const Activate = () => {
       }
    };
 
-   const dashboardButton = session && isParent && (
+   const billingPath = isParent ? "/parents/billing" : session?.user?.is_student ? "/students/billing" : null;
+   const dashboardButton = session && billingPath && (
       <button
          type="button"
-         onClick={() => openSiteAs(session, "/parents/billing")}
+         onClick={() => openSiteAs(session, billingPath)}
          className="mt-4 block w-full rounded-xl border-2 border-mainColor py-3 text-center font-semibold text-mainColor"
       >
          {t("activateOpenBilling")}

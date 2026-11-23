@@ -44,7 +44,10 @@ export default function UserMenu({ variant = "icon" }: Props) {
    const triggerRef = useRef<HTMLButtonElement>(null);
    const panelRef = useRef<HTMLDivElement>(null);
 
-   const stored = typeof window !== "undefined" ? getUserFromLocalStorage() : null;
+   // localStorage only exists in the browser. Reading it before mount made the
+   // first client render differ from the server one (hydration error on every
+   // dashboard page), so the stored name only kicks in after mount.
+   const stored = mounted ? getUserFromLocalStorage() : null;
    const displayFirst = userState?.firstname || stored?.firstname || "";
    const displayLast = userState?.lastname || stored?.lastname || "";
 

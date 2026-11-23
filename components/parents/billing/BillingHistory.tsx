@@ -12,10 +12,12 @@ import BillingTableRow from "./components/BillingTableRow";
 import ConfirmationModal from "./components/ConfirmationModal";
 import HistorySkeleton from "./components/HistorySkeleton";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 
 const BillingHistory = () => {
    const { handlers, billing_history } = useSelector((state: RootState) => state.pricing);
    const { t } = useTranslation("parent");
+   const { basePath } = useBilling();
    const [showBill, setShowBill] = useState(true);
    const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
    
@@ -37,7 +39,7 @@ const BillingHistory = () => {
 
    const handleAddPayment = (subscriptionId: number) => {
       setOpenDropdownId(null);
-      router.push(`/parents/billing/payment?subscription_id=${subscriptionId}`);
+      router.push(`${basePath}/payment?subscription_id=${subscriptionId}`);
    };
 
    const handleToggleDropdown = (id: number) => {

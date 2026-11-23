@@ -6,6 +6,7 @@ import { attachPaymentMethod, getActiveSubscription } from "services/pricingServ
 import { loadStripe } from "@stripe/stripe-js";
 import { useTranslation } from "react-i18next";
 import { track } from "utils/siteTracker";
+import { useBilling } from "@/components/billing/BillingContext";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -13,6 +14,7 @@ const PaymentConfirmPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { t } = useTranslation("parent");
+  const { basePath } = useBilling();
   const { query, isReady } = router;
   const hasRunRef = useRef(false);
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -21,7 +23,7 @@ const PaymentConfirmPage = () => {
   useEffect(() => {
     if (status === "success") {
       const timer = setTimeout(() => {
-        router.push("/parents/billing");
+        router.push(basePath);
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -135,7 +137,7 @@ const PaymentConfirmPage = () => {
                 {t("tryAgain")}
               </button>
               <button
-                onClick={() => router.push("/parents/billing")}
+                onClick={() => router.push(basePath)}
                 className="rounded bg-mainColor px-6 py-2 text-white"
               >
                 {t("backToBilling")}

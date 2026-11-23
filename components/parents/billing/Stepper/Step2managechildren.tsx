@@ -1,6 +1,5 @@
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 
 interface Step2ManageChildrenProps {
   selectedChildIds: number[];
@@ -23,7 +22,7 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
   requireOne = false,
 }) => {
   const { t } = useTranslation("parent");
-  const { children } = useSelector((state: RootState) => state.parentChild);
+  const { seats: children, role } = useBilling();
   
   const handleToggle = (childId: number) => {
     const currentIds = selectedChildIds || []; 
@@ -42,18 +41,18 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
   return (
     <div className="flex-1 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
       <div className="bg-mainColor px-4 py-5 text-white text-center">
-        <h2 className="text-lg font-bold">{t("selectChildren")}</h2>
+        <h2 className="text-lg font-bold">{t("selectChildren", { context: role })}</h2>
       </div>
 
       <div className="px-6 py-6">
         <div className="mb-4 text-sm text-gray-500">
-          {t("selectWhichChildren")}
+          {t("selectWhichChildren", { context: role })}
         </div>
 
         {!hasChildren ? (
            <div className="text-center py-8 text-gray-400">
-             {t("noChildrenFound")}
-             {requireOne && <p className="mt-2 text-sm text-gray-500">{t("kidsJoinPlanLater")}</p>}
+             {t("noChildrenFound", { context: role })}
+             {requireOne && <p className="mt-2 text-sm text-gray-500">{t("kidsJoinPlanLater", { context: role })}</p>}
            </div>
         ) : (
           <ul className="max-h-80 space-y-3 overflow-y-auto pr-1">
@@ -93,7 +92,7 @@ const Step2ManageChildren: React.FC<Step2ManageChildrenProps> = ({
           </ul>
         )}
 
-        {needsPick && <p className="mt-4 text-sm text-red-600">{t("pickAtLeastOneChild")}</p>}
+        {needsPick && <p className="mt-4 text-sm text-red-600">{t("pickAtLeastOneChild", { context: role })}</p>}
 
         <div className="mt-6 flex gap-3">
           <button 

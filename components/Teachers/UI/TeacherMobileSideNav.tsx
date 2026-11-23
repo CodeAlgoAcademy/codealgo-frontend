@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import NavButton from "components/parents/UI/NavButton";
 import { GrOrganization } from "react-icons/gr";
 import { SlOrganization } from "react-icons/sl";
+import { MdOutlinePayment } from "react-icons/md";
 import { resetAuthUser } from "store/authSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -31,6 +32,11 @@ const links = [
       name: "organization",
       icon: <SlOrganization />,
       url: "/teachers/organization",
+   },
+   {
+      name: "billing",
+      icon: <MdOutlinePayment />,
+      url: "/teachers/billing",
    },
    // {
    //    name: "calendar",

@@ -3,6 +3,7 @@ import React, { FormEvent, useState, useEffect } from "react";
 import { toast } from "sonner";
 import Loader from "@/components/UI/loader";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 
 interface PaymentFormProps {
   subscriptionId: number;
@@ -13,6 +14,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret 
   const stripe = useStripe();
   const elements = useElements();
   const { t } = useTranslation("parent");
+  const { basePath } = useBilling();
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState<number | null>(null);
   const [currency, setCurrency] = useState<string>("usd");
@@ -53,13 +55,13 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ subscriptionId, clientSecret 
         ? await stripe.confirmPayment({
             elements,
             confirmParams: {
-              return_url: `${window.location.origin}/parents/billing/payment/confirm?subscription_id=${subscriptionId}&type=payment`,
+              return_url: `${window.location.origin}${basePath}/payment/confirm?subscription_id=${subscriptionId}&type=payment`,
             },
           })
         : await stripe.confirmSetup({
             elements,
             confirmParams: {
-              return_url: `${window.location.origin}/parents/billing/payment/confirm?subscription_id=${subscriptionId}&type=setup`,
+              return_url: `${window.location.origin}${basePath}/payment/confirm?subscription_id=${subscriptionId}&type=setup`,
             },
           });
 

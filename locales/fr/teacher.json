@@ -844,5 +844,6 @@
   "encLevel": "Niveau",
   "encRight": "Juste",
   "encWrong": "Faux",
-  "encEnemies": "Ennemis battus"
+  "encEnemies": "Ennemis battus",
+  "billing": "Facturation"
 }

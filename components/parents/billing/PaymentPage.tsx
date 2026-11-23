@@ -8,12 +8,14 @@ import { createSetupIntent, fetchAmountDue, getActiveSubscription } from "servic
 import { useInitStripe } from "hooks/useStripe";
 import PaymentForm from "./PaymentForm";
 import { useTranslation } from "react-i18next";
+import { useBilling } from "@/components/billing/BillingContext";
 
 const PaymentPage = () => {
   const router = useRouter();
   const { query, isReady, push } = router;
   const dispatch = useAppDispatch();
   const { t } = useTranslation("parent");
+  const { basePath, role } = useBilling();
   const { current_subscription } = useSelector((state: RootState) => state.pricing);
   
   const [clientSecret, setClientSecret] = useState<string>("");
@@ -28,7 +30,7 @@ const PaymentPage = () => {
     if (!isReady) return;
 
     if (!subscriptionId || isNaN(subscriptionId)) {
-      push("/parents/billing");
+      push(basePath);
       return;
     }
 
@@ -61,7 +63,7 @@ const initPayment = async () => {
              setClientSecret(activeSub.latest_client_secret);
            } else if (activeSub.status === "PENDING") {
              // Nothing to pay yet, the checkout never reached Stripe. Billing starts it again.
-             push("/parents/billing");
+             push(basePath);
              return;
            } else {
              // Trial ended or a renewal failed: pay the open invoice now. Only
@@ -104,7 +106,7 @@ const initPayment = async () => {
     return (
       <div className="mt-12 bg-white px-8 pt-6 pb-10 text-center">
         <p className="text-red-600 mb-4">{error || t("failedToLoadPaymentForm")}</p>
-        <button onClick={() => push("/parents/billing")} className="rounded bg-mainColor px-6 py-2 text-white">
+        <button onClick={() => push(basePath)} className="rounded bg-mainColor px-6 py-2 text-white">
           {t("backToBilling")}
         </button>
       </div>
@@ -113,14 +115,14 @@ const initPayment = async () => {
 
   return (
     <>
-     <button onClick={() => push("/parents/billing")} className="rounded border-2 border-mainColor px-6 py-2 text-black ml-8 mt-4">
+     <button onClick={() => push(basePath)} className="rounded border-2 border-mainColor px-6 py-2 text-black ml-8 mt-4">
           {t("backToBilling")}
      </button>
     <div className="mt-8 bg-white px-8 pt-6 pb-10">
       <h4 className="border-b pb-2 text-lg font-semibold">
         {trialEnded ? t("trialEndedTitle") : clientSecret.startsWith("pi_") ? t("completePayment") : t("addPaymentMethodTitle")}
       </h4>
-      {trialEnded && <p className="mt-3 text-sm text-gray-600">{t("trialEndedMessage")}</p>}
+      {trialEnded && <p className="mt-3 text-sm text-gray-600">{t("trialEndedMessage", { context: role })}</p>}
       <Elements stripe={stripePromise} options={options}>
         <PaymentForm subscriptionId={subscriptionId} clientSecret={clientSecret} />
       </Elements>
