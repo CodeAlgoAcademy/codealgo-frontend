@@ -1,9 +1,10 @@
 import Footer, { socials } from "@/components/home/new-home/footer";
+import GuideSection from "@/components/home/GuideSection";
 import Navbar from "@/components/navbar/home/Navbar";
 import Head from "next/head";
 import { codingLanguages, fortune10Companies, salaryByRegion, thingsYouCanCreate, whatTheyDo } from "public/learnmore.data";
 import React from 'react';
-import { FaCode, FaLaptopCode } from "react-icons/fa";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import { useTranslation } from "react-i18next";
 
 export default function LearnMore() {
@@ -50,7 +51,7 @@ export default function LearnMore() {
         <section className="mb-16 bg-blue-50 p-6 rounded-lg">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="md:w-1/3 flex justify-center">
-              <FaCode className="text-blue-500 text-8xl" />
+              <SpriteIcon name="code" className="text-blue-500 text-8xl" />
             </div>
             <div className="md:w-2/3">
               <h2 className="text-3xl text-gray-800 mb-4 font-thabit">{t("codingSimpleTerms")}</h2>
@@ -84,7 +85,7 @@ export default function LearnMore() {
       <section className="mb-16 bg-green-50 p-6 rounded-lg">
   <div className="flex flex-col md:flex-row-reverse items-center gap-8">
     <div className="md:w-1/3 flex justify-center">
-      <FaLaptopCode className="text-green-600 text-8xl" />
+      <SpriteIcon name="laptop-code" className="text-green-600 text-8xl" />
     </div>
     <div className="md:w-2/3">
       <h2 className="text-3xl font-semibold text-gray-800 mb-4 font-thabit">
@@ -126,22 +127,22 @@ export default function LearnMore() {
         <section className="mb-16 bg-yellow-50 p-6 rounded-lg">
           <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center font-thabit">{t("bigCompaniesHireCoders")}</h2>
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white rounded-lg overflow-hidden">
+            <table className="plain-table min-w-full bg-white rounded-lg overflow-hidden">
               <thead className="bg-gray-800 text-white">
   <tr>
-    <th className="py-3 px-4 text-left font-thabit">#</th>
-    <th className="py-3 px-4 text-left font-thabit">{t("tableCompany")}</th>
-    <th className="py-3 px-4 text-left font-thabit">{t("tableIndustry")}</th>
-    <th className="py-3 px-4 text-left font-thabit">{t("startingSalary")}</th>
+    <th className="text-left">#</th>
+    <th className="text-left">{t("tableCompany")}</th>
+    <th className="text-left">{t("tableIndustry")}</th>
+    <th className="text-left">{t("startingSalary")}</th>
   </tr>
 </thead>
               <tbody className="divide-y divide-gray-200">
                 {fortune10Companies.map((company, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="py-3 px-4">{company.rank}</td>
-                    <td className="py-3 px-4 font-medium font-thabit">{company.name}</td>
-                    <td className="py-3 px-4 font-thabit">{company.industry}</td>
-                    <td className="py-3 px-4 font-thabit">{company.salary}</td>
+                    <td>{company.rank}</td>
+                    <td className="font-medium">{company.name}</td>
+                    <td>{company.industry}</td>
+                    <td>{company.salary}</td>
                   </tr>
                 ))}
               </tbody>
@@ -231,6 +232,8 @@ export default function LearnMore() {
   </div>
 </section> */}
       </div>
+      <GuideSection id="learnMore" />
+
       <Footer />
     </>
   );

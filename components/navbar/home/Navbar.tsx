@@ -1,11 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { links } from "./Links";
-import Button, { CustomButton } from "@/components/UI/Button";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import AccessibilityMenu from "./accessibility/menu";
 import { cn } from "utils";
-import { BiMenu } from "react-icons/bi";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import MobileNavbar from "./mobile-navbar";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mui/material";
@@ -44,7 +43,7 @@ const Navbar = () => {
               {links.map((link, index) => {
                 return (
                   <Fragment key={index}>
-                    <div className="h-[30px] w-[3px] rounded-full bg-white/70"></div>
+                    <div className="nav-divider"></div>
                     <div
                       className="relative"
                       onMouseEnter={() => {
@@ -69,7 +68,7 @@ const Navbar = () => {
                         }
                       }}
                     >
-                      <p className="whitespace-nowrap text-white">
+                      <p className="nav-item">
                         {link.route ? (
                           <Link href={link.route}>{tHome(link.name)}</Link>
                         ) : (
@@ -77,20 +76,21 @@ const Navbar = () => {
                         )}
                       </p>
 
-                      <div
-                        className={cn(
-                          "absolute top-[100%] left-0 z-[100] min-h-fit min-w-[120px] cursor-pointer bg-white",
-                          heading != link.name && "hidden"
-                        )}
-                      >
-                        {link.sublinks?.map((slinks, index) => (
+                      {link.sublinks && (
+                      <div className={cn("nav-dropdown", heading != link.name && "hidden")}>
+                        {link.sublinks.map((slinks, index) => (
+                          // A real <a>, so the href is in the server-rendered
+                          // HTML. Next 12's Link only adds one for plain text
+                          // children; wrapped around a <p> it left crawlers
+                          // with no link to these pages at all.
                           <Link key={index} href={slinks.link}>
-                            <p className="z-[400] p-2 text-[.85rem] hover:bg-mainRed/20">
+                            <a className="nav-sublink">
                               {tHome(slinks.name)}
-                            </p>
+                            </a>
                           </Link>
                         ))}
                       </div>
+                      )}
                     </div>
                   </Fragment>
                 );
@@ -104,34 +104,20 @@ const Navbar = () => {
 
           <div className="flex items-center gap-2 xl:gap-4 max-lg:hidden">
             <LanguageSwitcher variant="navbar" />
-            <CustomButton
-              onClick={() => push("/login")}
-              variant="filled"
-              size="medium"
-              className="h-[44px] whitespace-nowrap bg-mainRed px-4 font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
-            >
+            <button type="button" onClick={() => push("/login")} className="nav-btn nav-btn-filled">
               <span className="no-contrast-adjust">{t("login")}</span>
-            </CustomButton>
+            </button>
 
-            <CustomButton
-              onClick={() => setShowAppModal(true)}
-              variant="outline"
-              size="medium"
-              className="h-[44px] whitespace-nowrap px-4 font-bold !text-white flex items-center justify-center"
-            >
+            <button type="button" onClick={() => setShowAppModal(true)} className="nav-btn nav-btn-outline">
               <span className="no-contrast-adjust">{t("getApp")}</span>
-            </CustomButton>
+            </button>
 
-            <CustomButton
-              onClick={() => push("https://play.codealgoacademy.com")}
-              variant="filled"
-              size="medium"
-              className="h-[44px] whitespace-nowrap bg-mainRed px-4 font-bold !text-white flex items-center justify-center hover:bg-mainRed/80"
-            >
+            <button type="button" onClick={() => push("https://play.codealgoacademy.com")} className="nav-btn nav-btn-filled">
               <span className="no-contrast-adjust">{t("playGame")}</span>
-            </CustomButton>
+            </button>
           </div>
-          <BiMenu
+          <SpriteIcon
+            name="menu"
             className="text-white lg:hidden"
             size={28}
             onClick={() => setShowMobileNav(true)}

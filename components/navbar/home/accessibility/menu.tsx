@@ -1,11 +1,12 @@
 import React, { FC, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, Variant } from "framer-motion";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import { MdClose, MdOutlineAnimation } from "react-icons/md";
 import { AccessibilityFeatures } from "types/interfaces/accessibility.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { cn } from "utils";
-import { IoAccessibility, IoContrast, IoInvertMode, IoText } from "react-icons/io5";
+import { IoContrast, IoInvertMode, IoText } from "react-icons/io5";
 import { RxLink1 } from "react-icons/rx";
 import { accessibilityActions } from "store/accessibilitySlice";
 import { GrPowerReset } from "react-icons/gr";
@@ -58,10 +59,10 @@ const AccessibilityMenu = () => {
       <section className="omit-invert">
          <div
             onClick={() => setIsOpen(true)}
-className="!fixed bottom-[120px] right-7 z-[1000] h-[60px] w-[60px] cursor-pointer rounded-full bg-mainRed p-2 shadow-lg transition-all duration-300 hover:scale-[1.2]"
+className="a11y-fab"
          >
-            <div className="flex h-full w-full items-center justify-center rounded-full border-2 border-white bg-transparent">
-               <IoAccessibility className="text-white" size={20} />
+            <div className="a11y-fab-ring">
+               <SpriteIcon name="accessibility" className="text-white" size={20} />
             </div>
          </div>
 

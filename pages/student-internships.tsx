@@ -1,10 +1,10 @@
 import Banner from "@/components/home/new-home/banner";
+import GuideSection from "@/components/home/GuideSection";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
-import { CustomButton } from "@/components/UI/Button";
 import Image from "next/image";
 import React from "react";
-import { BsBagFill, BsPinMapFill } from "react-icons/bs";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -108,6 +108,8 @@ const StudentInternships = () => {
                </div>
             </section>
 
+            <GuideSection id="internships" />
+
             <section className="mt-14 mb-6 text-center font-thabit">
                <h2 className="text-[2.1rem] font-bold max-md:text-[1.5rem]">Questions About Internships?</h2>
                <p className="mx-auto mt-4 max-w-[800px] text-[1.1rem] font-light max-md:text-[.9rem]">
@@ -127,21 +129,21 @@ const StudentInternships = () => {
 
 const SingleJob = () => {
    return (
-      <article className="flex items-center gap-x-3 gap-y-8 rounded-xl border border-mainBlack py-3 px-8 font-thabit max-md:flex-col max-md:py-8">
+      <article className="job-card">
          <div>
-            <p className="w-full rounded-[10px] bg-slate-300 p-2 text-[.8rem] font-semibold md:max-w-fit">50 Hours of CodeAlgo</p>
+            <p className="job-tag">50 Hours of CodeAlgo</p>
 
             <p className="mt-6">Software Engineer Internship Google Kansas City, MO</p>
             <div className="flex items-center gap-4">
-               <p className="flex items-center gap-2 text-[.8rem]">
+               <p className="job-meta">
                   <span>
-                     <BsBagFill className="text-gray-500" />
+                     <SpriteIcon name="bag" className="text-gray-500" />
                   </span>
                   Google
                </p>
-               <p className="flex items-center gap-2 text-[.8rem]">
+               <p className="job-meta">
                   <span>
-                     <BsPinMapFill className="text-gray-500" />
+                     <SpriteIcon name="pin-map" className="text-gray-500" />
                   </span>
                   Kansas City, MO
                </p>
@@ -153,10 +155,8 @@ const SingleJob = () => {
             </p>
          </div>
 
-         <div className="min-w-fit max-w-fit max-md:min-w-full max-md:max-w-full">
-            <CustomButton variant="filled" className="max-w-fit py-3 text-[.75rem] text-mainBlack max-md:w-full max-md:max-w-full" fullWidth>
-               {"View Salary & More Info"}
-            </CustomButton>
+         <div className="job-action">
+            <button type="button" className="job-btn">View Salary &amp; More Info</button>
          </div>
       </article>
    );

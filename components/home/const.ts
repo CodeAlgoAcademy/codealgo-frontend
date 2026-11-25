@@ -1,21 +1,20 @@
-import { Book, Users, Clock, Shield, Sparkles, TrendingUp,BookOpen, ShieldCheck  } from 'lucide-react';
-
+// `icon` is a symbol id in public/assets/icons.svg (see components/UI/SpriteIcon.tsx).
 export const parentResources = [
-  { id: "gettingStartedGuide", icon: Book },
-  { id: "onlineSafetyTips", icon: Shield },
-  { id: "managingScreenTime", icon: Clock },
-  { id: "trackingProgress", icon: TrendingUp },
-  { id: "encouragingLearning", icon: Sparkles },
-  { id: "familyCodingActivities", icon: Users },
+  { id: "gettingStartedGuide", icon: "book" },
+  { id: "onlineSafetyTips", icon: "shield" },
+  { id: "managingScreenTime", icon: "clock" },
+  { id: "trackingProgress", icon: "trending-up" },
+  { id: "encouragingLearning", icon: "sparkles" },
+  { id: "familyCodingActivities", icon: "users" },
 ];
 
 export const teacherResources = [
-  { id: "curriculumGuide", icon: BookOpen },
-  { id: "classroomManagement", icon: Users },
-  { id: "assessmentTools", icon: TrendingUp },
-  { id: "lessonPlans", icon: Sparkles },
-  { id: "progressReports", icon: Clock },
-  { id: "schedulingTools", icon: ShieldCheck },
+  { id: "curriculumGuide", icon: "book-open" },
+  { id: "classroomManagement", icon: "users" },
+  { id: "assessmentTools", icon: "trending-up" },
+  { id: "lessonPlans", icon: "sparkles" },
+  { id: "progressReports", icon: "clock" },
+  { id: "schedulingTools", icon: "shield-check" },
 ];
 
 export const howToGuidesParent = [1, 2, 3, 4, 5];

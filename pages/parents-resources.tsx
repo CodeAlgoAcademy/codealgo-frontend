@@ -1,5 +1,6 @@
 import React from "react";
-import { ChevronRight, CheckCircle } from "lucide-react";
+import GuideSection from "@/components/home/GuideSection";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import Footer from "@/components/about-us/aoc";
 import { SimpleAccordion } from "@/components/home/accordion";
 import { parentResources, howToGuidesParent } from "@/components/home/const";
@@ -106,7 +107,7 @@ const ParentsResources = () => {
               },
             ].map((item, index) => (
               <div key={index} className="group relative text-center">
-                <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-mainColor text-3xl font-bold text-white shadow-lg transition-transform duration-300 group-hover:scale-110">
+                <div className="step-circle">
                   {item.step}
                 </div>
                 <h3 className="mb-4 text-2xl font-bold leading-tight text-gray-900">{item.title}</h3>
@@ -135,22 +136,22 @@ const ParentsResources = () => {
           </div>
 
           <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
-            <div className="rounded-2xl border p-6 text-center">
-              <CheckCircle className="mx-auto mb-4 text-mainColor" size={48} />
+            <div className="info-card">
+              <SpriteIcon name="check-circle" size={48} className="mx-auto mb-4 text-mainColor" />
               <h3 className="mb-2 text-xl font-bold">Age-Appropriate Learning</h3>
               <p className="text-gray-600">
                 Carefully designed curriculum that grows with your child's abilities and interests.
               </p>
             </div>
-            <div className="rounded-2xl border p-6 text-center">
-              <CheckCircle className="mx-auto mb-4 text-mainColor" size={48} />
+            <div className="info-card">
+              <SpriteIcon name="check-circle" size={48} className="mx-auto mb-4 text-mainColor" />
               <h3 className="mb-2 text-xl font-bold">Safe Learning Environment</h3>
               <p className="text-gray-600">
                 Robust parental controls and monitored content ensure a secure online experience.
               </p>
             </div>
-            <div className="rounded-2xl border p-6 text-center">
-              <CheckCircle className="mx-auto mb-4 text-mainColor" size={48} />
+            <div className="info-card">
+              <SpriteIcon name="check-circle" size={48} className="mx-auto mb-4 text-mainColor" />
               <h3 className="mb-2 text-xl font-bold">Future-Ready Skills</h3>
               <p className="text-gray-600">
                 Build problem-solving abilities and computational thinking that prepare kids for tomorrow's world.
@@ -173,16 +174,16 @@ const ParentsResources = () => {
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {parentResources.map((resource) => (
-  <div key={resource.id} className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl">
-    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-mainColor transition group-hover:scale-110">
-      <resource.icon className="h-6 w-6 text-white" />
+  <div key={resource.id} className="resource-card group">
+    <div className="resource-icon">
+      <SpriteIcon name={resource.icon} className="h-6 w-6 text-white" />
     </div>
     <h3 className="mb-2 text-xl font-bold text-gray-900">{t(resource.id)}</h3>
     <p className="mb-4 text-gray-600">{t(`${resource.id}Desc`)}</p>
     <a href="/login" className="inline-flex items-center">
-      <span className="inline-flex h-auto cursor-pointer items-center gap-1 p-0 text-mainColor transition-all group-hover:gap-2">
+      <span className="resource-link">
         {t("explore")}
-        <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        <SpriteIcon name="chevron-right" className="resource-arrow" />
       </span>
     </a>
   </div>
@@ -213,6 +214,8 @@ const ParentsResources = () => {
           </div>
         </div>
       </section>
+
+      <GuideSection id="parents" />
 
       <Footer />
     </div>

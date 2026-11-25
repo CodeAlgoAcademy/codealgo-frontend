@@ -1,4 +1,5 @@
 import Banner from "@/components/home/new-home/banner";
+import GuideSection from "@/components/home/GuideSection";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import Head from "next/head";
@@ -143,6 +144,8 @@ const DevForum = () => {
                      <li>Run CodeAlgo in the browser on the Chromebooks and computers your school already has.</li>
                   </ul>
                </section>
+
+               <GuideSection id="devForum" />
 
                <section className="mt-16 text-center">
                   <h2 className="font-thabit text-[2.1rem] font-bold max-md:text-[1.5rem]">
