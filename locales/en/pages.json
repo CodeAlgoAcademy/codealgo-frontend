@@ -349,6 +349,40 @@
     ]
   },
   "guides": {
+    "about": {
+      "heading": "How CodeAlgo Academy works",
+      "intro": "CodeAlgo Academy is a learning platform where children pick up real coding skills by playing. It is used by families at home and by teachers in classrooms, and it is built around a few simple ideas.",
+      "topics": [
+        {
+          "title": "Learning through play",
+          "body": "Lessons take place inside a 3D game. Students solve challenges by writing instructions for their character, and the game responds straight away, so they can see what worked and fix what did not. Children stay motivated because they want to reach the next level, and they practice real coding concepts while they do it."
+        },
+        {
+          "title": "From blocks to Python",
+          "body": "New coders begin with block coding, where they snap instructions together and learn how sequences, loops, and conditions work. When they are ready, they move on to Python and start typing real code. The thinking stays the same from one stage to the next, so each step builds on the last."
+        },
+        {
+          "title": "Coding, math, and AI literacy together",
+          "body": "Coding is a practical way to use math. Students count, measure, spot patterns, and reason step by step as they play, and they are introduced to how artificial intelligence works and how to use it responsibly. The goal is confident problem solvers, not only children who can follow instructions."
+        },
+        {
+          "title": "Built for families",
+          "body": "Parents create an account, add a profile for each child, and follow their progress from a parent dashboard. They can see what their child has completed and how much time they have spent, and they can set screen time limits that suit their household."
+        },
+        {
+          "title": "Built for classrooms",
+          "body": "Teachers set up classes and add students with Clever, Google Classroom, or manual entry. Younger students can sign in with printed QR code cards. Progress reports show who needs support and who is ready for more, and CodeAlgo runs in the browser on the Chromebooks and computers schools already have."
+        },
+        {
+          "title": "Who we work with",
+          "body": "CodeAlgo Academy is used by parents teaching at home, by classroom teachers, and by schools, districts, charter networks, and after-school programs. Whatever the setting, the aim is the same: give every child a fair chance to learn how technology is made, and the confidence to make it themselves. If you would like to bring CodeAlgo to your family or your school, our team is glad to help you get started."
+        },
+        {
+          "title": "A path to real opportunity",
+          "body": "Our work does not stop at the last level. Students learn to think through problems, write real programs, and then put those skills to use through internships with companies. We are based in Kansas City, Missouri, and we are committed to opening careers in technology to students who have too often been left out of them."
+        }
+      ]
+    },
     "parents": {
       "heading": "A parent's guide to coding at home",
       "intro": "You do not need to know how to code to help your child learn. What matters most is a steady routine, a safe setup, and a parent who shows interest. These habits make the biggest difference.",

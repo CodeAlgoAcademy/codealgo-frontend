@@ -12,14 +12,20 @@ import { GiTargetArrows } from "react-icons/gi";
 import { CodeBlock, CopyBlock, dracula, androidstudio } from "react-code-blocks";
 import Leadership from "../components/about-us/leadership";
 import Banner from "@/components/home/new-home/banner";
+import GuideSection from "@/components/home/GuideSection";
+
+// Lengths matter to the site audit: 50-60 characters for the title and
+// 150-160 for the description.
+const PAGE_TITLE = "About CodeAlgo Academy | Game-Based Coding for Kids";
+const PAGE_DESCRIPTION =
+  "Meet CodeAlgo Academy: our mission, our vision, and the team helping kids learn real coding, math, and AI literacy through 3D game-based lessons and projects.";
 
 const AboutUs = () => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    name: "About Us | CodeAlgo Academy",
-    description:
-      "CodeAlgo Academy teaches kids coding through game-based learning. Learn about our mission and team.",
+    name: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     url: "https://codealgoacademy.com/about",
     isPartOf: {
       "@type": "WebSite",
@@ -35,8 +41,8 @@ const AboutUs = () => {
   return (
     <>
      <Head>
-        <title>About Us | CodeAlgo Academy</title>
-        <meta name="description" content="CodeAlgo Academy teaches kids coding through game-based learning. Learn about our mission and team." />
+        <title>{PAGE_TITLE}</title>
+        <meta name="description" content={PAGE_DESCRIPTION} />
         <link rel="canonical" href="https://codealgoacademy.com/about" />
         <script
           type="application/ld+json"
@@ -51,6 +57,7 @@ const AboutUs = () => {
           <Banner />
           <Header />
           <Leadership />
+          <GuideSection id="about" />
           <AOC />
         </div>
       </section>
