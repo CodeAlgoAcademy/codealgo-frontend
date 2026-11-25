@@ -1,19 +1,11 @@
-import Image from "next/image";
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
+import OptimizedImage from "@/components/UI/OptimizedImage";
+import React from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 
 const Hero = () => {
    const { push } = useRouter();
-   const features = useSelector((state: RootState) => state.accessibility.features);
    const { t } = useTranslation("home");
-
-   const animationsPaused = useMemo(() => features["pause animations"], [features]);
-   const floatStyle: React.CSSProperties = {
-      animationPlayState: animationsPaused ? "paused" : "running",
-   };
 
    const toSignUp = () => push("/signup");
    const toPricing = () => push("/pricing");
@@ -73,8 +65,8 @@ const Hero = () => {
                         />
                      </div>
 
-                     <div style={floatStyle} className="absolute -left-8 -top-20 z-20 sm:-left-16 sm:-top-16">
-                        <Image
+                     <div className="absolute -left-8 -top-20 z-20 sm:-left-16 sm:-top-16">
+                        <OptimizedImage
                            src="/assets/landing/images16.png"
                            alt={t("heroAltMath")}
                            width={180}
@@ -83,8 +75,8 @@ const Hero = () => {
                         />
                      </div>
 
-                     <div style={floatStyle} className="absolute -right-10 -top-10 z-20 sm:-right-14 sm:-top-12">
-                        <Image
+                     <div className="absolute -right-10 -top-10 z-20 sm:-right-14 sm:-top-12">
+                        <OptimizedImage
                            src="/assets/landing/image18.png"
                            alt={t("heroAltEla")}
                            width={180}
@@ -93,8 +85,8 @@ const Hero = () => {
                         />
                      </div>
 
-                     <div style={floatStyle} className="absolute left-1/2 top-full z-20 -translate-x-1/2 -translate-y-6">
-                        <Image
+                     <div className="absolute left-1/2 top-full z-20 -translate-x-1/2 -translate-y-6">
+                        <OptimizedImage
                            src="/assets/landing/image15.png"
                            alt={t("heroAltCoppa")}
                            width={180}
@@ -106,35 +98,6 @@ const Hero = () => {
                </div>
             </div>
          </div>
-
-         <style jsx>{`
-            @keyframes float {
-               0%,
-               100% {
-                  transform: translateY(0);
-               }
-               50% {
-                  transform: translateY(-8px);
-               }
-            }
-            .animate-float {
-               animation: float 4s ease-in-out infinite;
-            }
-            .animate-float-slow {
-               animation: float 5s ease-in-out infinite;
-            }
-            .animate-float-slower {
-               animation: float 6s ease-in-out infinite;
-            }
-            @media (prefers-reduced-motion: reduce) {
-               .animate-float,
-               .animate-float-slow,
-               .animate-float-slower {
-                  animation: none !important;
-                  transform: none !important;
-               }
-            }
-         `}</style>
       </header>
    );
 };

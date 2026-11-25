@@ -111,6 +111,19 @@ const MarqueeRow = ({
 
    const loopItems = useMemo(() => Array.from({ length: repeatCount }, () => items).flat(), [items, repeatCount]);
 
+   // Speed, distance and pause are set on the element from here, not through a
+   // style prop, so the server-rendered HTML carries no inline style. Until this
+   // runs the track uses the defaults in styles/globals.css, which match the
+   // first render (14s, four copies of the row).
+   const trackRef = useRef<HTMLDivElement>(null);
+   useEffect(() => {
+      const track = trackRef.current;
+      if (!track) return;
+      track.style.setProperty("--marquee-duration", `${duration}s`);
+      track.style.setProperty("--marquee-distance", `${100 / repeatCount}%`);
+      track.style.animationPlayState = paused ? "paused" : "";
+   }, [duration, repeatCount, paused]);
+
    return (
       <div ref={containerRef} className="group relative overflow-hidden">
          <div ref={singleSetRef} className="pointer-events-none invisible absolute flex gap-4" aria-hidden="true">
@@ -120,16 +133,10 @@ const MarqueeRow = ({
          </div>
 
          <div
+            ref={trackRef}
             className={`flex w-max gap-4 ${
                direction === "ltr" ? "animate-marquee-ltr" : "animate-marquee-rtl"
             } group-hover:[animation-play-state:paused]`}
-            style={
-               {
-                  animationDuration: `${duration}s`,
-                  animationPlayState: paused ? "paused" : undefined,
-                  "--marquee-distance": `${100 / repeatCount}%`,
-               } as React.CSSProperties
-            }
          >
             {loopItems.map((testimony, index) => (
                <TestimonialCard key={index} data={testimony} />
@@ -189,21 +196,6 @@ const VoiceOfOurCommunity = () => {
 
    return (
       <section className="overflow-hidden bg-[#F3F9FA] pt-44">
-         <style>{`
-        @keyframes marquee-ltr {
-          from { transform: translateX(calc(-1 * var(--marquee-distance, 50%))); }
-          to { transform: translateX(0); }
-        }
-        @keyframes marquee-rtl {
-          from { transform: translateX(0); }
-          to { transform: translateX(calc(-1 * var(--marquee-distance, 50%))); }
-        }
-        .animate-marquee-ltr { animation-name: marquee-ltr; animation-timing-function: linear; animation-iteration-count: infinite; }
-        .animate-marquee-rtl { animation-name: marquee-rtl; animation-timing-function: linear; animation-iteration-count: infinite; }
-        @media (prefers-reduced-motion: reduce) {
-          .animate-marquee-ltr, .animate-marquee-rtl { animation: none; }
-        }
-      `}</style>
 
          <div className=" mx-auto mb-12 bg-mainColor px-4 text-center ">
             <h2 className=" py-4 text-center font-tiltWarp text-[2.1rem] text-white max-md:text-[1.5rem]">{t("whatsTheWord")}</h2>

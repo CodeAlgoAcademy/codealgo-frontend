@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "@/components/UI/OptimizedImage";
 import React from "react";
 import { cn } from "utils";
 import { useTranslation } from "react-i18next";
@@ -49,7 +49,7 @@ const AsSeenIs = () => {
 
          {/* Existing combined logos */}
          <div className="mx-auto mt-12 max-w-[1200px]">
-            <Image
+            <OptimizedImage
                src="/assets/landing/as-seen-in.png"
                width={2000}
                height={600}
@@ -65,10 +65,10 @@ const AsSeenIs = () => {
                   key={logo.src}
                   className="relative h-[110px] w-[220px] max-md:h-[90px] max-md:w-[180px]"
                >
-                  <Image
+                  <OptimizedImage
                      src={logo.src}
                      alt={logo.alt}
-                     layout="fill"
+                     fill
                      sizes="(max-width: 768px) 180px, 220px"
                      className="object-contain"
                   />
