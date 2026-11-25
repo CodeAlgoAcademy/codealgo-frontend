@@ -1007,3 +1007,40 @@ a {
       @apply flex w-full max-w-fit items-center justify-center gap-3 rounded-md bg-mainRed px-6 py-3 text-center text-[.75rem] font-normal text-mainBlack transition-all duration-100 hover:bg-mainRed/80 max-md:max-w-full;
    }
 }
+
+/* Testimonial marquee on the homepage (components/home/new-home/voice-of-our-community.tsx).
+   The component adjusts the two variables once it has measured the row. */
+@keyframes marquee-ltr {
+   from {
+      transform: translateX(calc(-1 * var(--marquee-distance, 25%)));
+   }
+   to {
+      transform: translateX(0);
+   }
+}
+@keyframes marquee-rtl {
+   from {
+      transform: translateX(0);
+   }
+   to {
+      transform: translateX(calc(-1 * var(--marquee-distance, 25%)));
+   }
+}
+.animate-marquee-ltr,
+.animate-marquee-rtl {
+   animation-duration: var(--marquee-duration, 14s);
+   animation-timing-function: linear;
+   animation-iteration-count: infinite;
+}
+.animate-marquee-ltr {
+   animation-name: marquee-ltr;
+}
+.animate-marquee-rtl {
+   animation-name: marquee-rtl;
+}
+@media (prefers-reduced-motion: reduce) {
+   .animate-marquee-ltr,
+   .animate-marquee-rtl {
+      animation: none;
+   }
+}

@@ -105,6 +105,7 @@ function MyApp({ Component, pageProps }: AppProps) {
          <Layout>
             <Head>
                <title>CodeAlgo Academy | Online Coding Classes for Kids</title>
+               <meta name="viewport" content="width=device-width, initial-scale=1" />
                <meta name="description" content="CodeAlgo Academy teaches kids ages 6-18 to code through fun, game-based lessons. Learn Python, algorithms & more." />
                {pageUrl && <link key="hreflang-en" rel="alternate" hrefLang="en" href={pageUrl} />}
                {pageUrl && <link key="hreflang-default" rel="alternate" hrefLang="x-default" href={pageUrl} />}
