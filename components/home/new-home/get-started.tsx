@@ -1,4 +1,3 @@
-import { CustomButton } from "@/components/UI/Button";
 import OptimizedImage from "@/components/UI/OptimizedImage";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
@@ -67,14 +66,9 @@ const GetStarted = () => {
                   </div>
 
                   {/* Button */}
-                  <CustomButton
-                     onClick={toSignUp}
-                     className="!absolute bottom-8 left-1/2 !mx-auto min-w-[170px] -translate-x-1/2 justify-center !bg-white !text-black !shadow-md"
-                     variant="filled"
-                     size="medium"
-                  >
+                  <button type="button" onClick={toSignUp} className="card-cta">
                      {card.title}
-                  </CustomButton>
+                  </button>
                </article>
             ))}
          </div>

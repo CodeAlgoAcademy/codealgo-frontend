@@ -38,7 +38,7 @@ const ValuePropositions = () => {
             <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
                {features.map((feature) => (
                   <div key={feature.title} className="flex flex-col items-start  text-center">
-                    <div className="relative mb-6 flex h-52 w-full items-center justify-center overflow-hidden">
+                    <div className="card-media">
                      <div
                         className={`${feature.clip} ${feature.accent} absolute inset-0 opacity-10`}
                         aria-hidden="true"

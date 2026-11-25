@@ -33,7 +33,7 @@ const CodeToSuccess = () => {
                {steps.map((step) => (
                   <div
                      key={step.title}
-                     className="rounded-3xl bg-white  text-black shadow-lg transition hover:-translate-y-2 hover:shadow-2xl"
+                     className="lift-card"
                   >
                      <img
                         src={step.image}

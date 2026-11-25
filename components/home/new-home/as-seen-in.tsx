@@ -63,12 +63,13 @@ const AsSeenIs = () => {
             {additionalLogos.map((logo) => (
                <div
                   key={logo.src}
-                  className="relative h-[110px] w-[220px] max-md:h-[90px] max-md:w-[180px]"
+                  className="logo-box"
                >
                   <OptimizedImage
                      src={logo.src}
                      alt={logo.alt}
                      fill
+                     widths={[256, 640]}
                      sizes="(max-width: 768px) 180px, 220px"
                      className="object-contain"
                   />
