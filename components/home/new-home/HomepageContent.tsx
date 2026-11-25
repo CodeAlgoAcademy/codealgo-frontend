@@ -1,12 +1,5 @@
 import React from "react";
-import {
-   Code2,
-   Blocks,
-   Globe,
-   Brain,
-   Gamepad2,
-   GraduationCap,
-} from "lucide-react";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import { useTranslation } from "react-i18next";
 
 const HomepageContent = () => {
@@ -14,7 +7,7 @@ const HomepageContent = () => {
 
    const learningPaths = [
       {
-         icon: <Brain className="h-5 w-5 text-white" />,
+         icon: <SpriteIcon name="brain" className="h-5 w-5 text-white" />,
          title: t("algorithmsAndProblemSolving"),
          description: t("algorithmsDescription"),
          accent: "bg-mainColor",
@@ -22,7 +15,7 @@ const HomepageContent = () => {
          keyword: t("codingForKids"),
       },
       {
-         icon: <Code2 className="h-5 w-5 text-white" />,
+         icon: <SpriteIcon name="code-2" className="h-5 w-5 text-white" />,
          title: t("pythonForKidsTitle"),
          description: t("pythonDescription"),
          accent: "bg-mainPurple",
@@ -30,7 +23,7 @@ const HomepageContent = () => {
          keyword: t("pythonForKidsKeyword"),
       },
       {
-         icon: <Blocks className="h-5 w-5 text-white" />,
+         icon: <SpriteIcon name="blocks" className="h-5 w-5 text-white" />,
          title: t("blockBasedCoding"),
          description: t("blockBasedDescription"),
          accent: "bg-mainPink",
@@ -38,7 +31,7 @@ const HomepageContent = () => {
          keyword: t("kidsCodingCourses"),
       },
       {
-         icon: <Globe className="h-5 w-5 text-white" />,
+         icon: <SpriteIcon name="globe" className="h-5 w-5 text-white" />,
          title: t("onlineCodingClasses"),
          description: t("onlineClassesDescription"),
          accent: "bg-mainGreen",
@@ -46,7 +39,7 @@ const HomepageContent = () => {
          keyword: t("onlineCodingClassesKeyword"),
       },
       {
-         icon: <GraduationCap className="h-5 w-5 text-white" />,
+         icon: <SpriteIcon name="graduation-cap" className="h-5 w-5 text-white" />,
          title: t("forKidsAges6to14"),
          description: t("kidsAgesDescription"),
          accent: "bg-mainColor",
@@ -54,7 +47,7 @@ const HomepageContent = () => {
          keyword: t("kidsAges6to14Keyword"),
       },
       {
-         icon: <Gamepad2 className="h-5 w-5 text-white" />,
+         icon: <SpriteIcon name="gamepad-2" className="h-5 w-5 text-white" />,
          title: t("learnThroughGames"),
          description: t("learnThroughGamesDescription"),
          accent: "bg-mainPink",
@@ -89,10 +82,10 @@ const HomepageContent = () => {
                         {item.icon}
                      </div>
                      <div>
-                        <h3 className="mb-1 font-thabitBold text-lg text-mainBlack">
+                        <h3 className="item-title">
                            {item.title}
                         </h3>
-                        <p className="font-workSans text-sm leading-relaxed text-mainBlack/60">
+                        <p className="body-muted">
                            {item.description}
                         </p>
                         <span
