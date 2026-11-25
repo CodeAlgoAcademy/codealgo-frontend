@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, Star, Award, TrendingUp } from "lucide-react";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import { useTranslation } from "react-i18next";
 
 const HomepageExpandedContent = () => {
@@ -37,7 +37,7 @@ const HomepageExpandedContent = () => {
                {teacherStories.map((story, idx) => (
                   <div
                      key={idx}
-                     className="overflow-hidden rounded-2xl border border-mainBlack/10 bg-white"
+                     className="story-card"
                   >
                      <div className="aspect-video w-full">
                         <iframe
@@ -50,15 +50,15 @@ const HomepageExpandedContent = () => {
                      </div>
                      <div className="p-6">
                         <div className="mb-3 flex items-center gap-2">
-                           <Users className="h-5 w-5 text-mainColor" />
+                           <SpriteIcon name="users" className="h-5 w-5 text-mainColor" />
                            <span className="font-thabitBold text-mainBlack">{story.name}</span>
                         </div>
                         <div className="mb-3 flex items-center gap-2">
-                           <Star className="h-5 w-5 text-mainPink" />
+                           <SpriteIcon name="star" className="h-5 w-5 text-mainPink" />
                            <span className="font-workSans text-mainBlack/70">{story.role}</span>
                         </div>
                         <div className="flex items-start gap-2">
-                           <Award className="mt-1 h-4 w-4 flex-shrink-0 text-mainPurple" />
+                           <SpriteIcon name="award" className="mt-1 h-4 w-4 flex-shrink-0 text-mainPurple" />
                            <p className="font-workSans text-mainBlack/70">{story.achievement}</p>
                         </div>
                      </div>
@@ -82,13 +82,13 @@ const HomepageExpandedContent = () => {
                   </div>
                   <div className="rounded-xl bg-white/10 p-6 backdrop-blur-sm">
                      <h3 className="mb-4 flex items-center gap-2 font-thabitBold text-xl">
-                        <TrendingUp className="h-5 w-5" />
+                        <SpriteIcon name="trending-up" className="h-5 w-5" />
                         {t("whatKidsLearn")}
                      </h3>
                      <ul className="space-y-3 font-workSans">
                         {learnItems.map((item, idx) => (
                            <li key={idx} className="flex items-center gap-2">
-                              <div className="h-1.5 w-1.5 rounded-full bg-mainPink" />
+                              <div className="pink-dot" />
                               <span>{item}</span>
                            </li>
                         ))}

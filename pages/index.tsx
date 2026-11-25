@@ -14,6 +14,7 @@ import ValuePropositions from "@/components/home/new-home/ValuePropositions";
 import Navbar from "@/components/navbar/home/Navbar";
 import HomepageContent from "@/components/home/new-home/HomepageContent";
 import HomepageExpandedContent from "@/components/home/new-home/HomepageExpandedContent";
+import HomeFaq from "@/components/home/new-home/HomeFaq";
 import TeachersSection from "@/components/home/new-home/TeachersSection";
 import ParentsSection from "@/components/home/new-home/ParentsSection";
 import HowItWorks from "@/components/home/new-home/HowItWorks";
@@ -81,6 +82,7 @@ const Home: NextPage = () => {
          <HowItWorks />
 
          <HomepageExpandedContent />
+         <HomeFaq />
          <AsSeenIs />
          <Footer />
       </div>

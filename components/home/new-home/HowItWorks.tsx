@@ -35,7 +35,7 @@ const HowItWorks = () => {
 
                {steps.map((step) => (
                   <div key={step.number} className="relative flex flex-col items-center text-center">
-                     <div className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-mainRed font-tiltWarp text-lg text-white">
+                     <div className="step-badge">
                         {step.number}
                      </div>
 
@@ -45,7 +45,7 @@ const HowItWorks = () => {
 
                      <h3 className="mb-3 font-thabitBold text-xl text-white">{step.title}</h3>
 
-                     <p className="max-w-xs font-workSans text-sm leading-relaxed text-white md:text-base">{step.description}</p>
+                     <p className="body-light">{step.description}</p>
                   </div>
                ))}
             </div>

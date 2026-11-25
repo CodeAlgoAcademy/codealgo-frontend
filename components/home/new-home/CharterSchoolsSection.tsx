@@ -45,14 +45,14 @@ const CharterSchoolsSection: React.FC = () => {
                      {highlights.map((item) => (
                         <div
                            key={item.label}
-                           className="grid grid-cols-1 gap-2 py-6 sm:grid-cols-12 sm:gap-6"
+                           className="charter-row"
                         >
                            <dt className="sm:col-span-4">
                               <span className="font-workSans text-base font-medium text-white">
                                  {item.label}
                               </span>
                            </dt>
-                           <dd className="font-workSans text-sm leading-relaxed text-white/70 sm:col-span-8">
+                           <dd className="charter-body">
                               {item.detail}
                            </dd>
                         </div>

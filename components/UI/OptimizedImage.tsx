@@ -6,6 +6,10 @@ import { cn } from "utils";
 const IMAGE_SIZES = [16, 32, 48, 64, 96, 128, 256, 384];
 const DEVICE_SIZES = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 const ALL_SIZES = [...IMAGE_SIZES, ...DEVICE_SIZES];
+// What a `fill` image offers the browser to choose from unless `widths` says
+// otherwise. A short list on purpose: every entry is another URL in the HTML,
+// and the full sixteen made each image tag about 1.5 KB.
+const FILL_SIZES = [640, 1080, 1920];
 
 const optimized = (src: string, width: number, quality: number) =>
    `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`;
@@ -22,6 +26,11 @@ interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 
    /** Cover the nearest positioned ancestor, like next/image's layout="fill". */
    fill?: boolean;
    quality?: number;
+   /**
+    * For `fill`: the widths to offer, when the default list is a poor fit (a
+    * small logo, say). Each must be one of the optimizer's sizes above.
+    */
+   widths?: number[];
 }
 
 /**
@@ -36,12 +45,12 @@ interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 
  * Only for local images under /public. Remote images would need the optimizer's
  * domain allow-list.
  */
-const OptimizedImage = ({ src, alt, width, height, fill = false, quality = 75, sizes, className, ...rest }: OptimizedImageProps) => {
+const OptimizedImage = ({ src, alt, width, height, fill = false, quality = 75, sizes, widths = FILL_SIZES, className, ...rest }: OptimizedImageProps) => {
    if (fill) {
       return (
          <img
-            src={optimized(src, DEVICE_SIZES[DEVICE_SIZES.length - 1], quality)}
-            srcSet={(sizes ? ALL_SIZES : DEVICE_SIZES).map((size) => `${optimized(src, size, quality)} ${size}w`).join(", ")}
+            src={optimized(src, widths[widths.length - 1], quality)}
+            srcSet={widths.map((size) => `${optimized(src, size, quality)} ${size}w`).join(", ")}
             sizes={sizes ?? "100vw"}
             alt={alt}
             loading="lazy"

@@ -4,21 +4,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import { useTranslation } from "react-i18next";
 
-const StarIcon = ({ className }: { className?: string }) => (
-   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path
-         fillRule="evenodd"
-         d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-         clipRule="evenodd"
-      />
-   </svg>
-);
-
 const Avatar = ({ name }: { name: string }) => {
    const defaultSrc = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(
       name
    )}&backgroundColor=0961D6,14B8A6,6D28D9&textColor=ffffff`;
-   return <img src={defaultSrc} alt={name} className="h-10 w-10 flex-shrink-0 rounded-full border border-gray-100 object-cover shadow-sm" />;
+   return <img src={defaultSrc} alt={name} loading="lazy" className="testimonial-avatar" />;
 };
 
 type TextTestimonial = {
@@ -38,41 +28,37 @@ type ImageTestimonial = {
 
 type Testimonial = TextTestimonial | ImageTestimonial;
 
+// The testimonial-* classes and the star row live in styles/globals.css. The
+// five stars are one element drawn in CSS, not five inline SVGs: with the row
+// repeated for the marquee they used to be 80 KB of the homepage's HTML.
 const TextTestimonialCard = ({ data }: { data: TextTestimonial }) => (
-   <div className="flex h-[280px] w-[350px] flex-shrink-0 flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md">
-      {/* Header */}
-      <div className="mb-4 flex items-center gap-3">
+   <div className="testimonial-card">
+      <div className="testimonial-head">
          <Avatar name={data.author} />
          <div className="min-w-0">
-            <p className="truncate text-[0.95rem] font-bold text-gray-900">{data.author}</p>
-            <p className="truncate text-xs text-gray-500">
+            <p className="testimonial-author">{data.author}</p>
+            <p className="testimonial-role">
                {data.handle} • {data.role}
             </p>
          </div>
       </div>
 
-      <p className="line-clamp-5 mb-6 flex-grow overflow-hidden text-sm leading-relaxed text-gray-700">"{data.quote}"</p>
+      <p className="testimonial-quote">"{data.quote}"</p>
 
-      <div className="mt-auto flex items-center justify-between border-t border-gray-50 pt-4">
-         <div className="flex gap-1 overflow-hidden text-xs font-medium text-blue-500">
+      <div className="testimonial-foot">
+         <div className="testimonial-tags">
             {data.tags.slice(0, 2).map((tag: string, i: number) => (
-               <span key={i} className="cursor-pointer whitespace-nowrap hover:underline">
-                  {tag}
-               </span>
+               <span key={i}>{tag}</span>
             ))}
          </div>
-         <div className="flex flex-shrink-0 gap-0.5 text-yellow-400">
-            {[...Array(5)].map((_, i) => (
-               <StarIcon key={i} className="h-4 w-4" />
-            ))}
-         </div>
+         <span className="testimonial-stars" role="img" aria-label="5 out of 5 stars" />
       </div>
    </div>
 );
 
 const ImageTestimonialCard = ({ data }: { data: ImageTestimonial }) => (
-   <div className="h-[280px] w-[220px] flex-shrink-0 overflow-hidden rounded-2xl border border-gray-100 bg-gray-100 shadow-sm transition-shadow duration-300 hover:shadow-md">
-      <img src={data.image} alt={data.alt ?? ""} loading="lazy" className="h-full w-full object-cover" />
+   <div className="testimonial-photo">
+      <img src={data.image} alt={data.alt ?? ""} loading="lazy" />
    </div>
 );
 
@@ -91,15 +77,28 @@ const MarqueeRow = ({
    paused: boolean;
 }) => {
    const containerRef = useRef<HTMLDivElement>(null);
-   const singleSetRef = useRef<HTMLDivElement>(null);
-   const [repeatCount, setRepeatCount] = useState(4);
+   const trackRef = useRef<HTMLDivElement>(null);
+
+   // The server renders the row once. The copies that make the loop seamless
+   // are added in the browser, once the row can be measured: the server cannot
+   // know how many a given screen needs, and sending four of them to everyone
+   // made this section two thirds of the page's HTML.
+   const [repeatCount, setRepeatCount] = useState(1);
 
    useEffect(() => {
       const calculate = () => {
-         if (!containerRef.current || !singleSetRef.current) return;
-         const containerWidth = containerRef.current.offsetWidth;
-         const singleSetWidth = singleSetRef.current.scrollWidth;
+         const container = containerRef.current;
+         const track = trackRef.current;
+         if (!container || !track || items.length === 0) return;
+
+         // Width of one copy of the row: from the first card to the last card of the first set.
+         const first = track.children[0] as HTMLElement | undefined;
+         const last = track.children[items.length - 1] as HTMLElement | undefined;
+         if (!first || !last) return;
+         const singleSetWidth = last.offsetLeft + last.offsetWidth - first.offsetLeft;
+         const containerWidth = container.offsetWidth;
          if (singleSetWidth === 0 || containerWidth === 0) return;
+
          const needed = Math.ceil((containerWidth * 3) / singleSetWidth) + 1;
          setRepeatCount(Math.max(2, needed));
       };
@@ -111,11 +110,12 @@ const MarqueeRow = ({
 
    const loopItems = useMemo(() => Array.from({ length: repeatCount }, () => items).flat(), [items, repeatCount]);
 
+   // The row only starts moving once it has its copies; a single copy would
+   // scroll away and leave a gap.
+   const animated = repeatCount > 1;
+
    // Speed, distance and pause are set on the element from here, not through a
-   // style prop, so the server-rendered HTML carries no inline style. Until this
-   // runs the track uses the defaults in styles/globals.css, which match the
-   // first render (14s, four copies of the row).
-   const trackRef = useRef<HTMLDivElement>(null);
+   // style prop, so the server-rendered HTML carries no inline style.
    useEffect(() => {
       const track = trackRef.current;
       if (!track) return;
@@ -126,17 +126,11 @@ const MarqueeRow = ({
 
    return (
       <div ref={containerRef} className="group relative overflow-hidden">
-         <div ref={singleSetRef} className="pointer-events-none invisible absolute flex gap-4" aria-hidden="true">
-            {items.map((testimony, index) => (
-               <TestimonialCard key={index} data={testimony} />
-            ))}
-         </div>
-
          <div
             ref={trackRef}
-            className={`flex w-max gap-4 ${
-               direction === "ltr" ? "animate-marquee-ltr" : "animate-marquee-rtl"
-            } group-hover:[animation-play-state:paused]`}
+            className={`flex w-max gap-4 group-hover:[animation-play-state:paused] ${
+               animated ? (direction === "ltr" ? "animate-marquee-ltr" : "animate-marquee-rtl") : ""
+            }`}
          >
             {loopItems.map((testimony, index) => (
                <TestimonialCard key={index} data={testimony} />
