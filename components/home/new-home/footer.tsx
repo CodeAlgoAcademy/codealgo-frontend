@@ -27,6 +27,10 @@ const Footer = () => {
                href: "/dev-forum",
             },
             {
+               title: t("studentInternships"),
+               href: "/student-internships",
+            },
+            {
                title: t("pricing"),
                href: "/pricing",
             },
