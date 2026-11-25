@@ -7,6 +7,10 @@ import { IMathTest, IMathTestKind, IMathTestReport } from "types/interfaces/teac
 
 interface IMathTestsProps {
   studentId?: string | number;
+  /** Where the tests come from. Defaults to the teacher / parent endpoint. */
+  fetchTests?: (studentId: string | number) => Promise<IMathTestReport>;
+  /** Hide the controls that assign and cancel tests, for viewers who only read. */
+  readOnly?: boolean;
 }
 
 const KINDS: IMathTestKind[] = ["pre", "mid", "post", "knowledge"];
@@ -21,7 +25,7 @@ const Growth = ({ value }: { value: number | null }) => {
 
 // Pre / mid / post tests per grade and the knowledge test, for one student.
 // Used on the teacher dashboard and the parent dashboard, so it loads its own data.
-const MathTests = ({ studentId }: IMathTestsProps) => {
+const MathTests = ({ studentId, fetchTests = mathTestServices.getMathTests, readOnly = false }: IMathTestsProps) => {
   const { t } = useTranslation("teacher");
   const [report, setReport] = useState<IMathTestReport>(emptyMathTestReport);
   const [loading, setLoading] = useState(false);
@@ -33,14 +37,13 @@ const MathTests = ({ studentId }: IMathTestsProps) => {
 
   const load = useCallback(() => {
     if (!studentId) return Promise.resolve();
-    return mathTestServices
-      .getMathTests(studentId)
+    return fetchTests(studentId)
       .then((data) => {
         setReport(data);
         setGrade((g) => (g && data.grades.includes(g) ? g : data.summary[data.summary.length - 1]?.grade || data.grades[0] || "K"));
       })
       .catch(() => setReport(emptyMathTestReport));
-  }, [studentId]);
+  }, [studentId, fetchTests]);
 
   useEffect(() => {
     setReport(emptyMathTestReport);
@@ -88,6 +91,7 @@ const MathTests = ({ studentId }: IMathTestsProps) => {
         <p className="text-sm text-gray-500">{t("mathTestPickStudent")}</p>
       ) : (
         <div className="flex flex-col gap-4 pr-2">
+          {!readOnly && (
           <div className="flex flex-col gap-2 rounded-xl bg-gray-50 p-3">
             <div className="flex flex-wrap items-end gap-2">
               <label className="flex flex-col text-xs text-gray-500">
@@ -132,6 +136,7 @@ const MathTests = ({ studentId }: IMathTestsProps) => {
             <p className="text-[0.7rem] text-gray-500">{t("mathTestsHelp")}</p>
             {message && <p className={`text-xs ${message.error ? "text-red-500" : "text-green-600"}`}>{message.text}</p>}
           </div>
+          )}
 
           {loading ? (
             <p className="animate-pulse text-sm text-gray-400">{t("loadingProgress")}</p>
@@ -194,6 +199,7 @@ const MathTests = ({ studentId }: IMathTestsProps) => {
                               <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700">
                                 {t("mathTestWaiting")}
                               </span>
+                              {!readOnly && (
                               <span
                                 role="button"
                                 tabIndex={0}
@@ -211,6 +217,7 @@ const MathTests = ({ studentId }: IMathTestsProps) => {
                               >
                                 {t("mathTestCancel")}
                               </span>
+                              )}
                             </span>
                           ) : (
                             <span className="text-right">

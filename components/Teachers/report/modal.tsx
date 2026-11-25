@@ -51,19 +51,22 @@ function LevelBadge({ name }: { name: string }) {
 }
 
 export default function DiagnosticDetailModal({
-    studentId, onClose
+    studentId, onClose, fetchDetails = teachersStudentServices.getStudentDiagnosticDetail
 }: {
     studentId: number; onClose: () => void;
+    /** Where the history comes from. Defaults to the teacher endpoint. */
+    fetchDetails?: (studentId: number) => Promise<any[]>;
 }) {
     const { t } = useTranslation("teacher");
     const [details, setDetails] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        teachersStudentServices.getStudentDiagnosticDetail(studentId)
-            .then(res => setDetails(res))
+        fetchDetails(studentId)
+            .then(res => setDetails(Array.isArray(res) ? res : []))
+            .catch(() => setDetails([]))
             .finally(() => setLoading(false));
-    }, [studentId]);
+    }, [studentId, fetchDetails]);
 
     return (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"

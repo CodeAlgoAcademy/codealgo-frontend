@@ -9,14 +9,17 @@ const auth = () => ({ headers: { Authorization: `Bearer ${getAccessToken()}` } }
 
 export const emptyMathTestReport: IMathTestReport = { tests: [], summary: [], grades: [], kinds: [] };
 
+// The report as the card expects it, whatever came back.
+export const toMathTestReport = (data: any): IMathTestReport => ({
+  tests: Array.isArray(data?.tests) ? data.tests : [],
+  summary: Array.isArray(data?.summary) ? data.summary : [],
+  grades: Array.isArray(data?.grades) ? data.grades : [],
+  kinds: Array.isArray(data?.kinds) ? data.kinds : [],
+});
+
 const getMathTests = async (studentId: string | number): Promise<IMathTestReport> => {
   const { data } = await http.get(base(studentId), auth());
-  return {
-    tests: Array.isArray(data?.tests) ? data.tests : [],
-    summary: Array.isArray(data?.summary) ? data.summary : [],
-    grades: Array.isArray(data?.grades) ? data.grades : [],
-    kinds: Array.isArray(data?.kinds) ? data.kinds : [],
-  };
+  return toMathTestReport(data);
 };
 
 const runMathTest = async (studentId: string | number, kind: IMathTestKind, grade: string): Promise<IMathTest> => {
