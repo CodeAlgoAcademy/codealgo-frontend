@@ -5,7 +5,7 @@ import { MdClose } from "react-icons/md";
 import Image from "next/image";
 import { FcOrganization } from "react-icons/fc";
 import { BiUserPin } from "react-icons/bi";
-import { HiUsers } from "react-icons/hi";
+import { HiOutlineDocumentReport, HiUsers } from "react-icons/hi";
 import { GoOrganization } from "react-icons/go";
 import { DEFAULT_SUPPORT } from "constants/support.const";
 import { useTranslation } from "react-i18next";
@@ -34,6 +34,7 @@ export default function OrganizerSidebar({ onClose, isOpen }: Props) {
             <NavButton title={t("addOrganization")} image={<GoOrganization size={22} />} url="/organizers/create-organization" />
             <NavButton title={t("roles")} image={<BiUserPin size={22} />} url="/organizers/roles" />
             <NavButton title={t("student")} image={<BiUserPin size={22} />} url="/organizers/student" />
+            <NavButton title={t("reports")} image={<HiOutlineDocumentReport size={22} />} url="/organizers/reports" />
             {/* <NavButton title="Licenses" image={<BiUserPin size={22} />} url="/organizers/licenses" /> */}
             <NavButton title={t("users")} image={<HiUsers size={22} />} url="/organizers/users" />
             <NavButton

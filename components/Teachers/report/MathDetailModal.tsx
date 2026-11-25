@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
-import teachersClassServices from "services/teachersClassServices";
+import { ClassReportSource, teacherReportSource } from "services/classReportSource";
 import { IMathQuestReport } from "types/interfaces/teacherstudent.interface";
 import TeacherStudentMathQuest from "@/components/Teachers/students/studentsprogress/mathQuest";
 import MathTests from "@/components/Teachers/students/studentsprogress/mathTests";
@@ -10,13 +10,15 @@ interface Props {
   studentId: number;
   studentName: string;
   onClose: () => void;
+  /** Where the data comes from and whether tests can be managed. Defaults to the teacher endpoints. */
+  source?: ClassReportSource;
 }
 
 const emptyReport: IMathQuestReport = { rows: [], totals: [], recent_rounds: [] };
 
 // One student's math in full: every Math Quest standard they have played and
 // their tests. Reuses the cards from the student progress page.
-export default function MathDetailModal({ classId, studentId, studentName, onClose }: Props) {
+export default function MathDetailModal({ classId, studentId, studentName, onClose, source = teacherReportSource }: Props) {
   const { t } = useTranslation("teacher");
   const titleId = useId();
   const [report, setReport] = useState<IMathQuestReport>(emptyReport);
@@ -25,10 +27,13 @@ export default function MathDetailModal({ classId, studentId, studentName, onClo
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    teachersClassServices
-      .getStudentMathQuestProgressByTeacher(String(studentId), String(classId))
+    source
+      .mathDetails(studentId, classId)
       .then((data) => {
         if (!cancelled) setReport(data);
+      })
+      .catch(() => {
+        if (!cancelled) setReport(emptyReport);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -36,7 +41,7 @@ export default function MathDetailModal({ classId, studentId, studentName, onClo
     return () => {
       cancelled = true;
     };
-  }, [classId, studentId]);
+  }, [classId, studentId, source]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -73,7 +78,7 @@ export default function MathDetailModal({ classId, studentId, studentName, onClo
 
         <div className="grid flex-1 grid-cols-1 gap-6 overflow-y-auto p-6 lg:grid-cols-2">
           <TeacherStudentMathQuest report={report} isLoading={loading} />
-          <MathTests studentId={studentId} />
+          <MathTests studentId={studentId} fetchTests={source.mathTests} readOnly={!source.canManageMathTests} />
         </div>
       </div>
     </div>
