@@ -7,6 +7,7 @@
   "messages": "Messages",
   "reportsAndSettings": "Reports & Settings",
   "classReport": "Class Report",
+  "reportLoadFailed": "This report could not be loaded. Your account may not have access to it for this class.",
   "classSettings": "Class Settings",
   "students": "Students",
   "organization": "Organization",
