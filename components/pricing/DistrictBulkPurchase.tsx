@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { MenuItem, Select } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { CustomButton } from "@/components/UI/Button";
@@ -68,8 +67,8 @@ const DistrictBulkPurchase = () => {
             </p>
 
             <form onSubmit={onSubmit} className="mt-14 space-y-5">
-               <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
+               <div className="form-row">
+                  <div className="form-label">
                      <p>{t("name")}</p>
                   </div>
                   <div className="w-full flex-1">
@@ -77,13 +76,13 @@ const DistrictBulkPurchase = () => {
                         value={requestBody.name}
                         onChange={(e) => updateRequestBody("name", e.target.value)}
                         required
-                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
+                        className="form-input"
                      />
                   </div>
                </div>
 
-               <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
+               <div className="form-row">
+                  <div className="form-label">
                      <p>{t("email")}</p>
                   </div>
                   <div className="w-full flex-1">
@@ -92,69 +91,33 @@ const DistrictBulkPurchase = () => {
                         onChange={(e) => updateRequestBody("email", e.target.value)}
                         type="email"
                         required
-                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
+                        className="form-input"
                      />
                   </div>
                </div>
 
-               <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
+               <div className="form-row">
+                  <div className="form-label">
                      <p>{t("selectCategory")}</p>
                   </div>
                   <div className="w-full flex-1">
-                     <Select
+                     {/* A native <select>: MUI's Select server-renders about 8 KB of
+                         inline <style> into the page for this one control. */}
+                     <select
                         value={requestBody.category || "unselected"}
-                        fullWidth
-                        sx={{
-                           borderRadius: ".375rem",
-                           border: "1px solid #d1d5db",
-                           backgroundColor: "white",
-                           height: 45,
-                           outline: "none",
-                           "& *": {
-                              outline: "none",
-                              border: "none !important",
-                           },
-                           "&:focus": {
-                              borderColor: "#FF0D11",
-                              boxShadow: "0 0 0 1px #FF0D11",
-                           },
-                        }}
-                        MenuProps={{
-                           PaperProps: {
-                              sx: {
-                                 "& .MuiMenuItem-root": {
-                                    "&:hover": {
-                                       backgroundColor: "#FF575A",
-                                       color: "#FFFFFF",
-                                    },
-                                    "&.Mui-selected": {
-                                       backgroundColor: "#FF0D11",
-                                       color: "#FFFFFF",
-                                       "&:hover": {
-                                          backgroundColor: "#FF575A",
-                                       },
-                                    },
-                                 },
-                              },
-                           },
-                        }}
                         onChange={(e) => updateRequestBody("category", e.target.value)}
+                        className="h-[45px] w-full rounded-md border border-gray-300 bg-white px-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
                      >
-                        <MenuItem value={"unselected"}>
-                           {t("pleaseSelectCategory")}
-                        </MenuItem>
-                        <MenuItem value={"organization"}>
-                           {t("organization")}
-                        </MenuItem>
-                        <MenuItem value={"school"}>{t("school")}</MenuItem>
-                        <MenuItem value={"district"}>{t("district")}</MenuItem>
-                     </Select>
+                        <option value="unselected">{t("pleaseSelectCategory")}</option>
+                        <option value="organization">{t("organization")}</option>
+                        <option value="school">{t("school")}</option>
+                        <option value="district">{t("district")}</option>
+                     </select>
                   </div>
                </div>
 
-               <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
+               <div className="form-row">
+                  <div className="form-label">
                      <p>{t("institutionName")}</p>
                   </div>
                   <div className="w-full flex-1">
@@ -164,13 +127,13 @@ const DistrictBulkPurchase = () => {
                         onChange={(e) =>
                            updateRequestBody("institution_name", e.target.value)
                         }
-                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
+                        className="form-input"
                      />
                   </div>
                </div>
 
-               <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
+               <div className="form-row">
+                  <div className="form-label">
                      <p>{t("numberOfClassrooms")}</p>
                   </div>
                   <div className="w-full flex-1">
@@ -181,13 +144,13 @@ const DistrictBulkPurchase = () => {
                         onChange={(e) =>
                            updateRequestBody("student_count", e.target.value)
                         }
-                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
+                        className="form-input"
                      />
                   </div>
                </div>
 
-               <div className="flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3">
-                  <div className="max-w-fit font-bold md:min-w-[250px]">
+               <div className="form-row">
+                  <div className="form-label">
                      <p>{t("anyOtherDetails")}</p>
                   </div>
                   <div className="w-full flex-1">
@@ -196,7 +159,7 @@ const DistrictBulkPurchase = () => {
                         value={requestBody.message}
                         onChange={(e) => updateRequestBody("message", e.target.value)}
                         rows={3}
-                        className="w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed"
+                        className="form-input"
                      />
                   </div>
                </div>

@@ -1,4 +1,5 @@
 import Banner from "@/components/home/new-home/banner";
+import GuideSection from "@/components/home/GuideSection";
 import Footer from "@/components/home/new-home/footer";
 import Navbar from "@/components/navbar/home/Navbar";
 import { useRouter } from "next/router";
@@ -159,6 +160,8 @@ const Pricing = () => {
                ))}
             </div>
          </section>
+
+         <GuideSection id="pricing" />
 
          <DistrictBulkPurchase />
          <Footer />

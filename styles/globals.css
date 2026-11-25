@@ -841,3 +841,169 @@ a {
 .hide-video-controls::-webkit-media-controls-enclosure {
    display: none !important;
 }
+
+/* Named classes for markup that repeats many times on the public marketing
+   pages (navbar, footer, FAQ accordion, resource cards). Each one stands for
+   the Tailwind utilities listed in it; using the short name keeps the
+   server-rendered HTML small. Hover states that depend on a parent still need
+   `group` on that parent in the markup. */
+@layer components {
+   .nav-divider {
+      @apply h-[30px] w-[3px] rounded-full bg-white/70;
+   }
+   .nav-item {
+      @apply whitespace-nowrap text-white;
+   }
+   .nav-dropdown {
+      @apply absolute top-[100%] left-0 z-[100] min-h-fit min-w-[120px] cursor-pointer bg-white;
+   }
+   .nav-sublink {
+      @apply z-[400] block p-2 text-[.85rem] hover:bg-mainRed/20;
+   }
+   .nav-btn {
+      @apply flex h-[44px] w-auto items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-3 text-center text-sm font-bold !text-white;
+   }
+   .nav-btn-filled {
+      @apply bg-mainRed transition-all duration-100 hover:bg-mainRed/80;
+   }
+   .nav-btn-outline {
+      @apply border border-mainRed bg-transparent duration-300 hover:bg-mainRed;
+   }
+   .a11y-fab {
+      @apply !fixed bottom-[120px] right-7 z-[1000] h-[60px] w-[60px] cursor-pointer rounded-full bg-mainRed p-2 shadow-lg transition-all duration-300 hover:scale-[1.2];
+   }
+   .a11y-fab-ring {
+      @apply flex h-full w-full items-center justify-center rounded-full border-2 border-white bg-transparent;
+   }
+
+   .footer-heading {
+      @apply mb-2 font-thabit text-[.9rem] md:mb-8;
+   }
+   .social-link {
+      @apply flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-[17px] text-black;
+   }
+
+   .faq-item {
+      @apply rounded-xl border border-gray-200 bg-white px-6 py-4;
+   }
+   .faq-summary {
+      @apply flex w-full cursor-pointer list-none items-center justify-between text-left;
+   }
+   .faq-summary::-webkit-details-marker {
+      display: none;
+   }
+   .faq-question {
+      @apply flex items-center gap-3 font-semibold text-gray-900;
+   }
+   .faq-bulb {
+      @apply flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-100;
+   }
+   .faq-chevron {
+      @apply h-5 w-5 text-gray-500 transition-transform group-open:rotate-90;
+   }
+   .faq-answer {
+      @apply mt-4 pl-11 text-gray-600;
+   }
+
+   .step-circle {
+      @apply mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-mainColor text-3xl font-bold text-white shadow-lg transition-transform duration-300 group-hover:scale-110;
+   }
+   .info-card {
+      @apply rounded-2xl border p-6 text-center;
+   }
+   .resource-card {
+      @apply rounded-2xl border border-gray-200 bg-white p-6 transition hover:shadow-xl;
+   }
+   .resource-icon {
+      @apply mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-mainColor transition group-hover:scale-110;
+   }
+   .resource-link {
+      @apply inline-flex h-auto cursor-pointer items-center gap-1 p-0 text-mainColor transition-all group-hover:gap-2;
+   }
+   .resource-arrow {
+      @apply ml-1 h-4 w-4 transition-transform group-hover:translate-x-1;
+   }
+
+   /* Long-form guide panel (components/home/GuideSection.tsx). Everything is
+      styled from the one class, including the card numbers (a CSS counter),
+      so the markup stays close to plain text. */
+   .guide {
+      @apply mx-auto my-16 w-[calc(100%-2rem)] max-w-[1200px] rounded-3xl bg-[#f4f6f9] px-5 py-12 font-thabit md:px-12 md:py-16;
+   }
+   .guide h2 {
+      @apply mx-auto max-w-3xl text-center text-3xl font-bold text-mainBlack md:text-4xl;
+   }
+   .guide h2::after {
+      content: "";
+      @apply mx-auto mt-4 block h-1 w-16 rounded-full bg-mainRed;
+   }
+   .guide > p {
+      @apply mx-auto mt-5 max-w-3xl text-center text-lg leading-relaxed text-gray-600;
+   }
+   .guide ol {
+      counter-reset: guide;
+      @apply mt-10 grid list-none gap-6 md:grid-cols-2;
+   }
+   .guide li {
+      counter-increment: guide;
+      @apply relative rounded-2xl border border-gray-200 bg-white p-6 pt-20 transition hover:-translate-y-1 hover:shadow-xl md:pt-6 md:pl-24;
+   }
+   .guide li::before {
+      content: counter(guide, decimal-leading-zero);
+      @apply absolute left-6 top-6 flex h-12 w-12 items-center justify-center rounded-xl bg-mainColor text-base font-bold text-white;
+   }
+   /* An odd number of cards leaves the last one alone: let it span the row. */
+   .guide li:last-child:nth-child(odd) {
+      @apply md:col-span-2;
+   }
+   .guide h3 {
+      @apply mb-2 text-xl font-bold text-mainBlack;
+   }
+   .guide li p {
+      @apply leading-relaxed text-gray-600;
+   }
+
+   /* Sprite icons with no explicit size follow the font size; a Tailwind
+      h-* / w-* utility on the same element still wins. */
+   .i {
+      width: 1em;
+      height: 1em;
+   }
+
+   .data-table th {
+      @apply border border-gray-300 px-4 py-2 text-center font-bold;
+   }
+   .data-table td {
+      @apply border border-gray-300 px-3 py-2 text-center;
+   }
+   .plain-table th,
+   .plain-table td {
+      @apply py-3 px-4 font-thabit;
+   }
+
+   .form-row {
+      @apply flex items-center gap-12 max-md:flex-col max-md:items-start max-md:gap-3;
+   }
+   .form-label {
+      @apply max-w-fit font-bold md:min-w-[250px];
+   }
+   .form-input {
+      @apply w-full rounded-md border border-gray-300 bg-white p-3 outline-none focus:border-mainRed focus:ring-1 focus:ring-mainRed;
+   }
+
+   .job-card {
+      @apply flex items-center gap-x-3 gap-y-8 rounded-xl border border-mainBlack py-3 px-8 font-thabit max-md:flex-col max-md:py-8;
+   }
+   .job-tag {
+      @apply w-full rounded-[10px] bg-slate-300 p-2 text-[.8rem] font-semibold md:max-w-fit;
+   }
+   .job-meta {
+      @apply flex items-center gap-2 text-[.8rem];
+   }
+   .job-action {
+      @apply min-w-fit max-w-fit max-md:min-w-full max-md:max-w-full;
+   }
+   .job-btn {
+      @apply flex w-full max-w-fit items-center justify-center gap-3 rounded-md bg-mainRed px-6 py-3 text-center text-[.75rem] font-normal text-mainBlack transition-all duration-100 hover:bg-mainRed/80 max-md:max-w-full;
+   }
+}
