@@ -1,4 +1,5 @@
 import React from "react";
+import GuideSection from "@/components/home/GuideSection";
 import Head from "next/head";
 import Navbar from "@/components/navbar/home/Navbar";
 import Footer from "@/components/home/new-home/footer";
@@ -240,43 +241,43 @@ const CaseStudies = () => {
 
             {/* Table — matches exact iReady layout */}
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-gray-300 border-collapse">
+              <table className="data-table w-full text-sm border border-gray-300 border-collapse">
                 <thead>
                   <tr className="bg-gray-200 text-gray-800">
-                    <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">{tp("caseStudyData.tableThird")}</th>
-                    <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">{tp("caseStudyData.tableFourth")}</th>
-                    <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">{tp("caseStudyData.tableFifth")}</th>
-                    <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300">{tp("caseStudyData.tableSixth")}</th>
-                    <th colSpan={2} className="text-center px-4 py-2 font-bold border border-gray-300 bg-gray-300">{tp("caseStudyData.tableTotals")}</th>
+                    <th colSpan={2}>{tp("caseStudyData.tableThird")}</th>
+                    <th colSpan={2}>{tp("caseStudyData.tableFourth")}</th>
+                    <th colSpan={2}>{tp("caseStudyData.tableFifth")}</th>
+                    <th colSpan={2}>{tp("caseStudyData.tableSixth")}</th>
+                    <th colSpan={2} className="bg-gray-300">{tp("caseStudyData.tableTotals")}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {iReadyRows.map((row, i) => (
                     <tr key={i} className={row.bg}>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.third.n}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.third.pct}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.fourth.n}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.fourth.pct}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.fifth.n}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.fifth.pct}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-medium">{row.sixth.n}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-semibold">{row.sixth.pct}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-medium bg-gray-50">{row.totals.n}</td>
-                      <td className="px-3 py-2 text-center border border-gray-300 font-bold bg-gray-50">{row.totals.pct}</td>
+                      <td className="font-medium">{row.third.n}</td>
+                      <td className="font-semibold">{row.third.pct}</td>
+                      <td className="font-medium">{row.fourth.n}</td>
+                      <td className="font-semibold">{row.fourth.pct}</td>
+                      <td className="font-medium">{row.fifth.n}</td>
+                      <td className="font-semibold">{row.fifth.pct}</td>
+                      <td className="font-medium">{row.sixth.n}</td>
+                      <td className="font-semibold">{row.sixth.pct}</td>
+                      <td className="font-medium bg-gray-50">{row.totals.n}</td>
+                      <td className="font-bold bg-gray-50">{row.totals.pct}</td>
                     </tr>
                   ))}
                   {/* Totals row */}
                   <tr className="bg-white">
-                    <td className="px-3 py-2 text-center border border-gray-300 font-bold">15</td>
-                    <td className="px-3 py-2 border border-gray-300" />
-                    <td className="px-3 py-2 text-center border border-gray-300 font-bold">17</td>
-                    <td className="px-3 py-2 border border-gray-300" />
-                    <td className="px-3 py-2 text-center border border-gray-300 font-bold">16</td>
-                    <td className="px-3 py-2 border border-gray-300" />
-                    <td className="px-3 py-2 text-center border border-gray-300 font-bold">17</td>
-                    <td className="px-3 py-2 border border-gray-300" />
-                    <td className="px-3 py-2 text-center border border-gray-300 font-bold bg-gray-50">65</td>
-                    <td className="px-3 py-2 border border-gray-300 bg-gray-50" />
+                    <td className="font-bold">15</td>
+                    <td />
+                    <td className="font-bold">17</td>
+                    <td />
+                    <td className="font-bold">16</td>
+                    <td />
+                    <td className="font-bold">17</td>
+                    <td />
+                    <td className="font-bold bg-gray-50">65</td>
+                    <td className="bg-gray-50" />
                   </tr>
                 </tbody>
               </table>
@@ -356,6 +357,8 @@ const CaseStudies = () => {
             </div>
           </div>
         </section>
+
+        <GuideSection id="caseStudies" />
 
         <Footer />
       </main>

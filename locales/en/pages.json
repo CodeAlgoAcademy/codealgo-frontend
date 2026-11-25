@@ -347,5 +347,241 @@
         "answer": "Email info@codealgoacademy.com or send us a message from our contact page, and we will help you with plans and payments."
       }
     ]
+  },
+  "guides": {
+    "parents": {
+      "heading": "A parent's guide to coding at home",
+      "intro": "You do not need to know how to code to help your child learn. What matters most is a steady routine, a safe setup, and a parent who shows interest. These habits make the biggest difference.",
+      "topics": [
+        {
+          "title": "Getting started",
+          "body": "Create your parent account first, then add a profile for each child. Sit with your child for the first session so you can see how the game works and what a lesson looks like. Let them hold the mouse or tablet while you ask questions. Ten or fifteen minutes is enough for a first try, and stopping while it is still fun makes them want to come back."
+        },
+        {
+          "title": "Online safety",
+          "body": "Keep the device in a shared room, such as the kitchen or living room, especially for younger children. Use a password your child can remember but others cannot guess, and remind them never to share it. Check friend requests together and talk about why we only connect with people we know. Make it normal for your child to tell you when something online feels wrong."
+        },
+        {
+          "title": "Managing screen time",
+          "body": "Short, regular sessions work better than one long one. Twenty to thirty minutes, three or four times a week, is a good rhythm for most children. Agree on the schedule in advance so there is less arguing when it is time to stop. You can set screen time limits from your parent account, and it helps to balance coding with outdoor play, reading, and sleep."
+        },
+        {
+          "title": "Tracking progress",
+          "body": "Open your parent dashboard once a week and look at what your child completed, how long they spent, and which skills they are building. Look for patterns over time: a week with little progress usually means a level is too hard or interest is dropping. Use what you see to start a conversation, not to check up on them."
+        },
+        {
+          "title": "Encouraging learning",
+          "body": "Praise effort and persistence more than speed. When your child gets stuck, ask what they have tried and what they could change, instead of giving the answer. Getting code wrong and fixing it is how every programmer learns, so treat mistakes as a normal part of the work. Celebrate badges and finished levels, and ask your child to teach you what they learned."
+        },
+        {
+          "title": "When your child gets frustrated",
+          "body": "Every learner hits a level that feels impossible. When that happens, suggest a short break, then come back and read the problem together out loud. Ask your child to explain what the code should do, step by step, because saying it aloud often reveals the mistake. If they are still stuck, it is fine to leave the level for another day. Remind them of an earlier challenge that once felt hard and now feels easy. Learning to keep going through frustration is one of the most useful things coding teaches."
+        },
+        {
+          "title": "Family coding activities",
+          "body": "Coding ideas fit into everyday life. Ask your child to write exact step-by-step instructions for making a sandwich, then follow them literally and laugh at what goes wrong. Draw a maze on paper and guide each other through it using only forward, left, and right. Take turns on a level, or let an older sibling coach a younger one. These games build the same thinking the lessons do."
+        }
+      ]
+    },
+    "educators": {
+      "heading": "A teacher's guide to coding in the classroom",
+      "intro": "You do not need a computer science background to teach with CodeAlgo Academy. The platform carries the content, so your time goes to the students. These practices help a coding block run smoothly from the first week.",
+      "topics": [
+        {
+          "title": "Planning with the curriculum",
+          "body": "Start by deciding what you want students to be able to do by the end of the term, then work backward. Use the curriculum guide to see which concepts come in which order, and where lessons connect to standards such as TEKS, CCSS, and B.E.S.T. Pair coding with a subject you already teach, such as math, so it supports your plans instead of competing with them."
+        },
+        {
+          "title": "Managing the classroom",
+          "body": "Set up your class before the first session and add students with Clever, Google Classroom, or manual entry. Print login cards with QR codes for younger students so sign-in does not eat up the lesson. Agree on simple routines: where devices live, what to do when stuck, and how to ask for help. Many teachers use an \"ask three classmates before me\" rule."
+        },
+        {
+          "title": "Using assessment tools",
+          "body": "Check progress data during the lesson as well as after it. A quick look shows who is racing ahead and who has been on the same level for too long. Use that to decide who needs a short conversation today. Ask students to explain their solution out loud, because a student who can describe the logic has understood it."
+        },
+        {
+          "title": "Making lesson plans work",
+          "body": "A reliable coding lesson has three parts. Open with a five-minute warm-up that introduces the idea of the day away from the screen. Give students most of the time to work through levels at their own pace, since adaptive learning paths keep each one at the right difficulty. Close by asking two or three students to share what they solved and what was hard."
+        },
+        {
+          "title": "Sharing progress reports",
+          "body": "Progress reports are most useful when they lead to action. Review them every week or two to spot students who need support and students who are ready for a harder challenge. Bring them to parent conferences and to conversations with school leaders, so families and administrators can see growth over time and not just a final grade."
+        },
+        {
+          "title": "Supporting every learner",
+          "body": "A coding class always has a wide range of experience, from students who have never typed a line to students who code at home. Let students move at their own pace instead of keeping everyone on the same level. Pair a confident student with one who is unsure, and switch who controls the keyboard so both stay involved. For students who finish early, ask them to solve the same level a different way or to explain their solution to a classmate. For students who struggle, shorten the goal for the day and celebrate each level they complete."
+        },
+        {
+          "title": "Scheduling coding time",
+          "body": "Consistency matters more than length. Two or three sessions of twenty to thirty minutes a week usually produce steadier progress than one long block. Put coding on the timetable as a fixed slot, and keep a backup plan for days when devices or the network fail. CodeAlgo runs in the browser on the Chromebooks and computers your school already has."
+        }
+      ]
+    },
+    "pricing": {
+      "heading": "How to choose the right plan",
+      "intro": "The right plan depends on who is learning and for how long. Here is how to think it through before you subscribe.",
+      "topics": [
+        {
+          "title": "Monthly or annual?",
+          "body": "Both family plans give your child the same game, lessons, and parent tools. A monthly plan is the flexible choice if you want to see how your child takes to coding before you commit. An annual plan costs less over twelve months and suits families who already know coding will be part of the weekly routine. Learning to code is a gradual skill, so most children get more from steady practice over many months than from a short burst."
+        },
+        {
+          "title": "Planning for more than one child",
+          "body": "Each child learns on their own profile, with their own progress, levels, and achievements, so siblings of different ages can work at different speeds. You manage every child from one parent account, which means one login for you and one place to see how each of them is doing."
+        },
+        {
+          "title": "What to expect after you subscribe",
+          "body": "Pick a plan above and log in to your parent account to complete payment. Then add your child's profile and they can start playing. Your first week is a good time to sit with them for a session, set a regular schedule, and agree on screen time. After that, a weekly look at your parent dashboard is enough to stay in touch with their progress."
+        },
+        {
+          "title": "Choosing as a school or district",
+          "body": "Schools usually start with a simple question: how many students and how many classrooms? Have those numbers ready when you request a quote, along with the grade levels involved and whether you use Clever or Google Classroom for rostering. Districts buying for several schools should use the bulk purchase form so that pricing reflects the full number of schools."
+        },
+        {
+          "title": "Questions to ask before you decide",
+          "body": "A few questions make the choice easier. How many children will be learning, and how old are they? How many days a week can they realistically practice? Do you want to try coding for a short time first, or are you planning for the whole school year? If you are a teacher or school leader, who else needs to approve the purchase, and when does your budget year start? Having these answers ready will help you choose a plan with confidence, and will help our team give you an accurate quote."
+        },
+        {
+          "title": "Getting the most from your plan",
+          "body": "Whichever plan you choose, results come from regular use. Two or three short sessions a week, a parent or teacher who checks progress, and a little encouragement when a level feels hard will do more for a child than any feature. If you are unsure which plan fits your situation, send us a message and we will help you decide."
+        }
+      ]
+    },
+    "devForum": {
+      "heading": "Getting the most from a workshop",
+      "intro": "A workshop works best when it is planned around your school's goals. A little preparation before the session, and a clear plan for afterward, help the training carry over into everyday teaching.",
+      "topics": [
+        {
+          "title": "Before the session",
+          "body": "Decide what you want teachers to be able to do when they leave. Share your grade levels, the devices you use, and how students are rostered, so the session can be matched to your setup. Ask teachers to bring a laptop and, if they already have classes, their real class lists. Working with their own students' accounts makes the practice far more useful than a demo."
+        },
+        {
+          "title": "During the session",
+          "body": "Expect hands-on work, not a lecture. Teachers get the most out of time spent setting up a class, assigning a lesson, and reading a progress report themselves. It also helps to play a few levels as a student, because seeing what learners see makes it easier to help them later. Encourage questions about your own classrooms as they come up."
+        },
+        {
+          "title": "After the session",
+          "body": "Plan a first coding lesson within a week, while the training is fresh. Choose one or two teachers to act as the go-to people for colleagues, and set a short check-in a few weeks later to share what is working. Schools that schedule a refresher once a term tend to keep their momentum, especially when new staff join."
+        },
+        {
+          "title": "Who should attend",
+          "body": "Workshops are most effective when the people who will use the platform learn together. Invite the classroom teachers who will run the lessons, and include a school leader or coordinator so that decisions about scheduling and devices can be made in the room. If your school has technology staff who manage rostering or Chromebooks, bring them too. A shared session means everyone hears the same guidance, and teachers leave knowing who to ask when a question comes up later."
+        },
+        {
+          "title": "Questions worth asking",
+          "body": "Come with real situations from your classrooms. How should we group students with different levels of experience? What does a good first month look like? How do we share progress with families? The more specific the question, the more useful the answer will be for your team."
+        },
+        {
+          "title": "Choosing the right session",
+          "body": "Teams new to the platform should start with the introduction. Teachers who have used CodeAlgo for a while will get more from the best practices session, and the quick start suits a team with limited time. If your staff has mixed experience, tell us, and we can suggest how to split the group."
+        }
+      ]
+    },
+    "internships": {
+      "heading": "How to stand out when you apply",
+      "intro": "Companies do not expect students to know everything. They look for people who can think clearly, keep learning, and work well with others. These habits will help you show that.",
+      "topics": [
+        {
+          "title": "Keep a record of what you build",
+          "body": "Every time you finish a project or solve a hard problem, write down what it was, what you tried, and what finally worked. A short list of real examples is the start of a portfolio. When someone asks what you can do, you will have specific stories to tell instead of a general answer."
+        },
+        {
+          "title": "Practice explaining your code",
+          "body": "Being able to explain your thinking matters as much as getting the right answer. Pick a problem you solved and describe it out loud to a parent, teacher, or friend: what the goal was, how you broke it into steps, and where you got stuck. If they can follow you, an interviewer will too."
+        },
+        {
+          "title": "Get comfortable with being stuck",
+          "body": "Professional programmers spend much of their day fixing things that do not work yet. When your code fails, read the error, change one thing at a time, and test again. Learning to stay calm and work through a problem step by step is one of the most valuable skills you can bring to a team."
+        },
+        {
+          "title": "Build good work habits now",
+          "body": "Show up on time, finish what you start, and ask for help when you need it. Practice writing clear, polite messages, since much of the work in tech happens in writing. Working on a level with a classmate is good practice for the teamwork every internship involves."
+        },
+        {
+          "title": "Prepare a simple resume",
+          "body": "One page is enough. List your school, the programming languages you have used, the hours of coding you have completed, and two or three projects you are proud of. Ask a teacher or parent to read it and check for mistakes before you send it."
+        },
+        {
+          "title": "Keep learning while you wait",
+          "body": "Do not stop practicing after you apply. Keep solving problems and adding to your record of projects, so you are ready to talk about your most recent work when a company gets in touch."
+        },
+        {
+          "title": "Ask good questions",
+          "body": "An interview goes both ways. Come with a few questions about what interns work on, who they learn from, and what a normal day looks like. Curiosity shows that you care about the work and not only about the title."
+        }
+      ]
+    },
+    "learnMore": {
+      "heading": "How to start learning to code",
+      "intro": "Anyone can learn to code, and you do not need to be a math genius or own an expensive computer. What you need is a good starting point and regular practice. Here is a path that works for most beginners.",
+      "topics": [
+        {
+          "title": "Start with block coding",
+          "body": "Block coding lets you build programs by snapping together colored blocks instead of typing. You learn the big ideas, such as sequences, loops, and conditions, without worrying about spelling or punctuation. It is the easiest way to see how a computer follows instructions, and it is where many young coders begin."
+        },
+        {
+          "title": "Move on to a real language",
+          "body": "Once the ideas feel familiar, try a text language. Python is a popular first choice because its code reads almost like English. The logic you learned with blocks stays the same. Only the way you write it changes, so the step up is smaller than it looks."
+        },
+        {
+          "title": "Practice a little, often",
+          "body": "Coding is a skill, like playing an instrument or a sport. Twenty minutes a few times a week beats one long session a month. Each time you practice, your brain gets faster at spotting patterns and remembering how things fit together."
+        },
+        {
+          "title": "Learn to love fixing mistakes",
+          "body": "Every coder makes mistakes, including the experts. A mistake in code is called a bug, and finding and fixing it is called debugging. When something does not work, read the message, change one thing, and try again. Each bug you fix teaches you something you will not forget."
+        },
+        {
+          "title": "Build things you care about",
+          "body": "You learn fastest when you are making something you actually want. It could be a simple game, a quiz for your friends, or a drawing made with code. Start small, finish it, and then make it a little better. Finished small projects teach more than big ones you never complete."
+        },
+        {
+          "title": "Use math and logic as you go",
+          "body": "Coding and math help each other. Counting, patterns, coordinates, and working things out step by step all show up in code. Many students find that math makes more sense after they have used it to make a character move or a score go up."
+        },
+        {
+          "title": "What you need to begin",
+          "body": "You can start with very little. A computer, Chromebook, or tablet with a web browser is enough, and you do not have to install anything complicated. Set aside a regular time, find a quiet place to focus, and keep a notebook nearby for ideas and for things you want to remember. The most important thing to bring is curiosity. If you like solving puzzles, building things, or asking how something works, you already think like a coder."
+        },
+        {
+          "title": "Learn with other people",
+          "body": "Share what you build with family, classmates, or a teacher. Explaining your code to someone else helps you understand it better, and seeing how others solved the same problem gives you new ideas. Most software in the world is built by teams, so learning together is good practice for the real thing."
+        }
+      ]
+    },
+    "caseStudies": {
+      "heading": "Why coding practice supports math growth",
+      "intro": "Coding and math draw on the same habits of mind. This is why time spent solving coding problems can show up as growth in the math classroom, and why we look at math results alongside coding activity.",
+      "topics": [
+        {
+          "title": "Problems are broken into steps",
+          "body": "To write a program, a student has to split a task into small steps and put them in the right order. That is the same skill needed for a multi-step word problem or a long calculation. Practicing it in a game, where each step gives instant feedback, makes the habit easier to carry into math."
+        },
+        {
+          "title": "Math is used, not just studied",
+          "body": "In a coding challenge, numbers have a job to do. Students count moves, work with coordinates and angles, use variables, and repeat patterns with loops. Using a concept to reach a goal gives it meaning, and students are more likely to remember an idea they have put to work."
+        },
+        {
+          "title": "Mistakes become part of learning",
+          "body": "Code rarely works the first time. Students learn to test an idea, see what went wrong, and try again without giving up. That persistence matters in math, where many students stop at the first wrong answer. Coding gives them a safe place to practice being wrong and recovering from it."
+        },
+        {
+          "title": "Each student works at the right level",
+          "body": "When challenges match a student's grade level and adjust as they improve, students who are behind can catch up without being left out, and students who are ahead stay challenged. Steady work at the right level of difficulty is what produces growth over a semester."
+        },
+        {
+          "title": "Confidence opens the next door",
+          "body": "A student who has solved hundreds of problems starts to see themselves as someone who can do hard things. That confidence affects which courses they choose, whether they stay with math, and whether a career in technology feels possible. Skills matter, and so does believing those skills are within reach."
+        },
+        {
+          "title": "What helps schools see growth",
+          "body": "The schools that see the most progress tend to share a few practices. They give coding a regular place in the week instead of treating it as an occasional reward. Teachers look at progress data and step in early when a student stalls. Leaders stay involved and make sure devices and time are protected. Families hear about what their children are building. None of this is complicated, but it has to be consistent, and consistent practice is what turns a promising tool into measurable results."
+        },
+        {
+          "title": "Reading the results on this page",
+          "body": "The figures above come from platform records and from assessment reports shared by partner schools, and each one names its source. Growth data reflects the schools and time periods shown. Results in any school depend on how often students practice and how the program is used in class, so we share these numbers as evidence of what consistent use can do."
+        }
+      ]
+    }
   }
 }

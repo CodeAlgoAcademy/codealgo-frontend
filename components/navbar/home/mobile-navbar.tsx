@@ -138,9 +138,9 @@ const SingleMobileLink = forwardRef<HTMLDivElement, Props>(({ link, close }, ref
                   return (
                      <li key={index} onClick={close}>
                         <Link href={link.link}>
-                           <p className="rounded-md p-2 text-[.9rem] transition-all duration-300 hover:bg-mainRed hover:text-white" key={index}>
+                           <a className="block rounded-md p-2 text-[.9rem] transition-all duration-300 hover:bg-mainRed hover:text-white">
                               {tHome(link.name)}
-                           </p>
+                           </a>
                         </Link>
                      </li>
                   );

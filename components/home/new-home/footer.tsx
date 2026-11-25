@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsTwitterX, BsYoutube } from "react-icons/bs";
+import SpriteIcon from "@/components/UI/SpriteIcon";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -98,12 +98,12 @@ const Footer = () => {
             {links.map((link, index) => {
                return (
                   <div key={index}>
-                     <p className="mb-2 font-thabit text-[.9rem] md:mb-8">{link.header}</p>
+                     <p className="footer-heading">{link.header}</p>
 
                      <ul className="space-y-2">
                         {link.sublinks.map((sublink, index) => {
                            return (
-                              <li key={index} className="text-white">
+                              <li key={index}>
                                  <Link href={sublink.href}>{sublink.title}</Link>
                               </li>
                            );
@@ -122,7 +122,7 @@ const Footer = () => {
                         href={social.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-[17px] text-black"
+                        className="social-link"
                         key={index}
                      >
                         {social.icon}
@@ -140,11 +140,11 @@ const Footer = () => {
 };
 
 export const socials = [
-   { link: "https://www.youtube.com/@codealgoacademy6800", icon: <BsYoutube /> },
-   { link: "https://linkedin.com/company/codealgo", icon: <BsLinkedin /> },
-   { link: "https://facebook.com/stcodealgo", icon: <BsFacebook /> },
-   { link: "https://instagram.com/stcodealgo", icon: <BsInstagram /> },
-   { link: "https://twitter.com/stcodealgo", icon: <BsTwitterX /> },
+   { link: "https://www.youtube.com/@codealgoacademy6800", icon: <SpriteIcon name="youtube" /> },
+   { link: "https://linkedin.com/company/codealgo", icon: <SpriteIcon name="linkedin" /> },
+   { link: "https://facebook.com/stcodealgo", icon: <SpriteIcon name="facebook" /> },
+   { link: "https://instagram.com/stcodealgo", icon: <SpriteIcon name="instagram" /> },
+   { link: "https://twitter.com/stcodealgo", icon: <SpriteIcon name="x" /> },
 ];
 
 export default Footer;
