@@ -1,5 +1,5 @@
 import { CustomButton } from "@/components/UI/Button";
-import Image from "next/image";
+import OptimizedImage from "@/components/UI/OptimizedImage";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 
@@ -56,10 +56,10 @@ const GetStarted = () => {
                >
                   {/* Image */}
                   <div className={`absolute ${card.imageWrapper}`}>
-                     <Image
+                     <OptimizedImage
                         src={card.image}
                         alt={card.alt}
-                        layout="fill"
+                        fill
                         quality={100}
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className={`${card.fit} ${card.position}`}
