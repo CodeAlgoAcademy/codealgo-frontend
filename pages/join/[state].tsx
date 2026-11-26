@@ -16,7 +16,7 @@ import {
 } from "utils/quickSignup";
 
 /**
- * Ad landing page: codealgoacademy.com/join/mo, /join/ks.
+ * Ad landing page: codealgoacademy.com/join/midwest (also /join/mo, /join/ks).
  *
  * Account, first kid and the first payment in one form, with the ad's coupon
  * already on. The regular parent path (signup, verify email, add kid, billing)
@@ -30,6 +30,8 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 const DEFAULT_CODE = "MOKS30";
 
 const STATES: Record<string, { name: string; code: string }> = {
+   // One link for the MO/KS campaign. mo and ks stay working for anything already sent.
+   midwest: { name: "Missouri and Kansas", code: DEFAULT_CODE },
    mo: { name: "Missouri", code: DEFAULT_CODE },
    ks: { name: "Kansas", code: DEFAULT_CODE },
 };
