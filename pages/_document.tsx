@@ -56,6 +56,13 @@ class MyDocument extends Document {
                       strategy="afterInteractive"
                     >
                       {`
+                        // Only the live site reports to Google Analytics. On
+                        // localhost, previews and any other host, this official
+                        // opt-out flag stops every hit (page views and events),
+                        // so test traffic never reaches the reports.
+                        if (!/^(www\\.)?codealgoacademy\\.com$/.test(window.location.hostname)) {
+                          window['ga-disable-G-80CZZG1HG5'] = true;
+                        }
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
