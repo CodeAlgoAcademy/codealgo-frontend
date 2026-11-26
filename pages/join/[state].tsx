@@ -70,6 +70,9 @@ export default function JoinPage() {
    const [interval, setInterval] = useState<Interval>("MONTH");
    const [discount, setDiscount] = useState<Discount | null>(null);
    const [childName, setChildName] = useState("");
+   // Sent with the signup whether or not the check above came back. If the
+   // check was throttled or timed out the discount still has to be charged.
+   const [requestedCode, setRequestedCode] = useState("");
 
    useEffect(() => {
       http
@@ -82,6 +85,7 @@ export default function JoinPage() {
       if (!router.isReady) return;
       const fromUrl = typeof router.query.code === "string" ? router.query.code : "";
       const code = (fromUrl || region?.code || DEFAULT_CODE).trim().toUpperCase();
+      setRequestedCode(code);
       checkCoupon(code).then((res) => {
          if (res.ok && res.data.discount?.type === "percentage") {
             setDiscount({ code: res.data.code || code, percent: Number(res.data.discount.value) });
@@ -189,6 +193,7 @@ export default function JoinPage() {
                            price={price}
                            today={today}
                            discount={discount}
+                           requestedCode={requestedCode}
                         />
                      </Elements>
                   )}
@@ -282,9 +287,10 @@ interface FormProps {
    price: PlanPrice | null;
    today: number;
    discount: Discount | null;
+   requestedCode: string;
 }
 
-function SignupForm({ stateKey, childName, setChildName, prices, interval, setInterval, price, today, discount }: FormProps) {
+function SignupForm({ stateKey, childName, setChildName, prices, interval, setInterval, price, today, discount, requestedCode }: FormProps) {
    const stripe = useStripe();
    const elements = useElements();
    const router = useRouter();
@@ -340,7 +346,7 @@ function SignupForm({ stateKey, childName, setChildName, prices, interval, setIn
                   password,
                   child_name: childName,
                   price_id: price.id,
-                  promotion_code: discount?.code,
+                  promotion_code: discount?.code || requestedCode || undefined,
                   payment_method_id: paymentMethod.id,
                   state: stateKey,
                });
