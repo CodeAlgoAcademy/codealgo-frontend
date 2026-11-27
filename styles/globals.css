@@ -1180,12 +1180,12 @@ a {
 /* Sale strip above the public navbar (components/home/new-home/SaleBanner.tsx). */
 @layer components {
    .sale-banner {
-      @apply flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-mainRed px-4 py-2.5 text-center font-workSans text-sm font-semibold text-white md:text-base;
+      @apply flex flex-wrap items-center justify-center gap-x-4 gap-y-2 bg-mainRed px-4 py-4 text-center font-workSans text-lg font-bold text-white md:text-2xl;
    }
    .sale-banner strong {
-      @apply ml-1 rounded-md bg-white px-2 py-0.5 font-bold tracking-wide text-mainRed;
+      @apply ml-1 rounded-md bg-white px-3 py-1 font-bold tracking-wide text-mainRed;
    }
    .sale-banner a {
-      @apply rounded-full border border-white px-3 py-0.5 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-mainRed md:text-sm;
+      @apply rounded-full border-2 border-white px-5 py-1.5 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-white hover:text-mainRed md:text-lg;
    }
 }
