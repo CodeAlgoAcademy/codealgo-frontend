@@ -6,6 +6,7 @@ import AccessibilityMenu from "./accessibility/menu";
 import { cn } from "utils";
 import SpriteIcon from "@/components/UI/SpriteIcon";
 import MobileNavbar from "./mobile-navbar";
+import SaleBanner from "@/components/home/new-home/SaleBanner";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mui/material";
 import AppDownloadModal from "@/components/modals/AppDownloadModal";
@@ -27,6 +28,7 @@ const Navbar = () => {
 
    return (
       <>
+         <SaleBanner />
          <nav className="sticky top-0 left-0 z-[1001] bg-mainBlack px-6 py-4 font-workSans" ref={navbarRef}>
         <div className="mx-auto flex items-center justify-between">
           <ul className="flex items-center gap-6">
